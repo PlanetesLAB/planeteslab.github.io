@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "/notes",
+    baseUrl: "/notes/",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
@@ -69,7 +69,7 @@ const config: QuartzConfig = {
       Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: true, wikilinks: true }),
       Plugin.GitHubFlavoredMarkdown(),
       Plugin.TableOfContents(),
-      Plugin.CrawlLinks({ markdownLinkResolution: "absolute" }),
+      Plugin.CrawlLinks({ markdownLinkResolution: "shortest", prettyLinks: false }),
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
