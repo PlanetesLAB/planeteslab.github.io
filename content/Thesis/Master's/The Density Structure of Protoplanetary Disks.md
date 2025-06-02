@@ -47,4 +47,16 @@ H(r) = H(r_{\text{ref}})\left(\dfrac{r}{r_{\text{ref}}}\right)^{\psi}
 $$
 with $\psi$ being the [[Flaring in the disks#Flaring parameter|flaring parameter]].
 
-But there is always something more to the story.
+# A Short Digression on Disk Morphology
+
+The density structure described by formulas above are the base skeletons. They can be further modified to account for [[Disk Morphology|disk morphology]], which includes how the inner edge is modeled (razor-sharp or smoothened?) as well as how the outer edge tapers off. The formulation is as follows:
+
+$$
+\rho (r, z) = 
+\begin{cases}
+0, & \text{if } r < r_{\text{in}} \text{ or } r > r_{\text{out}} \\
+\text{(defined elsewhere)}, & \text{otherwise}
+\end{cases}
+$$
+
+which just filters the radial points which are out of bounds of the disk inner and outer edges. Now, we need to discuss something called the *truncated power law* distributions. They are also called as power laws with exponential cutoff. 
