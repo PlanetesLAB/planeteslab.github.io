@@ -47,7 +47,7 @@ H(r) = H(r_{\text{ref}})\left(\dfrac{r}{r_{\text{ref}}}\right)^{\psi}
 $$
 with $\psi$ being the [[Flaring in the disks#Flaring parameter|flaring parameter]].
 
-# A Short Digression on Disk Morphology
+### A Short Digression on Disk Morphology
 
 The density structure described by formulas above are the base skeletons. They can be further modified to account for [[Disk Morphology|disk morphology]], which includes how the inner edge is modeled (razor-sharp or smoothened?) as well as how the outer edge tapers off. The formulation is as follows:
 
