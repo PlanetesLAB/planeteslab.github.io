@@ -297,7 +297,7 @@ This section describes the various chemical processes and heating and cooling so
 
 To self-consistently evolve the gas temperature along with evolving abundances, we need to consider the processes which can increase or decrease the temperature of the gas. The various heating and cooling processes we consider are photoelectric heating due to small grains and polycylic aromatic hydrocarbons (PAHs), heating and cooling from the energy released through exothermic chemical reactions, heating by the formation of , heating by viscous dissipation, heating by cosmic-rays and X-rays, energy exchange processes through gas-dust collisions, heating by photodissociation of , , , heating by ionization of atomic carbon, cooling by electrons recombining with small dust grains, cooling by rotational transitions of and rovibrational transitions of and , heating and cooling by vibrational transitions of , cooling by and emissions and cooling by Ly$\alpha$ emissions.
 
-![Workflow of our model](flowchart.png){#fig:workflow}
+![Workflow of our model](flowchart.png)
 
 We used the KInetic Database for Astrochemistry (KIDA) as the provider for our chemical network.
 
@@ -326,51 +326,42 @@ Alongside the chemical processes, we also have following heating and cooling pro
 
 The distributions of volatiles in disks, including volatile organics, provide the initial conditions for planet volatile compositions and chemistry. The radius beyond which a volatile can only exists in form of ices, deposited on the dust grains, is referred to as the snowline of that particular volatile. These locations hold significance for several reasons. Firstly, the freezing out of key volatile substances alters both the chemical processes in gas and on grain surfaces. For instance, the freezing of CO facilitates the creation of oxygen-rich organic compounds in ice and could encourage carbon-rich organic chemistry in the gas phase. Secondly, in models of planet formation, the snowlines of major elements such as oxygen, carbon, and nitrogen dictate the volatile compositions of planetary atmospheres and envelopes, providing a key framework for understanding the atmospheric compositions of observed exoplanets. Thirdly, snowlines, particularly the water snowline, are anticipated to influence the evolution of dust grains and could regulate the timing and location of planetary core formation, thereby influencing whether terrestrial planets, Neptune-like planets, or gas giants form in certain regions [@berg2023].
 
-![**(a)**: Predicted gas-phase levels of five key CNO elements within the midplane of the disk, based on a basic T Tauri disk temperature model and the influx of volatile matter from interstellar sources. Notable shifts in abundance correspond to the respective snowlines. **(b)**: Analysis of and observations using ALMA directed at TW Hya. The outer limit of and the inner boundary of N2HC should indicate the CO snowline.](snowlines.png){#fig:snowlines}
+![(a) Predicted gas-phase levels of five key CNO elements within the midplane of the disk, based on a basic T Tauri disk temperature model and the influx of volatile matter from interstellar sources. Notable shifts in abundance correspond to the respective snowlines. (b) Analysis of and observations using ALMA directed at TW Hya. The outer limit of and the inner boundary of N2HC should indicate the CO snowline.](snowlines.png)
 
 ## On the Significance of Isotopes and Spin isomers
 
 The isotopogues of a molecule are often opticall thin then the stable counterpart. The origin of isotopic fractionation lies in the fact that the zero-point energies dictate that the heavier nuclei will be more stable at low temperatures. These isotopic distribution patterns then can be used to assess the current thermal or irradiation environment or to link together different evolutionary phases [@Ceccarelli2014]. Similar is the case of spin isomers of species like hydrogen, ammonia and water.
 
-![**(a)** Summary of disk-integrated ratios of deuterium to hydrogen (D/H) for HCN, HCOC, and ; *(i)* Average values across disks. *(ii)* Ranges derived from observations with spatial resolution. *(iii)* / ratios for HCN in a selection of protoplanetary disks. The shaded area represents D/H values found in comet volatiles and the range of / ratios in cometary HCN. **(b)** Radial distribution of DCN/HCN and / ratios. Data adapted from various papers by @berg2023](isotope.png){#fig:isotope}
+![(a) Summary of disk-integrated ratios of deuterium to hydrogen (D/H) for HCN, HCOC, and ; (i) Average values across disks. (ii) Ranges derived from observations with spatial resolution. (iii) N15/N ratios for HCN in a selection of protoplanetary disks. The shaded area represents D/H values found in comet volatiles and the range of / ratios in cometary HCN. (b) Radial distribution of DCN/HCN and / ratios. Data adapted from various papers by @berg2023](isotope.png)
 
 ## Results
 
-In this section, we present select results after a full thermo-chemical run from our model for a typical T Tauri disk.
+In this section, we present select results after a full thermo-chemical run from our model for a typical T-Tauri disk.
 
-![Gas number density structure of typical T Tauri disk. This represents the automatically generated grid from a parametric density profile.](n_gas.png){#fig:gasnumdens}
+![Gas number density structure of typical T Tauri disk. This represents the automatically generated grid from a parametric density profile.](n_gas.png)
 
-<figure id="fig:both">
-<figure id="fig:tdust">
-<img src="Tdust.png" />
-<figcaption>Dust temperature structure after iterative Monte-Carlo dust radiative transfer runs <a href="#fig:tdust" data-reference-type="ref" data-reference="fig:tdust">4.6</a></figcaption>
-</figure>
-<figure id="fig:tgas">
-<img src="Tgas.png" />
-<figcaption>Gas temperature structure after full therm-chemical evolution after gas thermal balance <a href="#fig:tgas" data-reference-type="ref" data-reference="fig:tgas">4.7</a></figcaption>
-</figure>
-<figcaption>Physical structure of a fiducial T Tauri Disk</figcaption>
-</figure>
+![Dust temperature structure after iterative Monte-Carlo dust radiative transfer runs](Tdust.png)
 
-![CO abundance distribution over the disk](CO.png){#fig:co}
+![Gas temperature structure after full therm-chemical evolution after gas thermal balance](Tgas.png)
 
-![CCH abundance distribution over the disk](C2H.png){#fig:cch}
+![CO abundance distribution over the disk](CO.png)
 
-![O abundance distribution over the disk](O.png){#fig:oxy}
+![CCH abundance distribution over the disk](C2H.png)
 
-![N2 abundance distribution over the disk](N2.png){#fig:n2}
+![O abundance distribution over the disk](O.png)
 
-![HCN abundance distribution over the disk](HCN.png){#fig:hcn}
+![N2 abundance distribution over the disk](N2.png)
 
-![CH3OH abundance distribution over the disk](CH3OH.png){#fig:ch3oh}
+![HCN abundance distribution over the disk](HCN.png)
+
+![CH3OH abundance distribution over the disk](CH3OH.png)
 
 # Simulating Observations
 
-::: epigraph
-*"The history of astronomy is a history of receding horizons"*
-
-Edwin Powell Hubble
-:::
+>[!quote]
+>*"The history of astronomy is a history of receding horizons"*
+>
+>**Edwin Powell Hubble**
 
 ## The Theory of Ray Tracing
 
@@ -414,9 +405,10 @@ where $R$ is the radial co-ordinate in the spherical co-ordinate system, $R_c$ i
 
 The model also has the option of choosing a more physical envelope gas density structure, which is derived from an in-falling rotating envelope model, given by:
 
-$$\rho_g (R, \mu) = \rho_{g, 0} {\left( \dfrac{R}{R_{\text{cen}}} \right)}^{-3/2} 
-  {\left( 1 +\dfrac{\mu}{\mu_0} \right)}^{-1/2} \left( \dfrac{\mu}{2\mu_0} + 
-  \dfrac{R_{cen}}{R} \mu_0^2 \right)$$ where $\rho_{g, 0}$ is the gas density parameter of the envelope; $R_{\text{cen}}$ is the centrifugal radius of the in-falling envelope; $\mu$ is the cosine of the polar co-ordinate in the spherical co-ordinate system and $\mu_0$ is the value of $\mu$ as $R \rightarrow \infty$.
+$$
+\rho_g (R, \mu) = \rho_{g, 0} {\left( \dfrac{R}{R_{\text{cen}}} \right)}^{-3/2} {\left( 1 +\dfrac{\mu}{\mu_0} \right)}^{-1/2} \left( \dfrac{\mu}{2\mu_0} + \dfrac{R_{cen}}{R} \mu_0^2 \right)
+$$
+where $\rho_{g, 0}$ is the gas density parameter of the envelope; $R_{\text{cen}}$ is the centrifugal radius of the in-falling envelope; $\mu$ is the cosine of the polar co-ordinate in the spherical co-ordinate system and $\mu_0$ is the value of $\mu$ as $R \rightarrow \infty$.
 
 [^1]: Hot Jupiters are a class of gas giant exoplanets that are inferred to be physically similar to Jupiter but that have very short orbital periods ($P < 10$ days).
 
