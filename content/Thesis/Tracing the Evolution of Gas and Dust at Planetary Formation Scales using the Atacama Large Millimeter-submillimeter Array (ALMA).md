@@ -21,7 +21,7 @@
 >**Isaac Asimov**
 ## Origins of Planetary Systems
 
-Up until the 1990s, the only planetary system known was our own solar system and incidentally all theories *on* planet formation were primarily derived from its geophysical study [see @Brush1990 and references therein]. Things changed in 1990s after the discovery of the first exoplanet by @Wolszczan1992, shortly followed by the discovery of the hot Jupiter[^1] *51 Pegasi b*, the first exoplanet to be discovered orbiting a main-sequence star [@Mayor1995], and it was established that planetary systems are far more common that previously thought.
+Up until the 1990s, the only planetary system known was our own solar system and incidentally all theories *on* planet formation were primarily derived from its geophysical study (see @Brush1990, and references therein). Things changed in 1990s after the discovery of the first exoplanet by  shortly followed by the discovery of the [[Hot Jupiters|hot jupiter]] *51 Pegasi b*, the first exoplanet to be discovered orbiting a main-sequence star [@Mayor1995], and it was established that planetary systems are far more common that previously thought.
 
 Study of how these planetary systems came to be is extremely multi-faceted and involved process and it is essential to narrow the scope to a particular epoch in the grand scheme of things. In nearby star-forming regions, most of the young stars (1 Myr of age or less), are surrounded by an optically thick circumstellar disk [@Williams2011]. The aim of this work concerns with these disks, which occur across stars of varying mass brackets, possess a thin-disk geometry with vertical extent no more than 10% to 20% of their outer radius, are composed of molecular gas and dust grains with sizes ranging from few microns to several mm [@Youdin2013]. We will outline the different methods that have been used to do this kind of modelling, and describe the kind of approach taken by this work in detail. But before doing that, it is essential to lay down the foundations of how protoplanetary disks themselves form and where are the seeds of planetary systems are truly sown in the chronological sense.
 
@@ -70,7 +70,7 @@ Combining these different aspects of modelling is not straightforward as a lot o
 
 In order to draw any scientific conclusions from the observational data, we need to build forward models that can simulate the physical and chemical environments to a certain degree of accuracy in these planet forming environments. The chemical abundances which we can observe give a plethora of information on the underlying physical conditions. And likewise, the physical conditions (along with initial chemical make-up) we simulate can be tuned to fit the observations. Therefore, a disk model exists on the junction of the interplay between physics and chemistry.
 
-These physical parameters include almost everything one can think about protoplanetary disks, from the disk morphology, to the nature of the interstellar dust regulating the disk dynamics, to the settling and the onset of coagulation of this dust into small pebbles that will eventually form planetesimals, initiating the process of planet formation. This dust, in turn is deeply coupled with the gas, which will later provide the raw material for gas giant planets. All of this, can be ascertained to a reasonable degree by studying the spectrographic signatures from these objects. The moment maps[^2] of high spatial and high spectral resolution can reveal information on the disk gas kinematics, which can in turn reveal more substructure within these disks. Gas kinematics observations have even made detection of still-forming planets possible [@Pinte2019].
+These physical parameters include almost everything one can think about protoplanetary disks, from the disk morphology, to the nature of the interstellar dust regulating the disk dynamics, to the settling and the onset of coagulation of this dust into small pebbles that will eventually form planetesimals, initiating the process of planet formation. This dust, in turn is deeply coupled with the gas, which will later provide the raw material for gas giant planets. All of this, can be ascertained to a reasonable degree by studying the spectrographic signatures from these objects. The [[Moment Maps|moment maps]] of high spatial and high spectral resolution can reveal information on the disk gas kinematics, which can in turn reveal more substructure within these disks. Gas kinematics observations have even made detection of still-forming planets possible [@Pinte2019].
 
 ![The left image shows an ALMA dust continuum image of the disk surrounding the star HL Tau @2015. The middle one reveals ALMA observations of the ringed sub-structure of TW Hya at 1 AU @Andrews2016. The right-most image featured the disk PDS70 highlighting the candidate protoplanet @Benisty2021.](ppd-substruct.png)
 
@@ -111,19 +111,25 @@ It is evident that protoplanetary disks can be studied both from a dynamical per
 
 ## Astrochemical Reaction Networks
 
-Chemical networks are list of reactions with their respective rate-coefficients, and suitable physical conditions, that can take place in the interstellar clouds (and disks). The physical environments in clouds and disks are diverse. If one assumes three stages of planet formation, various physical conditions can be tabulated as in Table [\[tab:my-table1\]](#tab:my-table1){reference-type="ref" reference="tab:my-table1"}. There are several well-established networks published in the community for planet formation environments like UMIST (with the most recent release published being @Millar2024) and KIDA (latest release being @Majumdar2016). For our intents and purposes, which are described in later chapters, we have used the latter.
+Chemical networks are list of reactions with their respective rate-coefficients, and suitable physical conditions, that can take place in the interstellar clouds (and disks). The physical environments in clouds and disks are diverse. If one assumes three stages of planet formation, various physical conditions can be tabulated as in the following table. There are several well-established networks published in the community for planet formation environments like UMIST (with the most recent release published being @Millar2024) and KIDA (latest release being @Majumdar2016). For our intents and purposes, which are described in later chapters, we have used the latter.
+
+|  Evolutionary Stage  | Gas number density $n_{\ce{H}}$ ($\text{cm}^{-3}$) | Temprature (K) | Dust grain size ($\mu$m) | Confirmed molecular detections |
+| :------------------: | :------------------------------------------------: | :------------: | :----------------------: | :----------------------------: |
+|  Pre-stellar cores   |                   $10^4$-$10^5$                    |     10-20      |           0.1            |               50               |
+|      Protostars      |                   $10^6$-$10^8$                    |     50-300     |          0.1-1           |              200               |
+| Protoplanetary Disks |                   $10^5$-$10^9$                    |     10-300     |           > 1            |               30               |
 
 ## What Can Disk Mass Tell Us?
 
 We have seen that, in all sense, the physical parameters we can constrain for the protoplanetary disks are mostly rooted in understanding their chemical composition. The gas mass of the disk is no exception. The importance of constraining the gas mass is many-fold @trapman2022novel; with the most evident being that the gas is the reservoir that will provide the raw material for gas giant planets to form. As the disk evolves, it loses mass through evaporation of gas and accretion on to the host star. This sets the timeline for formation of those giant planets (see @mordasini2018handbook). The dust component in the disk, although only 1% of the gas, is also crucial, as it is what will form the terrestrial planets. The dust dynamics (involving dust growth, settling and inward radial drift) is heavilty regulated by the gas content present in the disk @birnstiel2012simple.
 
-However, obtaining an estimate on disk gas masses has been proven to be arduous. Hydrogen molecule () is the chief constituent of the gas so if we can constrain the abundance of in disks, it will provide an excellent idea on the total gas content. But due to absence of any dipole moment, it does not emit significantly in the temperatures found in the disks ($50-500$ K). We have hydrogen deuteride ($\ce{HD}$), which traces hydrogen gas chemically @trapman2017far, but it emits in far-infrared and currently, due to an absence of a capable far-infrared facility in the post-*Herschel* era, making it virtually impossible to make any observations of it. The next most abundant species in disks is carbon monoxide () and emissions from its isotopologues have been the subject of study for a plethora of work (see @Zhang2017 [@Booth2019] to name a few).
+However, obtaining an estimate on disk gas masses has been proven to be arduous. Hydrogen molecule ($\ce{H2}$) is the chief constituent of the gas so if we can constrain the abundance of in disks, it will provide an excellent idea on the total gas content. But due to absence of any dipole moment, it does not emit significantly in the temperatures found in the disks ($50-500$ K). We have hydrogen deuteride ($\ce{HD}$), which traces hydrogen gas chemically @trapman2017far, but it emits in far-infrared and currently, due to an absence of a capable far-infrared facility in the post-*Herschel* era, making it virtually impossible to make any observations of it. The next most abundant species in disks is carbon monoxide () and emissions from its isotopologues have been the subject of study for a plethora of work (see @Zhang2017 [@Booth2019] to name a few).
 
 Although is assumed to have a relative constant abundance (relative to , denoted by $\chi_{\ce{CO}}$) in the warm gas of the disks due to its chemical stability of around $\chi_{\ce{CO}} \approx 10^{-4}$ @trapman2022novel, it can deplete from the gas due to photodissociation in the upper layers of the disk through irradiation by FUV photons or through freeze out the dust grains in deeply shielded, cold mid-plane of the disk @vanDishoeck1988 [@vanZadelhoff2001; @Visser2009; @Miotello2014]. These processes have been incorporated in physicochemical models and corresponding gas mass measurements have been made by reconciling the model results with the observations of and line fluxes @Williams2014 [@Miotello2016].
 
 However, when these gas masses were compared to the ones derived independently from , the -based gas masses were found to be underestimating the result by several factors of magnitude (see @Favre2013 [@Kama2016; @McClure2016; @Schwarz2016; @Trapman2017; @Calahan2021]). This is suspected to be caused by either some chemical processes depleting in the gas or dynamical processes like grain growth trapping the ice-deposited dust grains. Thus, to measure $\chi_{\ce{CO}}$ reliably, we need to look for species which can serve as calibrators of abundance.
 
-One such calibrator was studied by @trapman2022novel in the form of . The following reactions are of interest:
+One such calibrator was studied by @trapman2022novel in the form of $\ce{N2H+}$. The following reactions are of interest:
 
 $$
 \ce{CO + H3+ -> HCO+ + H2}
@@ -137,11 +143,11 @@ $$
 
 It is evidently clear that $\ce{N2H+}$ can only be abundant if there is a lack of $\ce{CO}$. But this is only one such example, there might be several others, and it is a function of the breadth of the chemistry that a model has considered. Here, the term chemistry encapsulates both the number of reactions considered (the chemical network) and the different types of chemical reactions that can happen in the warm gas of these transition disks. The aim of this thesis is two-fold: to perform a statistical study across grids of forward theoretical disk thermochemical models to identify calibrators like these which can be detected by the current state-of-the-art observatories like the Atacama Large Millimeter/submillimeter Array (ALMA) and to include isotope chemistry @Majumdar2016 to model for species like considering the future observational missions like the PRobe far-Infrared Mission for Astrophysics (PRIMA).
 
-![Comparison of total gas mass estimates using different molecular tracers: CO (black), HD (red), and combined with CO (blue) @berg2023](diskmass.png)
+![Comparison of total gas mass estimates using different molecular tracers: CO (black), HD (red), and combined with CO (blue)](diskmass.png) 
 
 ## Line Diagnostics
 
-Once a simulation is done, the data produced by it has to be converted into form of something which telescopes will observe. Our code is accompanied by a ray-tracing module which performs line radiative transfer in a two-step process @Kamp2010. The first step is to solve the level populations for a given molecule. If sufficient information on its collisional parteners is available then the level populations are solved in non-LTE [^3], otherwise the calculations are done in LTE. The next step is to perform the ray tracing by solving the transfer equation @Pontoppidan2009
+Once a simulation is done, the data produced by it has to be converted into form of something which telescopes will observe. Our code is accompanied by a ray-tracing module which performs line radiative transfer in a two-step process  . The first step is to solve the level populations for a given molecule. If sufficient information on its collisional parteners is available then the level populations are solved in [[Local Thermodynamic Equilibrium|non-LTE]], otherwise the calculations are done in LTE. The next step is to perform the ray tracing by solving the transfer equation @Pontoppidan2009
 
 $$
 \dfrac{d I_{\nu}}{ds} =[\alpha^c_{\nu}(r, \theta) + \alpha^l_{\nu} (r, \theta, \bar{v})][S_{\nu} (r, \theta, \bar{v}) - I_{\nu}]
@@ -164,7 +170,7 @@ The superscripts $c$ and $l$ refer to continuum and line emissivity functions an
 
 ## The Density Profile
 
-The physical structure of our model is similar to as described in @Du2014 and @Woitke2009. This disk is assumed to be axisymmetric. We start with a parametrized distribution structure in cylindrical co-ordinates for the gas number density following  @lynden1974evolution [@Hartmann1998; @Andrews2009; @Cleeves2013] as an observationally constrained equation of the form: 
+The physical structure of our model is similar to as described in @Du2014 and @Woitke2009. This disk is assumed to be axisymmetric. We start with a parametrized distribution structure in cylindrical co-ordinates for the gas number density following   [@lynden1974evolution; @Hartmann1998; @Andrews2009; @Cleeves2013] as an observationally constrained equation of the form: 
 $$
 \rho (r, z) = \dfrac{\Sigma}{\sqrt{2 \pi} h}
 \exp \left[-\dfrac{1}{2}{\left(\dfrac{z}{h}\right)}^2\right],
@@ -208,7 +214,7 @@ T_{\text{atm}}
 $$
 ## Hydrostatic Disk Structure
 
-Our disk is static in the vertical and radial $\eqref{s4}$ direction but in Keplerian rotation in the azimuthal direction, around the $z$-axis. From the hydrostatic equations: 
+Our disk is static in the vertical and radial direction but in Keplerian rotation in the azimuthal direction, around the $z$-axis. From the hydrostatic equations: 
 $$
 \begin{split}
         \dfrac{v_{\phi}^2}{r} &= \dfrac{1}{\rho} \dfrac{\partial p}{\partial r} + \dfrac{\partial \Phi}{\partial r} \\ 0 &= \dfrac{1}{\rho} \dfrac{\partial p}{\partial z} + \dfrac{\partial \Phi}{\partial z}
@@ -247,7 +253,7 @@ The settling plays an important part in finding a converged physical structure o
 
 ## Continuum Radiative Transfer
 
-Once we have setup the dust in our model, we can now create a grid which will be the stage for the simulation of our disk. Note that that equations  ![!insert ref] are for gas, but as already states dust follows the gas, with 1% of its abundance. The choice of the grid is extremely important, as the this grid is going to be used to simulated photon transport in a medium. As our disk is axisymmetric, it is enough to model one quadrant in 2 dimensions, with the source of photons (that is, the host star) athe origin. Many models often use a normal polar or cartesian grid but these density distribution require a finer (or adaptive) treatment where the grid scales accordingly (finer in dense regions and sparse in regions with low density). Therefore, as already described, we adopt a tree-based grid, which allows us to employ an adaptive resolution and easy to program ray propagation along the grid. This grid also allows a more accurate treatment of calculation of observables as we are not bound under the assumption of light/radiation propagating in a straight line, rather we can propagate an actual physical ray through our grid and any integrations along the ray path will be more closer to reality.
+Once we have setup the dust in our model, we can now create a grid which will be the stage for the simulation of our disk. Note that that equations  in Section [[Tracing the Evolution of Gas and Dust at Planetary Formation Scales using the Atacama Large Millimeter-submillimeter Array (ALMA)#The Density Profile|3.1]] are for gas, but as already states dust follows the gas, with 1% of its abundance. The choice of the grid is extremely important, as the this grid is going to be used to simulated photon transport in a medium. As our disk is axisymmetric, it is enough to model one quadrant in 2 dimensions, with the source of photons (that is, the host star) athe origin. Many models often use a normal polar or cartesian grid but these density distribution require a finer (or adaptive) treatment where the grid scales accordingly (finer in dense regions and sparse in regions with low density). Therefore, as already described, we adopt a tree-based grid, which allows us to employ an adaptive resolution and easy to program ray propagation along the grid. This grid also allows a more accurate treatment of calculation of observables as we are not bound under the assumption of light/radiation propagating in a straight line, rather we can propagate an actual physical ray through our grid and any integrations along the ray path will be more closer to reality.
 
 ### Monte Carlo based photon transport
 
@@ -410,8 +416,5 @@ $$
 $$
 where $\rho_{g, 0}$ is the gas density parameter of the envelope; $R_{\text{cen}}$ is the centrifugal radius of the in-falling envelope; $\mu$ is the cosine of the polar co-ordinate in the spherical co-ordinate system and $\mu_0$ is the value of $\mu$ as $R \rightarrow \infty$.
 
-[^1]: Hot Jupiters are a class of gas giant exoplanets that are inferred to be physically similar to Jupiter but that have very short orbital periods ($P < 10$ days).
+# Bibliography
 
-[^2]: spectra visualized in form of snapshots as a function of (relative) disk radial velocity. Using Doppler's effect on the observed molecular emission lines, inference on the motion of disk can be made.
-
-[^3]: LTE or local thermodynamics equilibrium refers to the environment where the scales at which temperature change is much less than the mean free path of the population of the particles. That is, due to collisions, temperatures between various excited levels is briskly equilibriated.
