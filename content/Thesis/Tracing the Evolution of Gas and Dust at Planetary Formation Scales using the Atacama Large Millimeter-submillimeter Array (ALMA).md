@@ -1,3 +1,12 @@
+---
+tags:
+  - physics
+  - physical-structure
+  - chemistry
+  - modeling
+  - protoplanetary-disks
+  - ALMA
+---
 
 <div style="text-align: left; font-weight: bold; color: lightblue; font-size: 24px;">
   Declaration

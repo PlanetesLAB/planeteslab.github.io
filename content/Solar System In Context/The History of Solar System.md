@@ -1,0 +1,4 @@
+---
+tags:
+  - solar-system
+---
