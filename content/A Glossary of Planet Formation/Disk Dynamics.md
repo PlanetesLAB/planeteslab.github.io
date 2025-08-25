@@ -4,3 +4,6 @@ tags:
   - physical-structure
 ---
 # Turbulence
+
+# Gas gaps
+# Dust spirals
