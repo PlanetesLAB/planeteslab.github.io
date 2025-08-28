@@ -1,5 +1,6 @@
-import { QuartzConfig } from "./quartz/cfg"
-import * as Plugin from "./quartz/plugins"
+import { QuartzConfig } from "./quartz/cfg";
+import * as Plugin from "./quartz/plugins";
+import renameFootnotesHeading from './quartz/plugins/rename-footnotes-heading';
 
 /**
  * Quartz 4 Configuration
@@ -29,27 +30,16 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#faf8f8",
-          lightgray: "#e5e5e5",
-          gray: "#b8b8b8",
-          darkgray: "#4e4e4e",
-          dark: "#2b2b2b",
-          secondary: "#284b63",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
-          textHighlight: "#fff23688",
+          light: "#eff1f5",       // Base
+          lightgray: "#ccd0da",   // Surface1
+          gray: "#9ca0b0",        // Overlay1
+          darkgray: "#4c4f69",    // Text
+          dark: "#1e1e2e",        // Mantle (darkest in Latte)
+          secondary: "#1e66f5",   // Blue
+          tertiary: "#40a02b",    // Green
+          highlight: "rgba(30, 102, 245, 0.15)", // Blue @ 15% opacity
+          textHighlight: "#dc8a78aa", // Rosewater with alpha
         },
-        // darkMode: {
-        //   light: "#161618",
-        //   lightgray: "#393639",
-        //   gray: "#646464",
-        //   darkgray: "#d4d4d4",
-        //   dark: "#ebebec",
-        //   secondary: "#7b97aa",
-        //   tertiary: "#84a59d",
-        //   highlight: "rgba(143, 159, 169, 0.15)",
-        //   textHighlight: "#b3aa0288",
-        // },
         darkMode: {
           light: "#11111b",        // Crust - deepest background
           lightgray: "#1e1e2e",    // Base - elevated surfaces, cards  
@@ -87,6 +77,7 @@ const config: QuartzConfig = {
       Plugin.Citations({
         linkCitations: true,
       }),
+      renameFootnotesHeading(),
     ],
     filters: [Plugin.RemoveDrafts()],
     emitters: [
@@ -106,6 +97,7 @@ const config: QuartzConfig = {
       // Comment out CustomOgImages to speed up build time
       Plugin.CustomOgImages(),
     ],
+
   },
 }
 

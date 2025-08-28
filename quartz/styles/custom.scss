@@ -4,3 +4,81 @@
 img {
     background-color: white;
 }
+
+article.popover-hint h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+article.popover-hint h2 {
+    font-size: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+article.popover-hint h3 {
+    font-size: 1rem;
+}
+
+/* Sidebar article links */
+// .left.sidebar a {
+//     display: block;
+//     font-size: 0.9rem;
+//     line-height: 1.4;
+//     padding: 0.35rem 0.6rem;
+//     margin: 0.15rem 0;
+//     border-radius: 6px;
+//     /* softer rectangle, not pill */
+//     background-color: transparent;
+//     color: #cdd6f4;
+//     text-decoration: none;
+//     word-break: break-word;
+//     /* avoid overflow */
+//     white-space: normal;
+//     /* allow wrapping */
+// }
+
+// /* Hover state */
+// .left.sidebar a:hover {
+//     background-color: rgba(137, 180, 250, 0.15);
+//     /* faint blue */
+//     color: #89b4fa;
+// }
+
+// /* Active link */
+// .left.sidebar a.active {
+//     background-color: rgba(137, 180, 250, 0.25);
+//     color: #89b4fa;
+//     font-weight: 600;
+// }
+
+/* Only style links inside the Explorer tree */
+.left.sidebar .explorer a {
+    display: block;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    padding: 0.35rem 0.6rem;
+    margin: 0.15rem 0;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #cdd6f4;
+    text-decoration: none;
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Hover state */
+.left.sidebar .explorer a:hover {
+    background-color: rgba(137, 180, 250, 0.15);
+    color: #89b4fa;
+}
+
+/* Active page */
+.left.sidebar .explorer a.active {
+    background-color: rgba(137, 180, 250, 0.25);
+    color: #89b4fa;
+    font-weight: 600;
+}
