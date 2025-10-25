@@ -91,7 +91,22 @@ img[src$="logo_aa.svg"] {
 img[src$="apj.png"] {
     background: none !important;
     display: block;
-    max-width: 50%;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Default: dark mode */
+img[src$="mnras.svg"] {
+    background: none !important;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+img[src$="apjl.png"] {
+    background: none !important;
+    display: block;
+    max-width: 100%;
     height: auto;
 }
 
