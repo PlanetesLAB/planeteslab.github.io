@@ -6,14 +6,10 @@ description: Repository for research notes
 
 Browse by domain:
 
-- [[A Glossary of Planet Formation/index|A Glossary of Planet Formation]]
 - [[Astrophysical Objects/index|Astrophysical Objects]]
-- [[At the Fringes of Planet Formation/index|At the Fringes of Planet Formation]]
-- [[ML and Statistical Methods in Planetary Science/index|Machine Learning and Statistical Methods in Planetary Science]]
-- [[Numerical Methods/index|Numerical Methods]]
-- [[Physics and Chemistry of Planet Formation/index|Physics and Chemistry of Planet Formation]]
-- [[Planet Formation At Large/index|Planet Formation At Large]]
-- [[Reviews/index|Reviews]]
-- [[Solar System In Context/index|Solar System In Context]]
+- [[Foundations of Planet Formation/index|Foundations of Planet Formation]]
+- [[Planets & Planetary Systems/index|Planets & Planetary Systems]]
 - [[The Observation Toolkit/index|The Observation Toolkit]]
-- [[Thesis/index|Thesis]]
+- [[The Science of Planet Formation/index|The Science of Planet Formation]]
+- [[The Tools of the Trade/index|The Tools of the Trade]]
+- [[Theses & Reviews/index|Theses & Reviews]]
