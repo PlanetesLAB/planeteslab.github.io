@@ -55,7 +55,7 @@ A_V &= 1.086 \tau_V \\
 $$
 which is the same form as described in Du & Bergin (2014).
 
->[!References]
+>[!References]-
 >1. [Wild et al, 2011](https://ui.adsabs.harvard.edu/abs/2011MNRAS.417.1760W/abstract)
 >2. [Tielens, 2005](https://ui.adsabs.harvard.edu/abs/2005pcim.book.....T/abstract)
 >3. [Du & Bergin, 2014](http://dx.doi.org/10.1088/0004-637X/792/1/2)

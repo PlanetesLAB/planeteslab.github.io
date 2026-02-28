@@ -23,7 +23,7 @@ Now this bundle can carry energy as it has some cross-sectional area, which we c
 $$
 dE = I_{\nu} \; dA \cos \theta \; dt\; d \Omega\; d\nu
 \tag{1}
-\label{s1}
+\label{s11}
 $$
 
 We define $I_{\nu}$ as the **specific intensity** and $\theta$ is the angle between the vector normal to $dA$ and direction of $d \Omega$. The way to understand this expression is quite simple. We want to know *how much energy*
@@ -36,19 +36,20 @@ Because it gives a more detailed description of the radiation field, it is much 
 
 # Moments of Specific Intensity
 
-Before we derive any moments, let us write equation $\eqref{s1}$ a bit more generally.
+Before we derive any moments, let us write equation $\eqref{s11}$ a bit more generally.
 
 $$
 dE = I_{\nu} (\mathbf{r}, \mathbf{n}) \cos \theta \; dA\; dt\; d \Omega\; d\nu
 \tag{2}
 $$
 
-One important aspect when deriving moments of a physical quantity is to decide what is our independent variable. 
-
+Next is to ask about the nature of the independent variable for which we will be calculating the moments for. For specific intensity, it is more constructive to think in terms of direction. From the definition, it is clear that $I_{\nu}$ is not a spatial density, but rather a function of direction[^1]. 
 
 ## Zeroth moment (Radiation Energy Density)
 
-By definition, zeroth moment of a quantity is something which does not depend on the distance
+By definition, zeroth moment of a quantity is something which is does not depend of our independent variable (direction in our case). So we want to derive the quantity which is describes how much radiation is present locally, regardless of the direction.
+
+
 
 
 
@@ -56,3 +57,5 @@ By definition, zeroth moment of a quantity is something which does not depend on
 
 >[!Related]- See also
 >[[Optically Thick and Optically Thin Media#Dust Extinction]]
+
+[^1]: Note that we are trying to define $I_{\nu}$ as a density function, not just any function. So although, it does depend on $\mathbf{r}$, it is not a density function in $\mathbf{r}$.

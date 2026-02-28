@@ -232,3 +232,9 @@ img[src$="apjl.png"] {
     line-height: 1.7;
     text-align: justify;
 }
+
+a.data-footnote-backref {
+    font-size: 0;
+    /* hide the existing ↩ */
+    text-decoration: none;
+}

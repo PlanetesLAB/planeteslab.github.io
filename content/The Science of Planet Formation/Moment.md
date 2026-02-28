@@ -14,7 +14,7 @@ $$
 M_k = \int x^k f(x) dx
 $$
 
-where $M_k$ is the $k$th moment. When dealing with physical quantities, $x$ can various forms, but the major forms of interest are as follows
+where $M_k$ is the $k$th moment. When dealing with physical quantities, $x$ can have various forms, but the major forms of interest are as follows
 1. If $x$ represents spatial position, then $M_k$ would yield geometric moments,
 2. If $x$ represents velocity, then $M_k$ would yield kinetic moments,
 3. If $x$ represents direction, then $M_k$ would yield angular moments,
