@@ -23,8 +23,11 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "IBM Plex Sans",
-        body: "IBM Plex Sans",
+        header: {
+          name: "Rubik Mono One",
+          weights: [400],
+        },
+        body: "Rubik",
         code: "JetBrains Mono",
       },
       colors: {
