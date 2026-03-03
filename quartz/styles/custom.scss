@@ -245,3 +245,107 @@ a.data-footnote-backref {
     /* hide the existing ↩ */
     text-decoration: none;
 }
+
+@media (max-width: 768px) {
+
+    /* Prevent horizontal scroll */
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Global typography adjustments */
+    body {
+        font-size: 0.95rem;
+    }
+
+    h1.article-title {
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 1.25rem;
+    }
+
+    article.popover-hint h1 {
+        font-size: 1.25rem;
+    }
+
+    article.popover-hint h2 {
+        font-size: 1.1rem;
+    }
+
+    article.popover-hint h3 {
+        font-size: 0.95rem;
+    }
+
+    /* Explorer links (better tap targets) */
+    .left.sidebar .explorer a {
+        font-size: 1rem;
+        padding: 0.6rem 0.75rem;
+    }
+
+    .left.sidebar .explorer a:hover {
+        background-color: transparent;
+        color: inherit;
+    }
+
+    /* Paper preview block */
+    .paper-preview-container {
+        margin: 1.5rem 0 2rem 0;
+    }
+
+    .paper-preview {
+        padding: 1rem 1.25rem;
+        border-radius: 6px;
+    }
+
+    /* Journal logo */
+    .journal-logo img {
+        max-height: 45px;
+        max-width: 100%;
+    }
+
+    /* Authors */
+    .authors-list {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    /* Metadata – stack vertically */
+    .metadata {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .metadata-row {
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .metadata-item {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    /* Abstract */
+    .abstract-section {
+        margin-top: 1.25rem;
+    }
+
+    .abstract-heading {
+        font-size: 1rem;
+    }
+
+    .abstract-text {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        text-align: left;
+        /* justified text looks bad on mobile */
+    }
+
+    /* Images */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+}
