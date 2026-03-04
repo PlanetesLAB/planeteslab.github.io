@@ -117,6 +117,13 @@ img[src$="apjl.png"] {
     height: auto;
 }
 
+img[src$="apjs.png"] {
+    background: none !important;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
 // Paper Preview Container
 .paper-preview-container {
     margin: 2rem 0 3rem 0;
