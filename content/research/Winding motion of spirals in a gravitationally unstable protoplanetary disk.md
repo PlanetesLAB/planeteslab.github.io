@@ -43,7 +43,7 @@ $$
 where $R_c$ is the effective (or capture) radius, $\Omega$ is the angular frequency, $\sigma_p$ is the local surface density of [[Planetesimal Formation|planetesimals]], and $F_g$ is a constant factor accounting for gravitational enhancement[^1] due to Greenzweig & Lissauer (1992). One can assume the [[Minimum Mass Solar Nebula|minimum mass solar nebula scaling (MMSN)]] scaling for the surface density:
 
 $$
-\sigma_p \propto r^{-3/2} 
+\sigma_p \propto a^{-3/2} 
 $$
 
 Rice and Armitage (2003) provide reference values for a giant planet at the current location of Jupiter to estimate the growth time scale. A similar treatment can be found in Armitage (2020)[^2] which derives a very slow growth rate at the location of Jupiter. In any case, we can do some algebra and derive how does this rate vary with radius:
@@ -54,15 +54,41 @@ $$
 \end{split}
 $$
 
-if we assume $F_g$ remains constant with radius. Now with mass radius relation under constant density ($M \propto r^3$), MMSN scaling ($\sigma_p \propto r^{-3/2}$) and [[Kepler's Laws|Kepler's law]]  ($\Omega \propto r^{-3/2}$), we can conclude 
+if we assume $F_g$ remains constant with radius. Now with mass radius relation under constant density ($M \propto R_s^3$), MMSN scaling ($\sigma_p \propto a^{-3/2}$) and [[Kepler's Laws|Kepler's law]]  ($\Omega \propto a^{-3/2}$), we can conclude 
 
 $$
-t_{\text{grow}} \propto r^3
+t_{\text{grow}} \propto a^3
 $$
 
-which implies the timescale of growth will be even larger at larger radii. Thus, it is not possible to form giant planets at wide orbits *in situ* through core accretion and we must look for alternate mechanisms. GI is one such proposition. This makes observational evidence of GI in disks very critical. 
+which implies the timescale of growth will be even larger at larger radii (for a body of size $R_s$). Thus, it is not possible to form giant planets at wide orbits *in situ* through core accretion and we must look for alternate mechanisms. GI is one such proposition. This makes observational evidence of GI in disks very critical. 
 
-One of most evident signatures of GI is [[Disk Substructures#Wakes and Spirals|spiral arms]], however because these substructures can also be produced through alternate pathways (planet-disk interactions, stellar fly-bys and even shadows cast by the inner disk), it is essential to categorically devise a way to distinguish between these possibilities. 
+One of most evident signatures of GI is [[Disk Substructures#Wakes and Spirals|spiral arms]], however because these substructures can also be produced through alternate pathways (planet-disk interactions, stellar fly-bys and even shadows cast by the inner disk), it is essential to categorically devise a way to distinguish between these possibilities. Additionally, spiral arms induced by GI or planet-disk interaction present two different [[Theories of Planet Formation|scenarios]] of planet formation. If the spirals are being induced by a planet, this implies the planet already exists and must have formed at a much earlier stage of the [[Disk Formation and Evolution|disk lifetime]]. On the other hand, GI-induced spirals point to several other key things. If our goal is assert that GI is present, then one of the most useful metric is the [[Toomre's Q]] parameter, which requires following condition for instability in a Keplerian disk:
+
+$$
+Q \equiv \dfrac{c_s \Omega}{\pi G \Sigma_0} < 1
+$$
+
+In simpler terms, a disk becomes unstable when the gravity is strong enough to overcome the stabilizing internal forces of rotation and thermal pressure. Under our metric, $Q \lesssim 1$
+implies an unstable disk and high $Q$ implies stability. From the expression it is clear, high surface density (thus, more [[Disk Mass|massive disk]]) favors instability. So if we are looking for a candidate disk to observe GI, it should be massive. The [[Molecules with ALMA at Planet-Forming Scales (MAPS)|MAPS]] program obtained a mass of $0.1 M_{\odot}$ for IM Lup (whose stellar mass is $1.1 M_{\odot}$), which makes it a good candidate to look for GI. 
+
+According to this work, IM Lup has gravitational self-regulation, which is to say that the disk maintains a *marginally unstable* state, which prevents the system going too further in either direction (runaway expansion or collapse). In terms of Toomre's Q, marginally unstable refers to $Q \sim 1-2$ or $Q \sim \mathcal{O}(1)$. Thus, if GI were to present in IM Lup, then the disk has enough mass, and new planets can form through GI as the disk evolves further.
+
+Now coming back to the differences between GI-induced spirals and planet-induced spirals, the former spirals follow the local Keplerian motion, whereas in the case of latter, the spirals move as if they were single rigid body and follow the Keplerian motion at the radius of the companion. Building on this idea, this work attempts to measure the speed of the spirals observed in IM Lup across seven years of observation from [[Atacama Large Millimeter Sub-millimetre Array (ALMA)|ALMA]], to find the evidence for GI. 
+
+The next step is decide what kind of ALMA observations might help us. For instance, we cannot use [[Disk Dynamics|kinematic structures]] in CO emissions as those emission do not originate form the region we are interested in (where wide-orbit exoplanets are detected). The high resolution observations of IM Lup reveal that grand-design, two-armed symmetric spiral arms are present, and the absence of any shadow in the infrared eliminates the possibility of the shadow scenario. There is [[High turbulence in the IM Lup protoplanetary disk. Direct observational constraints from CN and C2H emission|evidence]] of strong turbulence in IM Lup, but only in the elevated disk layers. However, the claims of kinematic detection of embedded Jupiter-mass planets also exist which could have caused these spirals we have observed. The idea is to use the data across seven years and categorize the driver behind the motion of these spirals.
+
+Before moving on to analysis of the observations, we need to decide what observations to use. This paper uses both continuum and gas emission images to aid in the different steps of the process. First, CO [[Rotation curve|rotation curves]] provide the Toomre's Q parameter, establishing the disk has GI (or at least is marginally unstable). But because they only trace outer and upper layers, we need to use something else. Dust rotation curves reveal spirals throughout the range of our interest (20-70 AU), so authors used them to characterize the motion of the spirals.
+
+# Continuum emissions from IM Lup
+
+The work uses 4 separate observational epochs, and thus the first step is to convolve them to a set [[Beamsize|beamsize]] and position angle.
+
+## Images Analysis method
+
+$$
+\omega(r) = \omega_0 \left(\dfrac{r}{1^{\prime\prime}}\right)^{-\gamma} + \omega_f
+$$
+
 
 
 
