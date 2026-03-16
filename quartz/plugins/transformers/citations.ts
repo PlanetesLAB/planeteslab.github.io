@@ -135,7 +135,6 @@ export const Citations: QuartzTransformerPlugin<Partial<Options>> = (userOpts) =
       ])
 
       plugins.push(() => {
-        console.log("Initializing citation plugin with bibliography file:", opts.bibliographyFile)
         const bibPath = path.resolve(opts.bibliographyFile)
         const citationData = parseBibFile(bibPath)
         return (tree) => {
