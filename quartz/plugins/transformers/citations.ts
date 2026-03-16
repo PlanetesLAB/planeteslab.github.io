@@ -12,6 +12,32 @@ function field(body: string, name: string) {
   return m ? m[1] : ""
 }
 
+function cleanBibTex(str: string) {
+  if (!str) return ""
+
+  return str
+    // remove outer braces
+    .replace(/^\{+|\}+$/g, "")
+    // remove remaining braces
+    .replace(/[{}]/g, "")
+    // convert common LaTeX subscripts
+    .replace(/_\{([^}]*)\}/g, "<sub>$1</sub>")
+    // convert superscripts
+    .replace(/\^\{([^}]*)\}/g, "<sup>$1</sup>")
+    // remove math mode $
+    .replace(/\$/g, "")
+    // collapse whitespace
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+function formatAuthors(authors: string) {
+  const parts = authors.split(" and ")
+  if (parts.length === 0) return authors
+  if (parts.length === 1) return parts[0]
+  return parts[0].split(",")[0] + " et al."
+}
+
 function parseBibFile(filePath: string) {
   const text = fs.readFileSync(filePath, "utf8")
   const entries: Record<string, any> = {}
@@ -27,10 +53,10 @@ function parseBibFile(filePath: string) {
     const url = field(body, "url")
 
     entries[key] = {
-      title: field(body, "title"),
-      author: field(body, "author"),
-      year: field(body, "year"),
-      journal: field(body, "journal") || field(body, "booktitle"),
+      title: cleanBibTex(field(body, "title")),
+      author: formatAuthors(cleanBibTex(field(body, "author"))),
+      year: cleanBibTex(field(body, "year")),
+      journal: normalizeJournal(field(body, "journal") || field(body, "booktitle")),
       link: doi ? `https://doi.org/${doi}` : url
     }
   }
@@ -52,6 +78,36 @@ const defaultOptions: Options = {
   csl: "apa",
 }
 
+const journalMacros: Record<string, string> = {
+  "\\apj": "The Astrophysical Journal",
+  "\\apjl": "The Astrophysical Journal Letters",
+  "\\apjs": "The Astrophysical Journal Supplement Series",
+  "\\aj": "The Astronomical Journal",
+  "\\aap": "Astronomy & Astrophysics",
+  "\\aapr": "Astronomy & Astrophysics Review",
+  "\\aaps": "Astronomy & Astrophysics Supplement Series",
+  "\\mnras": "Monthly Notices of the Royal Astronomical Society",
+  "\\nat": "Nature",
+  "\\sci": "Science",
+  "\\icarus": "Icarus",
+  "\\pasp": "Publications of the Astronomical Society of the Pacific",
+  "\\pasj": "Publications of the Astronomical Society of Japan"
+}
+
+function normalizeJournal(journal: string) {
+  if (!journal) return ""
+
+  const cleaned = journal
+    .replace(/[{}]/g, "")
+    .trim()
+
+  if (journalMacros[cleaned]) {
+    return journalMacros[cleaned]
+  }
+
+  return cleaned
+}
+
 export const Citations: QuartzTransformerPlugin<Partial<Options>> = (userOpts) => {
   const opts = { ...defaultOptions, ...userOpts }
 
@@ -65,8 +121,7 @@ export const Citations: QuartzTransformerPlugin<Partial<Options>> = (userOpts) =
         lang = `https://raw.githubusercontent.com/citation-stylelanguage/locales/refs/heads/master/locales-${ctx.cfg.configuration.locale}.xml`
       }
 
-      const bibPath = path.resolve(opts.bibliographyFile)
-      const citationData = parseBibFile(bibPath)
+
 
       plugins.push([
         rehypeCitation,
@@ -80,30 +135,35 @@ export const Citations: QuartzTransformerPlugin<Partial<Options>> = (userOpts) =
       ])
 
       plugins.push(() => {
+        console.log("Initializing citation plugin with bibliography file:", opts.bibliographyFile)
+        const bibPath = path.resolve(opts.bibliographyFile)
+        const citationData = parseBibFile(bibPath)
         return (tree) => {
           visit(tree, "element", (node: any) => {
             if (
               node.tagName === "a" &&
-              typeof node.properties?.href === "string" &&
-              node.properties.href.startsWith("#bib-")
+              node.properties?.href
             ) {
-              const key = node.properties.href.replace("#bib-", "").toLowerCase()
-              const entry = citationData[key]
+              const href = String(node.properties.href)
+              if (href.startsWith("#bib-")) {
+                const key = node.properties.href.replace("#bib-", "").toLowerCase()
+                const entry = citationData[key]
 
-              if (entry?.link) {
-                node.properties.href = entry.link
-                node.properties.target = "_blank"
-                node.properties.rel = "noopener noreferrer"
+                if (entry?.link) {
+                  node.properties.href = entry.link
+                  node.properties.target = "_blank"
+                  node.properties.rel = "noopener noreferrer"
 
-                node.properties["data-cite-title"] = entry.title
-                node.properties["data-cite-author"] = entry.author
-                node.properties["data-cite-year"] = entry.year
-                node.properties["data-cite-journal"] = entry.journal
+                  node.properties["data-cite-title"] = entry.title
+                  node.properties["data-cite-author"] = entry.author
+                  node.properties["data-cite-year"] = entry.year
+                  node.properties["data-cite-journal"] = entry.journal
 
-                node.properties.className = [
-                  ...(node.properties.className || []),
-                  "citation-link",
-                ]
+                  node.properties.className = [
+                    ...(node.properties.className || []),
+                    "citation-link",
+                  ]
+                }
               }
             }
           })
