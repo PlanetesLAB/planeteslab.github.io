@@ -78,6 +78,7 @@ const config: QuartzConfig = {
       }),
       // Plugin.FootnotesToReferences(),
       Plugin.PaperPreviewInjector(),
+      Plugin.JournalEntryInjector(),
     ],
     filters: [Plugin.RemoveDrafts()],
     emitters: [

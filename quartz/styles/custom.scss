@@ -403,3 +403,557 @@ a.data-footnote-backref {
 .canvas text {
     font-family: system-ui, sans-serif;
 }
+
+// ============================================================
+// JOURNAL PAGE STYLES
+// Scoped to .journal-month-block (emitted by JournalEntryInjector)
+// No .journal-page wrapper needed — the blocks themselves are the hook.
+// ============================================================
+
+// --- Month color tokens (on the block itself, inherited by children) ---
+// .journal-month-block {
+//     --j-accent: var(--tertiary);
+//     --j-accent-bg: rgba(130, 130, 130, 0.06);
+
+//     &[data-month="january"] {
+//         --j-accent: #4a7fd4;
+//         --j-accent-bg: rgba(74, 127, 212, 0.08);
+//     }
+
+//     &[data-month="february"] {
+//         --j-accent: #9b6fe8;
+//         --j-accent-bg: rgba(155, 111, 232, 0.08);
+//     }
+
+//     &[data-month="march"] {
+//         --j-accent: #2ea86b;
+//         --j-accent-bg: rgba(46, 168, 107, 0.08);
+//     }
+
+//     &[data-month="april"] {
+//         --j-accent: #e07b3a;
+//         --j-accent-bg: rgba(224, 123, 58, 0.08);
+//     }
+
+//     &[data-month="may"] {
+//         --j-accent: #d44f6e;
+//         --j-accent-bg: rgba(212, 79, 110, 0.08);
+//     }
+
+//     &[data-month="june"] {
+//         --j-accent: #b8922a;
+//         --j-accent-bg: rgba(184, 146, 42, 0.08);
+//     }
+
+//     &[data-month="july"] {
+//         --j-accent: #2aa8a8;
+//         --j-accent-bg: rgba(42, 168, 168, 0.08);
+//     }
+
+//     &[data-month="august"] {
+//         --j-accent: #6aa32e;
+//         --j-accent-bg: rgba(106, 163, 46, 0.08);
+//     }
+
+//     &[data-month="september"] {
+//         --j-accent: #d44040;
+//         --j-accent-bg: rgba(212, 64, 64, 0.08);
+//     }
+
+//     &[data-month="october"] {
+//         --j-accent: #a0662a;
+//         --j-accent-bg: rgba(160, 102, 42, 0.08);
+//     }
+
+//     &[data-month="november"] {
+//         --j-accent: #3a70b8;
+//         --j-accent-bg: rgba(58, 112, 184, 0.08);
+//     }
+
+//     &[data-month="december"] {
+//         --j-accent: #aa3a8a;
+//         --j-accent-bg: rgba(170, 58, 138, 0.08);
+//     }
+
+//     margin-bottom: 3.5rem;
+//     padding-bottom: 1rem;
+// }
+
+// // Dark mode: nudge the pale backgrounds up slightly
+// .darkmode .journal-month-block {
+//     &[data-month="january"] {
+//         --j-accent-bg: rgba(74, 127, 212, 0.14);
+//     }
+
+//     &[data-month="february"] {
+//         --j-accent-bg: rgba(155, 111, 232, 0.14);
+//     }
+
+//     &[data-month="march"] {
+//         --j-accent-bg: rgba(46, 168, 107, 0.14);
+//     }
+
+//     &[data-month="april"] {
+//         --j-accent-bg: rgba(224, 123, 58, 0.14);
+//     }
+
+//     &[data-month="may"] {
+//         --j-accent-bg: rgba(212, 79, 110, 0.14);
+//     }
+
+//     &[data-month="june"] {
+//         --j-accent-bg: rgba(184, 146, 42, 0.14);
+//     }
+
+//     &[data-month="july"] {
+//         --j-accent-bg: rgba(42, 168, 168, 0.14);
+//     }
+
+//     &[data-month="august"] {
+//         --j-accent-bg: rgba(106, 163, 46, 0.14);
+//     }
+
+//     &[data-month="september"] {
+//         --j-accent-bg: rgba(212, 64, 64, 0.14);
+//     }
+
+//     &[data-month="october"] {
+//         --j-accent-bg: rgba(160, 102, 42, 0.14);
+//     }
+
+//     &[data-month="november"] {
+//         --j-accent-bg: rgba(58, 112, 184, 0.14);
+//     }
+
+//     &[data-month="december"] {
+//         --j-accent-bg: rgba(170, 58, 138, 0.14);
+//     }
+// }
+
+// // --- h1: Month header ---
+// h1.journal-month-heading {
+//     display: flex;
+//     align-items: center;
+//     gap: 0.75rem;
+//     font-size: 0.8rem !important; // override Quartz h1 sizing
+//     font-weight: 600;
+//     letter-spacing: 0.05em;
+//     text-transform: uppercase;
+//     color: var(--j-accent);
+//     margin-top: 0 !important;
+//     margin-bottom: 1.75rem;
+//     padding-bottom: 0.6rem;
+//     border-bottom: 2px solid var(--j-accent);
+
+//     // Anchor icon Quartz injects — hide it or it looks odd in the pill row
+//     a.internal {
+//         display: none;
+//     }
+
+//     .journal-month-pill {
+//         display: inline-block;
+//         font-size: 0.7rem;
+//         font-weight: 700;
+//         letter-spacing: 0.1em;
+//         text-transform: uppercase;
+//         padding: 0.2rem 0.7rem;
+//         border-radius: 20px;
+//         background-color: var(--j-accent-bg);
+//         color: var(--j-accent);
+//         border: 1px solid var(--j-accent);
+//     }
+
+//     .journal-month-year {
+//         font-size: 0.75rem;
+//         font-weight: 400;
+//         opacity: 0.65;
+//         letter-spacing: 0.04em;
+//     }
+// }
+
+// // --- h2: Entry date + week badge ---
+// h2.journal-entry-heading {
+//     display: flex !important;
+//     align-items: center;
+//     gap: 0.5rem;
+//     font-size: 0.9rem !important;
+//     font-weight: 500;
+//     margin-top: 0 !important;
+//     margin-bottom: 0.6rem;
+//     border: none !important; // override any Quartz h2 border/underline
+//     padding: 0 !important;
+
+//     // Anchor icon — hide inside the badge row
+//     a.internal {
+//         display: none;
+//     }
+
+//     .journal-week-num {
+//         display: inline-flex;
+//         align-items: center;
+//         font-size: 0.65rem;
+//         font-weight: 700;
+//         letter-spacing: 0.08em;
+//         text-transform: uppercase;
+//         padding: 0.15rem 0.55rem;
+//         border-radius: 4px;
+//         background-color: var(--j-accent-bg);
+//         color: var(--j-accent);
+//         border: 1px solid var(--j-accent);
+//         font-family: var(--codeFont, monospace);
+//         flex-shrink: 0;
+//     }
+
+//     .journal-sep {
+//         color: var(--j-accent);
+//         opacity: 0.4;
+//         font-size: 0.75em;
+//     }
+
+//     .journal-entry-date {
+//         font-size: 0.9rem;
+//         font-weight: 500;
+//         color: var(--dark);
+//         font-variant-numeric: tabular-nums;
+//     }
+// }
+
+// // --- Entry block: left-border accent wrapping h2 + body ---
+// .journal-entry-block {
+//     padding: 0.6rem 0 0.6rem 1rem;
+//     border-left: 2px solid var(--j-accent);
+//     margin-bottom: 1.75rem;
+//     transition: background-color 0.15s ease;
+//     border-radius: 0 4px 4px 0;
+
+//     &:hover {
+//         background-color: var(--j-accent-bg);
+//     }
+
+//     // Body paragraphs
+//     p {
+//         font-size: 0.95rem;
+//         line-height: 1.75;
+//         margin-bottom: 0.5rem;
+//     }
+
+//     // Lists inside entries
+//     ul,
+//     ol {
+//         font-size: 0.92rem;
+//         line-height: 1.7;
+//         margin-top: 0.25rem;
+//     }
+// }
+
+// // --- h3: Sub-section labels (Action items, Decisions, etc.) ---
+// .journal-entry-block h3 {
+//     font-size: 0.72rem !important;
+//     font-weight: 700;
+//     letter-spacing: 0.07em;
+//     text-transform: uppercase;
+//     color: var(--j-accent) !important;
+//     margin-top: 0.9rem !important;
+//     margin-bottom: 0.35rem !important;
+//     opacity: 0.8;
+
+//     // Hide anchor on h3 too
+//     a.internal {
+//         display: none;
+//     }
+// }
+
+// ============================================================
+// JOURNAL PAGE STYLES
+// Scoped to .journal-month-block (emitted by JournalEntryInjector)
+// ============================================================
+
+// --- Month color tokens ---
+.journal-month-block {
+    --j-accent: var(--tertiary);
+    --j-accent-bg: rgba(130, 130, 130, 0.06);
+
+    &[data-month="january"] {
+        --j-accent: #4a7fd4;
+        --j-accent-bg: rgba(74, 127, 212, 0.08);
+    }
+
+    &[data-month="february"] {
+        --j-accent: #9b6fe8;
+        --j-accent-bg: rgba(155, 111, 232, 0.08);
+    }
+
+    &[data-month="march"] {
+        --j-accent: #2ea86b;
+        --j-accent-bg: rgba(46, 168, 107, 0.08);
+    }
+
+    &[data-month="april"] {
+        --j-accent: #e07b3a;
+        --j-accent-bg: rgba(224, 123, 58, 0.08);
+    }
+
+    &[data-month="may"] {
+        --j-accent: #d44f6e;
+        --j-accent-bg: rgba(212, 79, 110, 0.08);
+    }
+
+    &[data-month="june"] {
+        --j-accent: #b8922a;
+        --j-accent-bg: rgba(184, 146, 42, 0.08);
+    }
+
+    &[data-month="july"] {
+        --j-accent: #2aa8a8;
+        --j-accent-bg: rgba(42, 168, 168, 0.08);
+    }
+
+    &[data-month="august"] {
+        --j-accent: #6aa32e;
+        --j-accent-bg: rgba(106, 163, 46, 0.08);
+    }
+
+    &[data-month="september"] {
+        --j-accent: #d44040;
+        --j-accent-bg: rgba(212, 64, 64, 0.08);
+    }
+
+    &[data-month="october"] {
+        --j-accent: #a0662a;
+        --j-accent-bg: rgba(160, 102, 42, 0.08);
+    }
+
+    &[data-month="november"] {
+        --j-accent: #3a70b8;
+        --j-accent-bg: rgba(58, 112, 184, 0.08);
+    }
+
+    &[data-month="december"] {
+        --j-accent: #aa3a8a;
+        --j-accent-bg: rgba(170, 58, 138, 0.08);
+    }
+
+    margin-bottom: 3.5rem;
+    padding-bottom: 1rem;
+}
+
+.darkmode .journal-month-block {
+    &[data-month="january"] {
+        --j-accent-bg: rgba(74, 127, 212, 0.14);
+    }
+
+    &[data-month="february"] {
+        --j-accent-bg: rgba(155, 111, 232, 0.14);
+    }
+
+    &[data-month="march"] {
+        --j-accent-bg: rgba(46, 168, 107, 0.14);
+    }
+
+    &[data-month="april"] {
+        --j-accent-bg: rgba(224, 123, 58, 0.14);
+    }
+
+    &[data-month="may"] {
+        --j-accent-bg: rgba(212, 79, 110, 0.14);
+    }
+
+    &[data-month="june"] {
+        --j-accent-bg: rgba(184, 146, 42, 0.14);
+    }
+
+    &[data-month="july"] {
+        --j-accent-bg: rgba(42, 168, 168, 0.14);
+    }
+
+    &[data-month="august"] {
+        --j-accent-bg: rgba(106, 163, 46, 0.14);
+    }
+
+    &[data-month="september"] {
+        --j-accent-bg: rgba(212, 64, 64, 0.14);
+    }
+
+    &[data-month="october"] {
+        --j-accent-bg: rgba(160, 102, 42, 0.14);
+    }
+
+    &[data-month="november"] {
+        --j-accent-bg: rgba(58, 112, 184, 0.14);
+    }
+
+    &[data-month="december"] {
+        --j-accent-bg: rgba(170, 58, 138, 0.14);
+    }
+}
+
+// --- h1: Month header ---
+h1.journal-month-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8rem !important;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--j-accent);
+    margin-top: 0 !important;
+    margin-bottom: 1.75rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--j-accent);
+
+    a.internal {
+        display: none;
+    }
+
+    .journal-month-pill {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.2rem 0.7rem;
+        border-radius: 20px;
+        background-color: var(--j-accent-bg);
+        color: var(--j-accent);
+        border: 1px solid var(--j-accent);
+    }
+
+    .journal-month-year {
+        font-size: 0.75rem;
+        font-weight: 400;
+        opacity: 0.65;
+        letter-spacing: 0.04em;
+    }
+}
+
+// --- Entry block: <details> wrapper ---
+details.journal-entry-block {
+    padding-left: 1rem;
+    border-left: 2px solid var(--j-accent);
+    margin-bottom: 1.5rem;
+    border-radius: 0 4px 4px 0;
+    transition: background-color 0.15s ease;
+
+    // Expanded state bg
+    &[open] {
+        background-color: var(--j-accent-bg);
+        padding-bottom: 0.75rem;
+    }
+
+    // Body content padding when open
+    &[open]>*:not(summary) {
+        padding-right: 0.75rem;
+    }
+
+    p {
+        font-size: 0.95rem;
+        line-height: 1.75;
+        margin-bottom: 0.5rem;
+        padding-left: 0.1rem;
+    }
+
+    ul,
+    ol {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        margin-top: 0.25rem;
+    }
+
+    // h3 sub-sections inside an entry
+    h3 {
+        font-size: 0.72rem !important;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--j-accent) !important;
+        margin-top: 0.9rem !important;
+        margin-bottom: 0.35rem !important;
+        opacity: 0.8;
+
+        a.internal {
+            display: none;
+        }
+    }
+}
+
+// --- <summary>: the clickable date/week header ---
+summary.journal-entry-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.5rem 0.55rem 0;
+    cursor: pointer;
+    list-style: none; // hide default browser triangle
+    user-select: none;
+
+    // Hide the default marker in all browsers
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    &::marker {
+        display: none;
+    }
+
+    &:hover {
+        .journal-entry-date {
+            color: var(--j-accent);
+        }
+    }
+
+    .journal-week-num {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.15rem 0.55rem;
+        border-radius: 4px;
+        background-color: var(--j-accent-bg);
+        color: var(--j-accent);
+        border: 1px solid var(--j-accent);
+        font-family: var(--codeFont, monospace);
+        flex-shrink: 0;
+    }
+
+    .journal-sep {
+        color: var(--j-accent);
+        opacity: 0.4;
+        font-size: 0.75em;
+    }
+
+    .journal-entry-date {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--dark);
+        font-variant-numeric: tabular-nums;
+        font-family: var(--headerFont, var(--codeFont, monospace));
+        transition: color 0.15s ease;
+    }
+
+    // Chevron — pushed to the right, rotates on open
+    .journal-entry-chevron {
+        margin-left: auto;
+        width: 0.9rem;
+        height: 0.9rem;
+        flex-shrink: 0;
+        opacity: 0.4;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+
+        // Draw a simple chevron via CSS border trick
+        display: inline-block;
+        border-right: 1.5px solid var(--j-accent);
+        border-bottom: 1.5px solid var(--j-accent);
+        transform: rotate(45deg); // pointing down = expanded
+    }
+}
+
+// Chevron points right when collapsed
+details.journal-entry-block:not([open]) summary.journal-entry-heading {
+    .journal-entry-chevron {
+        transform: rotate(-45deg);
+        opacity: 0.25;
+    }
+}

@@ -40,7 +40,7 @@ $$
 \dot{M} = \pi R_c^2 \sigma_p \Omega F_g
 $$
 
-where $R_c$ is the effective (or capture) radius, $\Omega$ is the angular frequency, $\sigma_p$ is the local surface density of [[Planetesimal Formation|planetesimals]], and $F_g$ is a constant factor accounting for gravitational enhancement[^1] due to Greenzweig & Lissauer (1992). One can assume the [[Minimum Mass Solar Nebula|minimum mass solar nebula scaling (MMSN)]] scaling for the surface density:
+where $R_c$ is the effective (or capture) radius, $\Omega$ is the angular frequency, $\sigma_p$ is the local surface density of [[Planetesimal Formation|planetesimals]], and $F_g$ is a constant factor accounting for gravitational enhancement[^1] [@greenzweig1992accretion]. One can assume the [[Minimum Mass Solar Nebula|minimum mass solar nebula scaling (MMSN)]] scaling for the surface density:
 
 $$
 \sigma_p \propto a^{-3/2} 
@@ -83,7 +83,7 @@ Before moving on to analysis of the observations, we need to decide what observa
 
 The work uses 4 separate observational epochs, and thus the first step is to convolve them to a set [[Beamsize|beamsize]] and position angle.
 
-## Images Analysis method
+## Image Analysis method
 
 $$
 \omega(r) = \omega_0 \left(\dfrac{r}{1^{\prime\prime}}\right)^{-\gamma} + \omega_f
