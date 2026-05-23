@@ -17,7 +17,7 @@ authors:
   - K. Furuya
   - Y. Yamato
   - T. Tsukagoshi
-volume: "9"
+volume: Vol. 9
 issue: pp. 1672–1679
 published: September 2025
 doi: 10.1038/s41550-025-02639-y

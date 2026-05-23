@@ -128,7 +128,7 @@ indirect_acc_R(i) = planet_gm * std::cos(phi_arr(i) - phi_planet_move) / SQR(rad
 
 Similarly, one can derive expressions for $a_{\phi}$ and $a_z$. The spherical polar components then can be obtained through simple co-ordinate transformation.
 
-## Implementing the Bae+25's potential
+## Implementing the Bae+25 potential
 
 Bae+25 defines their potential as
 
@@ -168,3 +168,45 @@ if (d <= epsilon) {
 	gravity(i) = planet_gm / (d * d * d);
 }
 ```
+
+# The Hydro-RT iteration
+
+For the solar-system models, we started with the @chiang1997spectral mid-plane profile given by their Equation (14a)
+
+$$
+T(R) = 150 \cdot \left(\dfrac{R}{\mathrm{AU}}\right)^{-3/7} \mathrm{K}
+$$
+
+At the location of Jupiter ($r = 5.2\;\mathrm{AU}$) this implies $T \approx 74\; \mathrm{K}$. We can derive the other parameters needed as follows:
+
+$$
+c_s^{2} = \dfrac{k_B T}{\mu m_{\mathrm{H}}}
+$$
+
+To make $c_s^2$ scale-free, we can divide it by the Keplerian velocity
+
+$$
+v^2 = \dfrac{GM}{R}
+$$
+
+After putting in the values this gives $c^2_{s,0} = 1.521 \times 10^{-3}$. $q$-value is simply $-3/7$, the exponent of the temperature profile. The surface density exponent, $p$-value can subsequently be calculated. We start with following relation:
+
+$$
+\Sigma \sim \rho_{\text{mid}} H
+$$
+
+This is true for vertically isothermal disks. So we have
+
+$$
+\begin{equation}
+\begin{split}
+	\Sigma &\propto \rho_{\text{mid}} H \\
+	&\propto r^p \cdot \dfrac{c_s}{\Omega} \\
+	&\propto r^p \cdot r^{q/2} \cdot r^{3/2}  
+\end{split}
+\end{equation}
+$$
+
+Ultimately, @chiang1997spectral says to have $\Sigma \propto r^{-3/2}$, so we can put values of $q$ and find $p$, which comes out to be $\approx -2.78$. 
+
+Now, upon performing a radiative transfer run, we will have the dust temperature profile. We take dust temperature equal to gas temperature at midplane and get a new estimate to improve our initial MMSN profile (reason for this is LTE, but look at Appendix B of  @speedie2022observing for a more quantitative treatment). The above hydro iteration gave me a temperature of $\sim 43\;\mathrm{K}$. First step is get the new $c^2_{s,0}$, which is straightforward, we just need to put the values with temperature now as 43 K instead of 74 K. This gives new value of $c_{s,0}^2 = 8.94 \times 10^{-4}$. To get the new value for $q$, we need to fit the midplane temperature profile. I used `np.polyfit` to get $q = -0.47557$, and thus $p = -2.7622$.
