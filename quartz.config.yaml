@@ -230,8 +230,9 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/jackyzha0/quartz
-        Discord Community: https://discord.gg/cRFFHYye7t
+        About me: https://kmaitreys.github.io/
+        ProsiaLAB: https://prosialab.github.io/
+        Source: https://github.com/ProsiaLAB/knowledge
   - source: github:quartz-community/recent-notes
     enabled: true
   - source: github:quartz-community/spacer
