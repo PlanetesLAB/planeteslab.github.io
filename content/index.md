@@ -6,7 +6,7 @@ Browse by domain:
 
 <div class="domain-grid">
 
-- ![[nustar.jpg]][[tour/objects/index|Astrophysical Objects]]
+- ![[wallpaper_roasted_planet.jpeg]][[tour/objects/index|Astrophysical Objects]]
 - ![[wallpaper_trappist.jpeg]][[tour/index|A Tour of Planet Formation]]
 - ![[earth.jpg]][[planets/index|Planets and Planetary Systems]]
 - ![[wallpaper_spitzer.jpeg]][[observations/index|The Observation Toolkit]]
