@@ -321,6 +321,7 @@ a.data-footnote-backref {
         justify-content: space-between !important; 
         padding: 1rem 1rem 0 1rem !important;
         margin: 0 !important;
+        z-index: 999 !important;
         // DO NOT use overflow: hidden here, as it breaks the explorer dropdown menu
     }
 
