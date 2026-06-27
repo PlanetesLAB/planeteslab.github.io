@@ -2,8 +2,8 @@
 
 ## Introduction
 
-This book walks through the implementation details of `citrus`.
+This book walks through the implementation details of `kappa`.
 
 ## Table of contents
 
-- [Dust Aggregates in the ISM](./chapter_1.md)
+1. [Dust Aggregates in the ISM](./chapter_1.md)
