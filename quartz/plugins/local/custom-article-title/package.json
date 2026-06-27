@@ -1,0 +1,33 @@
+{
+  "name": "custom-article-title",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    "./components": "./dist/components/index.js"
+  },
+  "scripts": {
+    "build": "esbuild components/index.tsx --bundle --platform=node --format=esm --outfile=dist/components/index.js --external:@quartz-community/types --external:fs --external:path --external:preact --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\""
+  },
+  "peerDependencies": {
+    "@quartz-community/types": "*",
+    "preact": "^10.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.2",
+    "typescript": "^5.0.0"
+  },
+  "quartz": {
+    "name": "custom-article-title",
+    "displayName": "Custom Article Title",
+    "category": "component",
+    "defaultOrder": 50,
+    "components": {
+      "CustomArticleTitle": {
+        "displayName": "Custom Article Title",
+        "defaultPosition": "beforeBody",
+        "defaultPriority": 10
+      }
+    }
+  }
+}

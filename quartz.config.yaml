@@ -178,7 +178,7 @@ plugins:
     layout:
       position: right
       priority: 50
-  - source: github:quartz-community/article-title
+  - source: ./quartz/plugins/local/custom-article-title
     enabled: true
     layout:
       position: beforeBody
