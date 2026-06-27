@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: prosialab.github.io/knowledge
+  baseUrl: planeteslab.github.io/knowledge
   ignorePatterns:
     - private
     - templates
@@ -231,8 +231,7 @@ plugins:
     options:
       links:
         About me: https://kmaitreys.github.io/
-        ProsiaLAB: https://prosialab.github.io/
-        Source: https://github.com/ProsiaLAB/knowledge
+        GitHub: https://github.com/PlanetesLAB/
   - source: github:quartz-community/recent-notes
     enabled: true
   - source: github:quartz-community/spacer
