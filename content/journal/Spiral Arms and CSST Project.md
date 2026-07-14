@@ -4,9 +4,17 @@ tags:
 ---
 # December 2025
 
+## 2025-12-25
+
+### See Different things
+
+Also it goes without saying that we need to look at different (all) diagnostics available to us. Looking just at density outputs may not always provide the full picture. Each other output (the three velocities, for instance) may provide some hint of what is going wrong. Developing an aptitude to study the outputs and knowing what is going wrong is as important as knowing how to run a model correctly.
+
 ## 2025-12-21
 
 ### More problems
+
+One tip I got to know was to try seeing the outputs after and at initial time steps ($dt, 2dt, 3dt, \ldots$) as they allow us to see if things are going immediately wrong (they usually do) and how it's going wrong at those initial time steps often helps to understand what exactly the problem is, especially when we are not sure and there are too many parameters to consider. Also view them in DS9 instead of making unwieldy `matplotlib` images.
 
 ![Many many planets?](radial_velocity.mp4)
 
