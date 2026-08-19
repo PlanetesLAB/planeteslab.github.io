@@ -239,10 +239,7 @@ plugins:
         About me: https://kmaitreys.github.io/
         GitHub: https://github.com/PlanetesLAB/
   - source: github:quartz-community/recent-notes
-    enabled: true
-    layout:
-      position: afterBody
-      condition: index
+    enabled: false
   - source: github:quartz-community/spacer
     enabled: true
     options: {}
