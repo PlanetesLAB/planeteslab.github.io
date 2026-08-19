@@ -1,0 +1,21 @@
+{
+  "name": "unlisted-pages",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "esbuild index.ts --bundle --platform=node --format=esm --outfile=dist/index.js --external:@quartz-community/types --external:unified --external:vfile --external:hast"
+  },
+  "peerDependencies": {
+    "@quartz-community/types": "*",
+    "unified": "*",
+    "vfile": "*",
+    "hast": "*"
+  },
+  "quartz": {
+    "name": "unlisted-pages",
+    "displayName": "Unlisted Pages",
+    "category": "transformer",
+    "defaultOrder": 45
+  }
+}
