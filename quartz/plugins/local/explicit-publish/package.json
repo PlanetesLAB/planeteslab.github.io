@@ -1,0 +1,18 @@
+{
+  "name": "explicit-publish",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "esbuild index.ts --bundle --platform=node --format=esm --outfile=dist/index.js --external:@quartz-community/types"
+  },
+  "peerDependencies": {
+    "@quartz-community/types": "*"
+  },
+  "quartz": {
+    "name": "explicit-publish",
+    "displayName": "Explicit Publish",
+    "category": "filter",
+    "defaultOrder": 50
+  }
+}
