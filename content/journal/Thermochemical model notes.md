@@ -1,0 +1,1 @@
+- Try models with simple dust distribution to see how can we have UV flux reach midplane for UV photodesorption of molecules like Methanol.
