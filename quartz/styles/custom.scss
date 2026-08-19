@@ -305,6 +305,8 @@ a.data-footnote-backref {
     // Hide all items inside the left sidebar on mobile except the darkmode toggle
     .left.sidebar .search,
     .left.sidebar .reader-mode,
+    .left.sidebar .graph-button-wrapper,
+    .left.sidebar .graph-button,
     .left.sidebar .page-title,
     .left.sidebar .spacer {
         display: none !important;
@@ -1299,4 +1301,476 @@ mjx-container.MathJax[display="true"]>svg {
     display: inline-block;
     margin: 0 auto;
     max-width: none !important;
+}
+
+/* ==========================================================================
+   Footnote Details Tag & Side Margin Rendering (Local Sidenotes Plugin)
+   ========================================================================== */
+
+details.footnote-details {
+    display: inline !important;
+    position: static !important;
+    vertical-align: baseline !important;
+
+    &::details-content {
+        display: contents !important;
+    }
+}
+
+details.footnote-details>summary.footnote-summary {
+    display: inline !important;
+    cursor: pointer;
+    list-style: none;
+    outline: none;
+    user-select: none;
+    position: relative;
+    z-index: 5;
+}
+
+details.footnote-details>summary.footnote-summary::-webkit-details-marker,
+details.footnote-details>summary.footnote-summary::marker {
+    display: none !important;
+    content: "" !important;
+}
+
+.footnote-ref-num {
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.78em;
+    line-height: 0;
+    vertical-align: super;
+    padding: 0 1px;
+    transition: opacity 0.15s ease;
+}
+
+details.footnote-details>summary.footnote-summary:hover .footnote-ref-num {
+    opacity: 0.75;
+}
+
+.footnote-body {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--darkgray);
+
+    a {
+        color: var(--secondary);
+        text-decoration: underline;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+}
+
+.footnote-num {
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.85em;
+    vertical-align: super;
+    margin-right: 0.2rem;
+}
+
+/* Desktop layout: Footnote displayed in the right margin beside corresponding line */
+@media all and (min-width: 1200px) {
+    article {
+        position: relative;
+    }
+
+    details.footnote-details>summary.footnote-summary {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    details.footnote-details>.footnote-body,
+    .footnote-body {
+        display: block !important;
+        position: absolute;
+        left: calc(100% + 2rem);
+        width: 280px;
+        margin-top: -0.15em;
+        padding: 0;
+        pointer-events: auto;
+        z-index: 5;
+        transition: top 0.15s ease;
+    }
+
+    .page > #quartz-body .sidebar.right {
+        position: sticky !important;
+        top: 0 !important;
+        height: 100vh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        pointer-events: none !important;
+        z-index: 50 !important;
+        padding-top: 5rem !important;
+    }
+
+    .sidebar.right > * {
+        pointer-events: auto;
+    }
+
+    .toc {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 290px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 50 !important;
+        pointer-events: auto !important;
+        background: var(--light) !important;
+        border: 1px solid var(--lightgray) !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+        overflow: hidden !important;
+        transition: all 0.2s ease !important;
+        flex: none !important;
+        height: auto !important;
+        min-height: unset !important;
+
+        &:has(button.toc-header.collapsed) {
+            flex: none !important;
+            height: auto !important;
+            min-height: unset !important;
+            max-height: none !important;
+        }
+
+        button.toc-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0.6rem 0.85rem !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            color: var(--dark) !important;
+            cursor: pointer !important;
+            box-shadow: none !important;
+            transition: background-color 0.15s ease, color 0.15s ease !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            height: auto !important;
+            min-height: unset !important;
+
+            h3,
+            .toc-title {
+                font-size: 0.82rem !important;
+                line-height: 1.25 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-weight: 600 !important;
+                color: var(--dark) !important;
+                display: block !important;
+                transition: color 0.15s ease !important;
+            }
+
+            svg.fold {
+                width: 14px !important;
+                height: 14px !important;
+                stroke: var(--darkgray) !important;
+                transition: transform 0.2s ease, stroke 0.15s ease !important;
+                transform: rotate(0deg) !important;
+                flex-shrink: 0 !important;
+                display: block !important;
+                margin: 0 !important;
+            }
+
+            &:hover {
+                background-color: var(--lightgray) !important;
+                color: var(--dark) !important;
+
+                h3,
+                .toc-title {
+                    color: var(--dark) !important;
+                }
+
+                svg.fold {
+                    stroke: var(--secondary) !important;
+                }
+            }
+
+            &.collapsed svg.fold {
+                transform: rotate(-90deg) !important;
+            }
+        }
+
+        // Accordion In-Flow Content Menu
+        ul.toc-content {
+            position: static !important;
+            width: 100% !important;
+            max-height: 45vh !important;
+            overflow-y: auto !important;
+            background: transparent !important;
+            border: none !important;
+            border-top: 1px solid var(--lightgray) !important;
+            border-radius: 0 0 10px 10px !important;
+            padding: 0.5rem 0.4rem 0.6rem 0.4rem !important;
+            margin: 0 !important;
+            list-style: none !important;
+            box-shadow: none !important;
+            transition: all 0.2s ease !important;
+
+            &.collapsed {
+                display: none !important;
+            }
+
+            &:not(.collapsed) {
+                display: block !important;
+            }
+
+            li {
+                margin: 0.2rem 0 !important;
+                padding: 0 !important;
+                line-height: 1.35 !important;
+
+                a {
+                    display: block !important;
+                    padding: 0.3rem 0.55rem !important;
+                    border-radius: 6px !important;
+                    color: var(--darkgray) !important;
+                    font-size: 0.8rem !important;
+                    text-decoration: none !important;
+                    transition: background-color 0.15s ease, color 0.15s ease !important;
+
+                    &:hover {
+                        background-color: var(--lightgray) !important;
+                        color: var(--dark) !important;
+                        text-decoration: none !important;
+                    }
+
+                    &.in-view {
+                        color: var(--secondary) !important;
+                        font-weight: 600 !important;
+                    }
+                }
+
+                &.depth-1 a {
+                    padding-left: 0.55rem !important;
+                }
+
+                &.depth-2 a {
+                    padding-left: 1.0rem !important;
+                }
+
+                &.depth-3 a {
+                    padding-left: 1.5rem !important;
+                    font-size: 0.76rem !important;
+                }
+
+                &.depth-4 a {
+                    padding-left: 2.0rem !important;
+                    font-size: 0.74rem !important;
+                }
+            }
+        }
+    }
+
+    // In-Flow Backlinks Accordion Card
+    .backlinks {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 290px !important;
+        margin: 0 0 1rem 0 !important;
+        padding: 0 !important;
+        z-index: 50 !important;
+        pointer-events: auto !important;
+        background: var(--light) !important;
+        border: 1px solid var(--lightgray) !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+        overflow: hidden !important;
+        transition: all 0.2s ease !important;
+        flex: none !important;
+        height: auto !important;
+        min-height: unset !important;
+
+        button.backlinks-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0.6rem 0.85rem !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            color: var(--dark) !important;
+            cursor: pointer !important;
+            box-shadow: none !important;
+            transition: background-color 0.15s ease, color 0.15s ease !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            height: auto !important;
+            min-height: unset !important;
+
+            h3 {
+                font-size: 0.82rem !important;
+                line-height: 1.25 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-weight: 600 !important;
+                color: var(--dark) !important;
+                display: block !important;
+                transition: color 0.15s ease !important;
+            }
+
+            .backlinks-count {
+                background: var(--lightgray) !important;
+                color: var(--dark) !important;
+                font-size: 0.72rem !important;
+                font-weight: 600 !important;
+                padding: 0.05rem 0.45rem !important;
+                border-radius: 9999px !important;
+            }
+
+            svg.fold {
+                width: 14px !important;
+                height: 14px !important;
+                stroke: var(--darkgray) !important;
+                transition: transform 0.2s ease, stroke 0.15s ease !important;
+                transform: rotate(0deg) !important;
+                flex-shrink: 0 !important;
+                display: block !important;
+                margin: 0 !important;
+            }
+
+            &:hover {
+                background-color: var(--lightgray) !important;
+                color: var(--dark) !important;
+
+                h3 {
+                    color: var(--dark) !important;
+                }
+
+                svg.fold {
+                    stroke: var(--secondary) !important;
+                }
+            }
+
+            &.collapsed svg.fold {
+                transform: rotate(-90deg) !important;
+            }
+        }
+
+        ul.backlinks-content {
+            position: static !important;
+            width: 100% !important;
+            max-height: 40vh !important;
+            overflow-y: auto !important;
+            background: transparent !important;
+            border: none !important;
+            border-top: 1px solid var(--lightgray) !important;
+            border-radius: 0 0 10px 10px !important;
+            padding: 0.5rem 0.4rem 0.6rem 0.4rem !important;
+            margin: 0 !important;
+            list-style: none !important;
+            box-shadow: none !important;
+            transition: all 0.2s ease !important;
+
+            &.collapsed {
+                display: none !important;
+            }
+
+            &:not(.collapsed) {
+                display: block !important;
+            }
+
+            li {
+                margin: 0.2rem 0 !important;
+                padding: 0 !important;
+                line-height: 1.35 !important;
+
+                a.internal {
+                    display: block !important;
+                    padding: 0.3rem 0.55rem !important;
+                    border-radius: 6px !important;
+                    color: var(--darkgray) !important;
+                    font-size: 0.8rem !important;
+                    text-decoration: none !important;
+                    transition: background-color 0.15s ease, color 0.15s ease !important;
+
+                    &:hover {
+                        background-color: var(--lightgray) !important;
+                        color: var(--dark) !important;
+                        text-decoration: none !important;
+                    }
+                }
+
+                &.overflow-end {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}
+
+/* Mobile & Tablet layout: Footnote expands directly below the line when clicked */
+@media all and (max-width: 1199px) {
+    details.footnote-details {
+        position: relative;
+    }
+
+    details.footnote-details>summary.footnote-summary {
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
+    .footnote-body {
+        display: block;
+        margin: 0.4rem 0 0.65rem 0;
+        padding: 0.5rem 0.75rem;
+        background-color: var(--lightgray);
+        border-left: 3px solid var(--secondary);
+        border-radius: 4px;
+        color: var(--dark);
+        font-size: 0.85rem;
+    }
+}
+
+/* Reader Mode compatibility: Keep footnote bodies fully visible when sidebars are dimmed */
+:root[reader-mode="on"] details.footnote-details>.footnote-body {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Hide original bottom footnotes section once processed */
+section[data-footnotes],
+.footnotes {
+    display: none;
+}
+
+/* ==========================================================================
+   Toolbar Graph Button Styling
+   ========================================================================== */
+
+.graph-button-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.graph-button {
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    background: none;
+    border: none;
+    width: 20px;
+    height: 32px;
+    margin: 0;
+    text-align: inherit;
+    flex-shrink: 0;
+
+    & svg {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: calc(50% - 10px);
+        fill: var(--darkgray);
+        stroke: var(--darkgray);
+        transition: opacity 0.1s ease;
+    }
+
+    &:hover svg {
+        fill: var(--dark);
+        stroke: var(--dark);
+    }
 }

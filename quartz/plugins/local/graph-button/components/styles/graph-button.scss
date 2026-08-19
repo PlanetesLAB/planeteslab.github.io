@@ -1,0 +1,82 @@
+.graph-button-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.graph-button {
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  background: none;
+  border: none;
+  width: 20px;
+  height: 32px;
+  margin: 0;
+  text-align: inherit;
+  flex-shrink: 0;
+
+  & svg {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: calc(50% - 10px);
+    fill: var(--darkgray);
+    stroke: var(--darkgray);
+    transition: opacity 0.1s ease;
+  }
+
+  &:hover svg {
+    fill: var(--dark);
+    stroke: var(--dark);
+  }
+}
+
+.global-graph-outer {
+  position: fixed;
+  z-index: 999999 !important;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--light) !important;
+  display: none;
+  overflow: hidden;
+
+  &.active {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & > .global-graph-container {
+    border: 1px solid var(--lightgray);
+    background-color: var(--light) !important;
+    border-radius: 12px;
+    box-sizing: border-box;
+    position: relative;
+    height: 88vh;
+    width: 88vw;
+    max-width: 1500px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+
+    @media all and (max-width: 800px) {
+      width: 95%;
+      height: 80vh;
+    }
+  }
+}
+
+body.global-graph-open {
+  overflow: hidden;
+
+  .domain-grid,
+  .center,
+  .sidebar.right {
+    visibility: hidden !important;
+  }
+
+  .sidebar.left {
+    z-index: 999999 !important;
+  }
+}

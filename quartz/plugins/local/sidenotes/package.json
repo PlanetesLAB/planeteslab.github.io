@@ -1,0 +1,22 @@
+{
+  "name": "sidenotes",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "esbuild index.ts --bundle --platform=node --format=esm --outfile=dist/index.js"
+  },
+  "peerDependencies": {
+    "@quartz-community/types": "*"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.2",
+    "typescript": "^5.0.0"
+  },
+  "quartz": {
+    "name": "sidenotes",
+    "displayName": "Sidenotes",
+    "category": "transformer",
+    "defaultOrder": 95
+  }
+}

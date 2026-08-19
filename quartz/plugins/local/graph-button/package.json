@@ -1,0 +1,36 @@
+{
+  "name": "graph-button",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    "./components": "./dist/components/index.js"
+  },
+  "scripts": {
+    "build:script": "esbuild components/scripts/graph.inline.ts --bundle --format=iife --minify --outfile=components/scripts/graph.inline.bundled.js",
+    "build:component": "esbuild components/index.tsx --bundle --platform=node --format=esm --outfile=dist/components/index.js --external:@quartz-community/types --external:@quartz-community/utils --external:fs --external:path --external:preact --loader:.inline.bundled.js=text --loader:.scss=text --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
+    "build": "npm run build:script && npm run build:component"
+  },
+  "peerDependencies": {
+    "@quartz-community/types": "*",
+    "@quartz-community/utils": "*",
+    "preact": "^10.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.2",
+    "typescript": "^5.0.0"
+  },
+  "quartz": {
+    "name": "graph-button",
+    "displayName": "Graph Button",
+    "category": "component",
+    "defaultOrder": 40,
+    "components": {
+      "GraphButton": {
+        "displayName": "Graph Button",
+        "defaultPosition": "left",
+        "defaultPriority": 40
+      }
+    }
+  }
+}
