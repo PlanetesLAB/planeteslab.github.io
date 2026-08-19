@@ -119,9 +119,9 @@ plugins:
       code: JetBrains Mono
   - source: github:quartz-community/remove-draft
     enabled: true
-  - source: github:quartz-community/explicit-publish
+  - source: ./quartz/plugins/local/explicit-publish
     enabled: true
-  - source: github:quartz-community/unlisted-pages
+  - source: ./quartz/plugins/local/unlisted-pages
     enabled: true
     options: {}
     order: 45
