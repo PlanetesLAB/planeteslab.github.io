@@ -1,3 +1,4 @@
 ---
-title: "A Tour of Planet Formation"
+title: A Tour of Planet Formation
+publish: true
 ---

@@ -2,6 +2,7 @@
 tags:
   - chemistry
   - modeling
+status: review
 ---
 Theoretical models of protoplanetary disks have made significant progress in recent years, with the development of sophisticated numerical simulations that can capture the complex physical and chemical processes occurring within the disks. These simulations are based on a range of physical models, such as [[Disk Dynamics|hydrodynamics]], [[Radiative Transfer|radiative transfer]], and [[Astrochemistry|astrochemistry]], and can provide detailed insights into the evolution of the disks and the formation of planets.
 

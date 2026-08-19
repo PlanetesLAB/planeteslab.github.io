@@ -1,3 +1,7 @@
+---
+publish: true
+---
+
 # `citrus`
 
 Rust implementation of LIME (**LI**ne **M**odelling **E**ngine), originally by [Brinch & Hogerheijde, 2010](https://ui.adsabs.harvard.edu/abs/2010A&A...523A..25B/abstract).

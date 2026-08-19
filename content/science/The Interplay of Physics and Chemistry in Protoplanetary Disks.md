@@ -2,6 +2,7 @@
 tags:
   - physics
   - chemistry
+status: review
 ---
 Protoplanetary disks are extended structures with a particular temperature and [[The Density Structure of Protoplanetary Disks|density structure]]. The gas and dust are coupled through various processes, such as drag and turbulence. The gas in the disk is also subject to various physical processes, such as heating and cooling, while the dust is subject to settling and growth. 
 

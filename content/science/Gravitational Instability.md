@@ -4,6 +4,7 @@ tags:
   - hydrodynamics
   - protoplanetary-disks
   - planet-formation
+status: review
 ---
 The Universe is full of *structures* and gravitational instability (GI) is the key idea which can explain how these structures form. Ideal models of any astrophysical structure are often isotropic in nature, in the sense, they are uniform in their respective geometry. Under a given geometry, they might be considered dynamically stable, where their own weight is supported by internal forces. Such idealized systems will never form structures.
 

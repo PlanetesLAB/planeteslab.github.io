@@ -1,4 +1,5 @@
 ---
 tags:
   - journal
+status: draft
 ---

@@ -1,6 +1,7 @@
 ---
 tags:
   - physics
+status: review
 ---
 Consider a point source emitting radiation isotropically in all directions. By placing a spherical shells $S_0$ and $S$ at radii $r_0$ and $r$, we can write, by conserving the energy:
 

@@ -2,6 +2,7 @@
 tags:
   - physical-structure
   - planet-formation
+status: review
 ---
 As mentioned earlier, density structure is one of the first and primary inputs for the model. The density profiles are inspired by Lyndell-Bell and Pringle for disks, and Ulrich for [[Disk Envelopes|envelopes]].
 

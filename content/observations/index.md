@@ -1,3 +1,4 @@
 ---
-title: "The Observation Toolkit"
+title: The Observation Toolkit
+publish: true
 ---

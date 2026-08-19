@@ -2,6 +2,7 @@
 tags:
   - telescopes
   - instrumentation
+status: wip
 ---
 > [!Important]
 >This is a live document comprising of information on the instruments aboard the CSST. 

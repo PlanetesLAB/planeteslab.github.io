@@ -1,6 +1,7 @@
 ---
 tags:
   - physics
+status: review
 ---
 Telescopes usually observe the flux density $S_{\nu}$ (in mJy) from the sky. Images themselves are usually in the units of Jy per beam. Brightness temperature is a way to convert this intensity into an equivalent temperature of a blackbody that would produce the same surface brightness at that frequency.
 

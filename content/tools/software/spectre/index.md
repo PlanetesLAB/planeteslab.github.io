@@ -1,3 +1,7 @@
+---
+publish: true
+---
+
 # `spectre`
 
 Linelists, molecular data, and spectral utilities.

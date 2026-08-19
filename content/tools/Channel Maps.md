@@ -2,6 +2,7 @@
 tags:
   - observations
   - modeling
+status: review
 ---
 Channel maps are 2D spatial slices at specific spectral (velocity) intervals. Each map shows emission at a narrow velocity bin.
 

@@ -1,6 +1,7 @@
 ---
 tags:
   - physical-structure
+status: review
 ---
 For disks, the gas surface density is derived from the parametric profile suggested by Lyndell-Bell and Pringle, which holds for a disk that has attained hydrostatic equilibrium:
 $$

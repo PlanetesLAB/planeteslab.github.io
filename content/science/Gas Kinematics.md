@@ -2,6 +2,7 @@
 tags:
   - physics
   - physical-structure
+status: review
 ---
 Gas kinematics refers to the study of motion of disk gas as traced by spectral line observations (for example through CO molecular line observations). The particularly notable aspect of gas kinematics is the observations of velocity kinks in the [[Channel Maps|channel maps]] of observations of disks. These are hypothesized to be caused by an embedded planet
 

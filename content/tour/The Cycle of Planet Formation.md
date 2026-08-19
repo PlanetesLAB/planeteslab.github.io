@@ -1,6 +1,7 @@
 ---
 tags:
   - planet-formation
+status: review
 ---
 The process of planet formation begins with the collapse of a [[Diffuse and Dense Molecular Clouds|molecular clouds]], resulting in the formation of a protostar and a protoplanetary disk around it. This disk is rich in gas and dust, and it is in this disk that the building blocks of planets are formed. Over time, the dust in the disk begins to [[Dust Evolution in Protoplanetary Disks|coalesce]] into larger particles, which then collide and stick together to form planetesimals. These planetesimals continue to grow by [[Planetesimal Accretion|accreting]] more dust and planetesimals, eventually forming protoplanets. The protoplanets can then undergo further growth and differentiation to form terrestrial planets, or they can accumulate large amounts of gas to form gas giant planets.
 

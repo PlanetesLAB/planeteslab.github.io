@@ -2,6 +2,7 @@
 tags:
   - solar-system
   - planet-formation
+status: wip
 ---
 Chondrites are a predominately non-metallic class of meteorites with numerous embedded round grain-like objects (*chondrules*), which have not undergone appreciable melting or differentiation.
 

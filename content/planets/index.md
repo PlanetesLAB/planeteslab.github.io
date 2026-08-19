@@ -1,3 +1,4 @@
 ---
-title: "Planets and Planetary Systems"
+title: Planets and Planetary Systems
+publish: true
 ---

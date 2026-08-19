@@ -2,6 +2,7 @@
 tags:
   - physical-structure
   - observations
+status: review
 ---
 The scale height has always been an important descriptive of the changing vertical environments in various astrophysical systems. The origin of term might be found in atmospheric sciences. There, the scale height is defined by the height you travel such that the pressure reduces by a factor of $1/e$. For gas, things are a little different, however. 
 

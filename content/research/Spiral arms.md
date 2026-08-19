@@ -3,6 +3,7 @@ tags:
   - projects
 abstract: This page will act as a living document to gather my learnings on the spiral arms project. It will be remain as it is after the completion of the project but learnings from it may be repurposed into new entries elsewhere in the knowledge base.
 title: Brightness of spiral arms
+status: wip
 ---
 # Understanding generic hydrodynamical setups of disk-planet systems in Athena++
 
