@@ -161,10 +161,16 @@ plugins:
       position: left
       priority: 50
   - source: github:quartz-community/graph
+    enabled: false
+  - source: ./quartz/plugins/local/graph-button
     enabled: true
     layout:
-      position: right
-      priority: 10
+      position: left
+      priority: 40
+      group: toolbar
+  - source: ./quartz/plugins/local/sidenotes
+    enabled: true
+    order: 95
   - source: github:quartz-community/search
     enabled: true
     layout:
