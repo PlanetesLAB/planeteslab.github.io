@@ -1,0 +1,100 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": false,
+  "showAttachments": true,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:\"tour/objects\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 5399264
+      }
+    },
+    {
+      "query": "path:\"observations\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 5431492
+      }
+    },
+    {
+      "query": "path:\"tour\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 14635894
+      }
+    },
+    {
+      "query": "path:\"science\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 5419488
+      }
+    },
+    {
+      "query": "path:\"tools\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 16720932
+      }
+    },
+    {
+      "query": "path:\"planets\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 10084434
+      }
+    },
+    {
+      "query": "path:\"research\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 12839680
+      }
+    },
+    {
+      "query": "path:\"journal\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 11621088
+      }
+    },
+    {
+      "query": "path:images  ",
+      "color": {
+        "a": 1,
+        "rgb": 14701233
+      }
+    },
+    {
+      "query": "path:movies  ",
+      "color": {
+        "a": 1,
+        "rgb": 14701233
+      }
+    },
+    {
+      "query": "path:reviews  ",
+      "color": {
+        "a": 1,
+        "rgb": 14725458
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": false,
+  "textFadeMultiplier": 2.2,
+  "nodeSizeMultiplier": 0.988444010416667,
+  "lineSizeMultiplier": 0.996818735616624,
+  "collapse-forces": false,
+  "centerStrength": 0.424235026041667,
+  "repelStrength": 9.49869791666667,
+  "linkStrength": 1,
+  "linkDistance": 30,
+  "scale": 0.41239159347780796,
+  "close": true
+}

@@ -1,0 +1,9 @@
+{
+  "id": "vault-publish-dashboard",
+  "name": "Publish Dashboard",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Industrial, minimalist pipeline dashboard to track note status and vault publishing progress.",
+  "author": "PlanetesLAB",
+  "isDesktopOnly": false
+}

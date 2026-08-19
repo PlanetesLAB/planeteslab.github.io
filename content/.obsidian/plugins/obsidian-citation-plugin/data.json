@@ -1,0 +1,9 @@
+{
+  "citationExportFormat": "biblatex",
+  "literatureNoteTitleTemplate": "@{{citekey}}",
+  "literatureNoteFolder": "Reading notes",
+  "literatureNoteContentTemplate": "---\nYear: \"{{year}}\"\nAuthor: \"{{authorString}}\"\nTags: \n  - '#paper'\nURL: \"{{URL}}\"\nDOI: \"{{DOI}}\"\nCite Key: \"[@{{citekey}}]\"\nLinks: \n  - \n---\n# {{title}}\n#### ({{year}}) - {{authorString}}\n\n## Abstract\n\n```\n{{abstract}}\n```\n\n## Notes\n{{note}}\n\n",
+  "markdownCitationTemplate": "[@{{citekey}}]",
+  "alternativeMarkdownCitationTemplate": "@{{citekey}}",
+  "citationExportPath": "/Users/kmaitreys/Web/planeteslab.github.io/bibliography.bib"
+}

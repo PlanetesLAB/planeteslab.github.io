@@ -1,0 +1,13 @@
+{
+  "textFontFamily": "CMU Serif",
+  "baseFontSize": 24,
+  "theme": "system",
+  "enabledCssSnippets": [
+    "justify"
+  ],
+  "cssTheme": "Minimal",
+  "accentColor": "#4583c9",
+  "monospaceFontFamily": "IosevkaCustom Nerd Font",
+  "baseFontSizeAction": false,
+  "translucency": false
+}

@@ -1,0 +1,18 @@
+{
+  "pathToPandoc": "/opt/homebrew/bin/pandoc",
+  "tooltipDelay": 0,
+  "zoteroGroups": [
+    {
+      "id": 1,
+      "name": "My Library",
+      "lastUpdate": 1773631807045
+    }
+  ],
+  "renderCitations": true,
+  "renderCitationsReadingMode": true,
+  "renderLinkCitations": true,
+  "pathToBibliography": "/Users/kmaitreys/Web/planeteslab.github.io/bibliography.bib",
+  "showCitekeyTooltips": true,
+  "enableCiteKeyCompletion": true,
+  "pullFromZotero": false
+}

@@ -1,0 +1,9 @@
+{
+  "alwaysUpdateLinks": true,
+  "useMarkdownLinks": false,
+  "showLineNumber": false,
+  "readableLineLength": true,
+  "strictLineBreaks": false,
+  "livePreview": true,
+  "newLinkFormat": "shortest"
+}

@@ -1,0 +1,178 @@
+{
+  "items": [
+    {
+      "type": "folder",
+      "ctime": 1749405497303,
+      "path": "knowledge/At the Fringes of Planet Formation"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405513027,
+      "path": "knowledge/Ice Modelling"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405520025,
+      "path": "knowledge/Images"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405525514,
+      "path": "knowledge/Machine Learning and Planetary Science"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405534596,
+      "path": "knowledge/Physics and Chemistry of Planet Formation"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405538196,
+      "path": "knowledge/Planet Formation At Large"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405541792,
+      "path": "knowledge/Solar System In Context"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405545537,
+      "path": "knowledge/Statistical Methods in Exoplanetary Science"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405550134,
+      "path": "knowledge/Surveys for Planetary Science"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405553975,
+      "path": "knowledge/The Observation Toolkit"
+    },
+    {
+      "type": "folder",
+      "ctime": 1749405557669,
+      "path": "knowledge/Thesis"
+    },
+    {
+      "type": "graph",
+      "ctime": 1749405686192,
+      "title": "Default Graph",
+      "options": {
+        "collapse-filter": false,
+        "search": "",
+        "showTags": false,
+        "showAttachments": false,
+        "hideUnresolved": false,
+        "showOrphans": true,
+        "collapse-color-groups": false,
+        "colorGroups": [
+          {
+            "query": "path:\"knowledge/A Glossary of Protoplanetary Disks\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 14701138
+            }
+          },
+          {
+            "query": "path:\"knowledge/At the Fringes of Planet Formation\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 14725458
+            }
+          },
+          {
+            "query": "path:\"knowledge/Ice Modelling\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 11657298
+            }
+          },
+          {
+            "query": "path:knowledge/Images  ",
+            "color": {
+              "a": 1,
+              "rgb": 5431378
+            }
+          },
+          {
+            "query": "path:\"knowledge/Machine Learning and Planetary Science\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 5431473
+            }
+          },
+          {
+            "query": "path:\"knowledge/Physics and Chemistry of Planet Formation\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 5419488
+            }
+          },
+          {
+            "query": "path:\"knowledge/Planet Formation At Large\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 5395168
+            }
+          },
+          {
+            "query": "path:\"knowledge/Solar System In Context\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 11621088
+            }
+          },
+          {
+            "query": "path:\"knowledge/Statistical Methods in Exoplanetary Science\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 14701233
+            }
+          },
+          {
+            "query": "path:\"knowledge/Surveys for Planetary Science\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 14701138
+            }
+          },
+          {
+            "query": "path:\"knowledge/The Observation Toolkit\"  ",
+            "color": {
+              "a": 1,
+              "rgb": 14725458
+            }
+          },
+          {
+            "query": "path:knowledge/Thesis  ",
+            "color": {
+              "a": 1,
+              "rgb": 11657298
+            }
+          },
+          {
+            "query": "",
+            "color": {
+              "a": 1,
+              "rgb": 5431378
+            }
+          }
+        ],
+        "collapse-display": false,
+        "showArrow": false,
+        "textFadeMultiplier": -0.4,
+        "nodeSizeMultiplier": 1.00411533775552,
+        "lineSizeMultiplier": 0.996818735616624,
+        "collapse-forces": false,
+        "centerStrength": 0.595437931501286,
+        "repelStrength": 16.8417490185461,
+        "linkStrength": 1,
+        "linkDistance": 196,
+        "scale": 0.17545579232341407,
+        "close": false
+      }
+    }
+  ]
+}

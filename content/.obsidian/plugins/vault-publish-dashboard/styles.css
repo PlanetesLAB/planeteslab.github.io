@@ -1,0 +1,512 @@
+/* Vault Publish Dashboard - Industrial Minimalist Design */
+
+.vpd-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 18px 24px;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-interface);
+  overflow-y: auto;
+  gap: 16px;
+}
+
+/* Header Section */
+.vpd-header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.vpd-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.vpd-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-normal);
+  font-family: var(--font-monospace);
+}
+
+.vpd-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Buttons */
+.vpd-btn {
+  background-color: var(--background-secondary);
+  color: var(--text-muted);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  padding: 6px 12px;
+  font-family: var(--font-monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.vpd-btn:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+  border-color: var(--text-muted);
+}
+
+.vpd-btn-primary {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent, #ffffff);
+  border-color: var(--interactive-accent);
+}
+
+.vpd-btn-primary:hover {
+  filter: brightness(1.1);
+  color: var(--text-on-accent, #ffffff);
+}
+
+.vpd-btn-small {
+  padding: 3px 8px;
+  font-size: 0.7rem;
+}
+
+.vpd-btn-advance {
+  border-color: var(--background-modifier-border-focus);
+}
+
+.vpd-btn-icon {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  padding: 2px 7px;
+  font-family: var(--font-monospace);
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.vpd-btn-icon:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+  border-color: var(--text-normal);
+}
+
+/* Metric / Stat Strip */
+.vpd-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.vpd-stat-box {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vpd-stat-main {
+  border-left: 3px solid var(--interactive-accent);
+}
+
+.vpd-stat-transient {
+  border-left: 3px solid var(--text-faint);
+  opacity: 0.85;
+}
+
+.vpd-stat-label {
+  font-family: var(--font-monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.vpd-stat-value {
+  font-family: var(--font-monospace);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-normal);
+  line-height: 1.2;
+}
+
+.vpd-stat-sub {
+  font-family: var(--font-monospace);
+  font-size: 0.65rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+/* Segmented Linear Progress Bar */
+.vpd-progress-bar {
+  height: 6px;
+  background: var(--background-secondary-alt);
+  border-radius: 2px;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--background-modifier-border);
+}
+
+.vpd-progress-segment {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Color definitions for pipeline stages (industrial muted tones) */
+.vpd-stage-bg-transient {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--background-modifier-border),
+    var(--background-modifier-border) 4px,
+    var(--background-secondary-alt) 4px,
+    var(--background-secondary-alt) 8px
+  );
+}
+
+.vpd-stage-bg-draft {
+  background-color: var(--text-faint, #6c7086);
+}
+
+.vpd-stage-bg-in_progress,
+.vpd-stage-bg-writing {
+  background-color: #fab387; /* Amber / copper */
+}
+
+.vpd-stage-bg-review {
+  background-color: #89b4fa; /* Steel Blue */
+}
+
+.vpd-stage-bg-published {
+  background-color: #a6e3a1; /* Sage / Green */
+}
+
+/* Toolbar */
+.vpd-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.vpd-search-container {
+  flex: 1;
+  min-width: 180px;
+}
+
+.vpd-search-input {
+  width: 100%;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  color: var(--text-normal);
+  outline: none;
+}
+
+.vpd-search-input:focus {
+  border-color: var(--interactive-accent);
+}
+
+.vpd-select {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  padding: 6px 10px;
+  font-family: var(--font-monospace);
+  font-size: 0.75rem;
+  color: var(--text-normal);
+  outline: none;
+  cursor: pointer;
+}
+
+.vpd-select:focus {
+  border-color: var(--interactive-accent);
+}
+
+.vpd-view-toggle {
+  display: flex;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.vpd-toggle-btn {
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  border: none;
+  padding: 6px 12px;
+  font-family: var(--font-monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.vpd-toggle-btn.vpd-active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent, #ffffff);
+}
+
+/* Content Area */
+.vpd-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+}
+
+/* Board View */
+.vpd-board-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  align-items: start;
+  width: 100%;
+}
+
+.vpd-column {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 270px);
+}
+
+.vpd-column-transient {
+  border-style: dashed;
+  background: var(--background-primary-alt, var(--background-secondary));
+  opacity: 0.92;
+}
+
+.vpd-col-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary-alt);
+}
+
+.vpd-col-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-monospace);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.vpd-col-count {
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-size: 0.7rem;
+  color: var(--text-normal);
+}
+
+.vpd-cards-container {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.vpd-empty-col {
+  padding: 24px 12px;
+  text-align: center;
+  font-family: var(--font-monospace);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+}
+
+.vpd-card {
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.vpd-card-transient {
+  border-style: dashed;
+  background: var(--background-secondary);
+}
+
+.vpd-card:hover {
+  border-color: var(--text-muted);
+}
+
+.vpd-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.vpd-card-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-normal);
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+.vpd-card-title:hover {
+  color: var(--interactive-accent);
+  text-decoration: underline;
+}
+
+.vpd-card-path {
+  font-family: var(--font-monospace);
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  word-break: break-all;
+}
+
+.vpd-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--background-modifier-border);
+}
+
+.vpd-card-time {
+  font-family: var(--font-monospace);
+  font-size: 0.68rem;
+  color: var(--text-faint);
+}
+
+.vpd-card-actions {
+  display: flex;
+  gap: 4px;
+}
+
+/* Table View */
+.vpd-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  background: var(--background-secondary);
+}
+
+.vpd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.vpd-table th {
+  background: var(--background-secondary-alt);
+  font-family: var(--font-monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.vpd-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+  vertical-align: middle;
+}
+
+.vpd-table-row:hover td {
+  background-color: var(--background-modifier-hover);
+}
+
+.vpd-row-transient td {
+  opacity: 0.85;
+}
+
+.vpd-title-link {
+  font-weight: 600;
+  color: var(--text-normal);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.vpd-title-link:hover {
+  color: var(--interactive-accent);
+  text-decoration: underline;
+}
+
+.vpd-td-folder {
+  font-family: var(--font-monospace);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.vpd-td-mtime {
+  font-family: var(--font-monospace);
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.vpd-status-select {
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-family: var(--font-monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-normal);
+  cursor: pointer;
+}
+
+.vpd-badge-published {
+  font-family: var(--font-monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #a6e3a1;
+  letter-spacing: 0.05em;
+}
+
+.vpd-table-empty {
+  padding: 32px 16px;
+  text-align: center;
+  font-family: var(--font-monospace);
+  color: var(--text-faint);
+}
+
+/* Status Bar Item */
+.vpd-status-bar-item {
+  font-family: var(--font-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 0 4px;
+}
