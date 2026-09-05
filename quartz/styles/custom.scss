@@ -1,7 +1,6 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
-<<<<<<< HEAD
 img {
     background-color: white;
 }
@@ -1428,7 +1427,7 @@ details.footnote-details {
         display: contents !important;
     }
 
-    &:not([open]) > .footnote-body {
+    &:not([open])>.footnote-body {
         display: none !important;
     }
 }
@@ -1510,7 +1509,7 @@ details.footnote-details>summary.footnote-summary:hover .footnote-ref-num {
         transition: top 0.15s ease;
     }
 
-    .page > #quartz-body .sidebar.right {
+    .page>#quartz-body .sidebar.right {
         position: sticky !important;
         top: 0 !important;
         height: 100vh !important;
@@ -1521,7 +1520,7 @@ details.footnote-details>summary.footnote-summary:hover .footnote-ref-num {
         padding-top: 5rem !important;
     }
 
-    .sidebar.right > * {
+    .sidebar.right>* {
         pointer-events: auto;
     }
 
@@ -1831,11 +1830,11 @@ details.footnote-details>summary.footnote-summary:hover .footnote-ref-num {
         pointer-events: auto !important;
     }
 
-    details.footnote-details:not([open]) > .footnote-body {
+    details.footnote-details:not([open])>.footnote-body {
         display: none !important;
     }
 
-    details.footnote-details[open] > .footnote-body {
+    details.footnote-details[open]>.footnote-body {
         display: block !important;
         position: static !important;
         width: auto !important;
@@ -1849,7 +1848,7 @@ details.footnote-details>summary.footnote-summary:hover .footnote-ref-num {
     }
 
     // Mobile Right Sidebar and Accordion Cards
-    .page > #quartz-body .sidebar.right {
+    .page>#quartz-body .sidebar.right {
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
@@ -1987,12 +1986,27 @@ details.footnote-details>summary.footnote-summary:hover .footnote-ref-num {
                     }
                 }
 
-                &.depth-1 a { padding-left: 0.55rem !important; }
-                &.depth-2 a { padding-left: 1.0rem !important; }
-                &.depth-3 a { padding-left: 1.5rem !important; font-size: 0.76rem !important; }
-                &.depth-4 a { padding-left: 2.0rem !important; font-size: 0.74rem !important; }
+                &.depth-1 a {
+                    padding-left: 0.55rem !important;
+                }
 
-                &.overflow-end { display: none !important; }
+                &.depth-2 a {
+                    padding-left: 1.0rem !important;
+                }
+
+                &.depth-3 a {
+                    padding-left: 1.5rem !important;
+                    font-size: 0.76rem !important;
+                }
+
+                &.depth-4 a {
+                    padding-left: 2.0rem !important;
+                    font-size: 0.74rem !important;
+                }
+
+                &.overflow-end {
+                    display: none !important;
+                }
             }
         }
     }
@@ -2046,5 +2060,3 @@ section[data-footnotes],
         stroke: var(--dark);
     }
 }
-=======
->>>>>>> 075afd3f712da0088a07f5284a7b3aba37dd61b6
