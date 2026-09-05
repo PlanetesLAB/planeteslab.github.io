@@ -271,26 +271,130 @@ img[src$="apjs.png"] {
     }
 }
 
-
-// Abstract section
-.abstract-section {
-    margin-top: 1.5rem;
+// CoCERI table (Context / Claim / Evidence / Reasoning / Implications)
+.coceri-section {
+    margin-top: 1rem;
 }
 
-.abstract-heading {
-    font-size: 1.1rem;
-    font-weight: 700;
-    // color: var(--dark);
-    margin-bottom: 0.75rem;
+// Undo Quartz's .table-container wrapper defaults (extra margin/padding + scroll)
+.coceri-section .table-container {
+    overflow: visible;
 }
 
-
-.abstract-text {
+.coceri-section .coceri-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: 0.95rem;
-    // color: var(--gray);
-    line-height: 1.7;
-    text-align: justify;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--lightgray);
+    border-radius: 8px;
+    overflow: hidden;
+
+    tbody {
+        line-height: normal;
+    }
 }
+
+.coceri-row {
+    --coceri-accent: var(--secondary);
+    --coceri-fill: color-mix(in srgb, var(--coceri-accent) 13%, transparent);
+
+    &[data-entry="co"] {
+        --coceri-accent: #1e66f5;
+    }
+
+    &[data-entry="c"] {
+        --coceri-accent: #40a02b;
+    }
+
+    &[data-entry="e"] {
+        --coceri-accent: #df8e1d;
+    }
+
+    &[data-entry="r"] {
+        --coceri-accent: #fe640b;
+    }
+
+    &[data-entry="i"] {
+        --coceri-accent: #8839ef;
+    }
+
+    border-bottom: 1px solid var(--lightgray);
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    td {
+        padding: 0.5rem 0.75rem;
+        vertical-align: top;
+    }
+
+    .coceri-label {
+        width: 7.5rem;
+        text-align: left;
+        vertical-align: middle;
+        font-family: var(--headerFont);
+        font-weight: 700;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--coceri-accent);
+        background-color: var(--coceri-fill);
+        box-shadow: inset 3px 0 0 var(--coceri-accent);
+    }
+
+    .coceri-value {
+        line-height: 1.6;
+        white-space: pre-line;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+}
+
+// Rounded table corners (in addition to the table's own border-radius)
+.coceri-table tr:first-child td:first-child {
+    border-top-left-radius: 7px;
+}
+
+.coceri-table tr:first-child td:last-child {
+    border-top-right-radius: 7px;
+}
+
+.coceri-table tr:last-child td:first-child {
+    border-bottom-left-radius: 7px;
+}
+
+.coceri-table tr:last-child td:last-child {
+    border-bottom-right-radius: 7px;
+}
+
+html[saved-theme="dark"] .coceri-row {
+    --coceri-fill: color-mix(in srgb, var(--coceri-accent) 18%, transparent);
+
+    &[data-entry="co"] {
+        --coceri-accent: #82aaff;
+    }
+
+    &[data-entry="c"] {
+        --coceri-accent: #9ece6a;
+    }
+
+    &[data-entry="e"] {
+        --coceri-accent: #e0af68;
+    }
+
+    &[data-entry="r"] {
+        --coceri-accent: #ff9e64;
+    }
+
+    &[data-entry="i"] {
+        --coceri-accent: #bb9af7;
+    }
+}
+
 
 a.data-footnote-backref {
     font-size: 0;
@@ -379,9 +483,16 @@ a.data-footnote-backref {
         gap: 0.5rem;
     }
 
-    // Abstract text: left-align on mobile (justified text looks bad on narrow columns)
-    .abstract-text {
-        text-align: left;
+    // CoCERI table: tighten on narrow screens
+    .coceri-row td {
+        padding: 0.4rem 0.5rem;
+    }
+
+    .coceri-label {
+        width: 5.5rem;
+        font-size: 0.62rem;
+        letter-spacing: 0.05em;
+        overflow-wrap: break-word;
     }
 
     // Prevent any wide images from causing horizontal scroll

@@ -17,14 +17,39 @@ var PaperPreviewInjector = () => {
               const issue = frontmatter?.issue || "";
               const published = frontmatter?.published || "";
               const doi = frontmatter?.doi || "";
-              const abstract = frontmatter?.abstract || "";
               const journalLogo = frontmatter?.journal_logo || "";
+              const coceriEntries = [
+                { key: "Co", label: "Context", slug: "co" },
+                { key: "C", label: "Claim", slug: "c" },
+                { key: "E", label: "Evidence", slug: "e" },
+                { key: "R", label: "Reasoning", slug: "r" },
+                { key: "I", label: "Implications", slug: "i" }
+              ];
               let authorsHTML = "";
               if (Array.isArray(authors) && authors.length > 0) {
                 const authorNames = authors.map((author) => {
                   return typeof author === "string" ? author : author.name || author;
                 });
                 authorsHTML = `<div class="authors-list">${authorNames.join(", ")}</div>`;
+              }
+              const coceriRows = [];
+              for (const entry of coceriEntries) {
+                const raw = frontmatter?.[entry.key];
+                const value = Array.isArray(raw) ? raw.join("\n") : raw;
+                if (value) {
+                  coceriRows.push(`
+                    <tr class="coceri-row" data-entry="${entry.slug}">
+                      <td class="coceri-label">${entry.label}</td>
+                      <td class="coceri-value">${value}</td>
+                    </tr>`);
+                }
+              }
+              let coceriHTML = "";
+              if (coceriRows.length > 0) {
+                coceriHTML = `
+                  <div class="coceri-section">
+                    <table class="coceri-table"><tbody>${coceriRows.join("")}</tbody></table>
+                  </div>`;
               }
               tree.children.unshift({
                 type: "html",
@@ -63,13 +88,8 @@ var PaperPreviewInjector = () => {
                           </div>
                         </div>` : ""}
                       </div>` : ""}
-                      
-                      ${abstract ? `
-                      <div class="abstract-section">
-                        <h2 class="abstract-heading">Abstract</h2>
-                        <p class="abstract-text">${abstract}</p>
-                      </div>` : ""}
                     </div>
+                    ${coceriHTML}
                   </div>
                 `
               });
