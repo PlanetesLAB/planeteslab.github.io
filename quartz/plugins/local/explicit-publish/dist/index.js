@@ -1,27 +1,15 @@
-// quartz/plugins/local/explicit-publish/index.ts
+// index.ts
 function normalizeStatus(str) {
   if (str === null || str === void 0) return "";
-  return String(str).toLowerCase().replace(/['"\-_ ]/g, "").trim();
-}
-function isUnlistedStatus(status) {
-  const norm = normalizeStatus(status);
-  return norm === "wip" || norm === "writing" || norm === "inprogress" || norm === "review" || norm === "inreview" || norm === "revising" || norm === "polish";
+  return String(str).toLowerCase().trim();
 }
 var ExplicitPublish = () => ({
   name: "ExplicitPublish",
   shouldPublish(_ctx, [_tree, vfile]) {
     const frontmatter = vfile.data?.frontmatter;
     if (!frontmatter) return false;
-    if (frontmatter.publish === true || frontmatter.publish === "true") {
-      return true;
-    }
-    if (frontmatter.unlisted === true || frontmatter.unlisted === "true") {
-      return true;
-    }
-    if (isUnlistedStatus(frontmatter.status)) {
-      return true;
-    }
-    return false;
+    const status = normalizeStatus(frontmatter.status);
+    return status === "live" || status === "writing" || status === "review";
   }
 });
 var index_default = ExplicitPublish;

@@ -1,19 +1,13 @@
-// quartz/plugins/local/unlisted-pages/index.ts
+// index.ts
 function normalizeStatus(str) {
   if (str === null || str === void 0) return "";
-  return String(str).toLowerCase().replace(/['"\-_ ]/g, "").trim();
-}
-function isUnlistedStatus(status) {
-  const norm = normalizeStatus(status);
-  return norm === "wip" || norm === "writing" || norm === "inprogress" || norm === "review" || norm === "inreview" || norm === "revising" || norm === "polish";
+  return String(str).toLowerCase().trim();
 }
 var rehypeUnlisted = () => {
   return () => (_tree, file) => {
     const frontmatter = file.data?.frontmatter;
-    if (typeof frontmatter?.unlisted === "boolean") {
-      ;
-      file.data.unlisted = frontmatter.unlisted;
-    } else if (isUnlistedStatus(frontmatter?.status)) {
+    const status = normalizeStatus(frontmatter?.status);
+    if (status === "writing" || status === "review") {
       ;
       file.data.unlisted = true;
     }

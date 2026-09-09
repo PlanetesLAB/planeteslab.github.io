@@ -10,18 +10,16 @@ function normalizeStatus(str) {
 }
 
 var DEFAULT_STAGES = [
-  { id: 'transient', label: 'TRANSIENT', progress: 0, isPublished: false, isTransient: true, aliases: ['transient', 'rough', 'scratch', 'temp', 'temporary'] },
-  { id: 'draft', label: 'DRAFT', progress: 0, isPublished: false, isTransient: false, aliases: ['draft', 'backlog', 'unstarted', 'todo'] },
-  { id: 'writing', label: 'WRITING', progress: 33, isPublished: false, isTransient: false, aliases: ['writing', 'inprogress', 'in-progress', 'in_progress', 'wip', 'doing'] },
-  { id: 'review', label: 'REVIEW', progress: 66, isPublished: false, isTransient: false, aliases: ['review', 'inreview', 'in-review', 'in_review', 'revising', 'polish'] },
-  { id: 'published', label: 'PUBLISHED', progress: 100, isPublished: true, isTransient: false, aliases: ['published', 'done', 'complete', 'completed'] }
+  { id: 'transient', label: 'TRANSIENT', progress: 0, isPublished: false, isTransient: true },
+  { id: 'draft', label: 'DRAFT', progress: 0, isPublished: false, isTransient: false },
+  { id: 'writing', label: 'WRITING', progress: 33, isPublished: false, isTransient: false },
+  { id: 'review', label: 'REVIEW', progress: 66, isPublished: false, isTransient: false },
+  { id: 'live', label: 'LIVE', progress: 100, isPublished: true, isTransient: false }
 ];
 
 var DEFAULT_SETTINGS = {
   stages: DEFAULT_STAGES,
-  defaultStage: 'draft',
   statusProperty: 'status',
-  publishProperty: 'publish',
   excludedFolders: '.obsidian, templates, private, archive, images',
   defaultView: 'board',
   showStatusBar: true
@@ -142,7 +140,7 @@ class PublishDashboardView extends obsidian.ItemView {
     var statOverall = statsStrip.createDiv({ cls: 'vpd-stat-box vpd-stat-main' });
     statOverall.createDiv({ cls: 'vpd-stat-label', text: 'CURRENT STATUS' });
     statOverall.createDiv({ cls: 'vpd-stat-value', text: progressPercent + '%' });
-    statOverall.createDiv({ cls: 'vpd-stat-sub', text: publishedNotes + ' OF ' + publishableNotes + ' PUBLISHED' });
+    statOverall.createDiv({ cls: 'vpd-stat-sub', text: publishedNotes + ' OF ' + publishableNotes + ' LIVE' });
 
     this.plugin.settings.stages.forEach(stage => {
       var count = this.notesData.filter(n => n.stage.id === stage.id).length;
@@ -443,7 +441,7 @@ class PublishDashboardView extends obsidian.ItemView {
           this.render();
         });
       } else {
-        tdActions.createSpan({ cls: 'vpd-badge-published', text: 'PUBLISHED' });
+        tdActions.createSpan({ cls: 'vpd-badge-published', text: 'LIVE' });
       }
     });
   }
@@ -468,16 +466,6 @@ class PublishDashboardSettingTab extends obsidian.PluginSettingTab {
         .setValue(this.plugin.settings.statusProperty)
         .onChange(async (value) => {
           this.plugin.settings.statusProperty = value.trim() || 'status';
-          await this.plugin.saveSettings();
-        }));
-
-    new obsidian.Setting(containerEl)
-      .setName('Quartz Publish Property')
-      .setDesc('Frontmatter YAML property key used by Quartz (default: "publish").')
-      .addText(text => text
-        .setValue(this.plugin.settings.publishProperty)
-        .onChange(async (value) => {
-          this.plugin.settings.publishProperty = value.trim() || 'publish';
           await this.plugin.saveSettings();
         }));
 
@@ -681,29 +669,13 @@ class VaultPublishDashboardPlugin extends obsidian.Plugin {
       var fm = (cache && cache.frontmatter) ? cache.frontmatter : {};
 
       var currentStatus = fm[this.settings.statusProperty];
-      var isPub = fm[this.settings.publishProperty];
 
-      var matchedStage = null;
+      if (currentStatus === undefined || currentStatus === null) return;
 
-      // 1. If publish: true is set, it is PUBLISHED
-      if (isPub === true || isPub === 'true') {
-        matchedStage = this.settings.stages.find(s => s.isPublished);
-      }
+      var norm = normalizeStatus(currentStatus);
+      var matchedStage = this.settings.stages.find(s => normalizeStatus(s.id) === norm);
 
-      // 2. Otherwise check explicit status field (supports aliases like writing/in_progress, case-insensitive, ignores hyphens/underscores)
-      if (!matchedStage && currentStatus !== undefined && currentStatus !== null) {
-        var norm = normalizeStatus(currentStatus);
-        matchedStage = this.settings.stages.find(s => {
-          if (normalizeStatus(s.id) === norm || normalizeStatus(s.label) === norm) return true;
-          if (s.aliases && s.aliases.map(normalizeStatus).includes(norm)) return true;
-          return false;
-        });
-      }
-
-      // 3. Fallback to default stage (DRAFT)
-      if (!matchedStage) {
-        matchedStage = this.settings.stages.find(s => s.id === this.settings.defaultStage) || this.settings.stages[1] || this.settings.stages[0];
-      }
+      if (!matchedStage) return;
 
       data.push({
         file: file,
@@ -748,21 +720,7 @@ class VaultPublishDashboardPlugin extends obsidian.Plugin {
     if (!targetStage) return;
 
     await this.app.fileManager.processFrontMatter(file, (fm) => {
-      if (targetStage.isPublished) {
-        // Published notes only need publish: true (removes redundant status)
-        fm[this.settings.publishProperty] = true;
-        delete fm[this.settings.statusProperty];
-      } else {
-        // For non-published notes, remove publish: true
-        delete fm[this.settings.publishProperty];
-        if (targetStage.id === 'draft') {
-          // Draft is the default state: clean up frontmatter or set draft
-          delete fm[this.settings.statusProperty];
-        } else {
-          // Set status: writing | review | transient
-          fm[this.settings.statusProperty] = targetStage.id;
-        }
-      }
+      fm[this.settings.statusProperty] = targetStage.id;
     });
 
     this.updateStatusBar();

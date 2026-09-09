@@ -5,28 +5,14 @@ import type { QuartzTransformerPlugin } from "@quartz-community/types"
 
 function normalizeStatus(str: unknown): string {
   if (str === null || str === undefined) return ""
-  return String(str).toLowerCase().replace(/['"\-_ ]/g, "").trim()
-}
-
-function isUnlistedStatus(status: unknown): boolean {
-  const norm = normalizeStatus(status)
-  return (
-    norm === "wip" ||
-    norm === "writing" ||
-    norm === "inprogress" ||
-    norm === "review" ||
-    norm === "inreview" ||
-    norm === "revising" ||
-    norm === "polish"
-  )
+  return String(str).toLowerCase().trim()
 }
 
 const rehypeUnlisted = (): Plugin<[], HastRoot> => {
   return () => (_tree: HastRoot, file: VFile) => {
     const frontmatter = file.data?.frontmatter as Record<string, unknown> | undefined
-    if (typeof frontmatter?.unlisted === "boolean") {
-      ;(file.data as Record<string, unknown>).unlisted = frontmatter.unlisted
-    } else if (isUnlistedStatus(frontmatter?.status)) {
+    const status = normalizeStatus(frontmatter?.status)
+    if (status === "writing" || status === "review") {
       ;(file.data as Record<string, unknown>).unlisted = true
     }
   }
