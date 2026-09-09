@@ -1,7 +1,7 @@
 ---
 tags:
   - journal
-status: wip
+status: writing
 ---
 # December 2025
 

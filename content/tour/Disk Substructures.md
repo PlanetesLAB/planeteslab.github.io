@@ -2,7 +2,7 @@
 tags:
   - protoplanetary-disks
   - physical-structure
-status: wip
+status: writing
 ---
 # Rings
 

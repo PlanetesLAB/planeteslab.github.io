@@ -2,7 +2,7 @@
 tags:
   - solar-system
   - planet-formation
-status: wip
+status: writing
 ---
 # The Solar Nebula
 

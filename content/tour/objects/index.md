@@ -1,4 +1,4 @@
 ---
 title: Astrophysical Objects
-publish: true
+status: live
 ---

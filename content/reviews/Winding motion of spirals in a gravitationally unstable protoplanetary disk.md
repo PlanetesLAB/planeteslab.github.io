@@ -22,7 +22,7 @@ issue: pp. 1672–1679
 published: September 2025
 doi: 10.1038/s41550-025-02639-y
 journal_logo: natastro.svg
-status: wip
+status: writing
 Co: This is the contect
 C: This is the claim
 E: This is the evidence

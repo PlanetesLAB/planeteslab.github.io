@@ -5,7 +5,7 @@ tags:
   - modeling
   - chemistry
   - physics
-status: wip
+status: writing
 ---
 Protoplanetary disks are the nurseries where planet formation starts. These disks are located around young stars and have been observed in various stages of their evolution, from the initial stages of accretion to the later stages of planet formation. 
 

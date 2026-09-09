@@ -2,7 +2,7 @@
 tags:
   - mathematics
   - "#interferometry"
-status: wip
+status: writing
 ---
 # The Sifting property
 

@@ -3,7 +3,7 @@ tags:
   - physics
   - planet-formation
   - planet-disk-interactions
-status: wip
+status: writing
 ---
 Planet-disk torques are the mediators of interaction between still-forming planets carving their way in the disk and the disk material. The complete physics of these torques is not yet fully understood and non-trivial. Often 2D and two-body approximations under several further constraints are used to  
 

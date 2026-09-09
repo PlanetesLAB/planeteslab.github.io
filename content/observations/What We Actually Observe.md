@@ -1,6 +1,6 @@
 ---
 tags:
   - observations
-status: wip
+status: writing
 ---
 We observe light.

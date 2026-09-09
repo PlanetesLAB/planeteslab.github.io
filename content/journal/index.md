@@ -1,5 +1,5 @@
 ---
 title: The Journal
-publish: true
+status: live
 ---
 A journal documenting timeline of a project.

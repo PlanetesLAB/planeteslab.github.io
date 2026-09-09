@@ -16,7 +16,7 @@ issue: A227
 published: July 2025
 doi: 10.1051/0004-6361/202555164
 journal_logo: logo_aa.svg
-status: wip
+status: writing
 ---
 This entry was motivated by the following work:
 

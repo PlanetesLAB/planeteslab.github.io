@@ -1,7 +1,7 @@
 ---
 tags:
   - physics
-status: wip
+status: writing
 ---
 The theory of radiative transfer describes how electromagnetic radiation travels through a medium.
 

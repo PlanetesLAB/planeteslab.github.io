@@ -3,7 +3,7 @@ tags:
   - mathematics
   - numerical-methods
 abstract: This note is an in-depth discussion on why updating velocities before position leads to more stable numerical integration techniques.
-status: wip
+status: writing
 ---
 # The Liouville Theorem in Hamiltonian Mechanics
 

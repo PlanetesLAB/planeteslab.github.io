@@ -2,7 +2,7 @@
 tags:
   - coursework
   - journal
-status: wip
+status: writing
 ---
 # 2026-09-09
 

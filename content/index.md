@@ -2,7 +2,7 @@
 title: PlanetesLAB
 page_title: Knowledge
 description: Repository for research notes
-publish: true
+status: live
 ---
 Browse by domain:
 

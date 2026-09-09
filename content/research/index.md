@@ -1,4 +1,4 @@
 ---
 title: Notes, Theses, Retrospectives
-publish: true
+status: live
 ---

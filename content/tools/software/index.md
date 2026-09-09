@@ -1,4 +1,4 @@
 ---
 title: Software Suite
-publish: true
+status: live
 ---

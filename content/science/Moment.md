@@ -1,7 +1,7 @@
 ---
 tags:
   - physics
-publish: true
+status: live
 ---
 In most simplest terms, a *moment* of a physical quantity is product of the distance to a given point, raised to a power, and the value of that quantity at that point:
 

@@ -3,7 +3,7 @@ tags:
   - machine-learning
   - "#projects"
   - "#gsoc"
-status: wip
+status: writing
 ---
 # Motivation
 Gas kinematics reveals still-forming embedded planets in images of disks through features called *kinks*. 

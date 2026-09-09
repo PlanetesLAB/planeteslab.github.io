@@ -5,7 +5,7 @@ tags:
   - protoplanetary-disks
   - exoplanets
   - planet-formation
-status: wip
+status: writing
 ---
 # Solar and sub-solar compositions
 

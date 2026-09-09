@@ -12,7 +12,7 @@ issue: Issue 43
 published: October 2025
 doi: 10.1126/sciadv.ady4823
 journal_logo: sciadv-logo.svg
-status: wip
+status: writing
 ---
 The birth of [[Cosmochemistry|cosmochemistry]] as field of study can be perhaps traced back to the commune of Alès in Southern France, when Louis Jacques Thénard analyzed and published a study on two soft black stones that had fell on a spring evening of 1806. It was a [[Meteorites|meteorite]], now named after the commune it fell in, and the first carbonaceous [[Chondrites|chondrite]] identified. The study was an elementary analysis of the strange rock's composition, and the field would still take more than a century and then some to become fully accepted within the scientific establishment, after Harold Urey engaged in research on the abundance of elements on Earth and beyond. 
 

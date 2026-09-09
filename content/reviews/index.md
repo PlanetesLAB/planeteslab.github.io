@@ -1,5 +1,5 @@
 ---
 title: Article Reviews
-publish: true
+status: live
 ---
 My reviews and notes on other works.

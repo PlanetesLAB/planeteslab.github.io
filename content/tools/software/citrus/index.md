@@ -1,5 +1,5 @@
 ---
-publish: true
+status: live
 ---
 
 # `citrus`
