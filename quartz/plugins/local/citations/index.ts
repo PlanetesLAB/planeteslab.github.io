@@ -63,6 +63,69 @@ function parseBibFile(filePath: string) {
   return entries
 }
 
+/**
+ * rehype-citation parses every field in the bibliography, although this plugin
+ * only displays citation metadata. Zotero abstracts can contain TeX constructs
+ * that citeproc does not support, so give it a derived bibliography with those
+ * non-display fields removed. The user's source bibliography is never changed.
+ */
+function stripAbstractFields(bibtex: string) {
+  const abstractField = /^\s*abstract\s*=\s*([{"])/gim
+  let output = ""
+  let cursor = 0
+  let match: RegExpExecArray | null
+
+  while ((match = abstractField.exec(bibtex)) !== null) {
+    const opener = match[1]
+    let index = abstractField.lastIndex
+    let depth = opener === "{" ? 1 : 0
+
+    while (index < bibtex.length) {
+      const character = bibtex[index]
+      if (character === "\\\\") {
+        index += 2
+        continue
+      }
+
+      if (opener === "{") {
+        if (character === "{") depth += 1
+        if (character === "}") {
+          depth -= 1
+          if (depth === 0) break
+        }
+      } else if (character === '"') {
+        break
+      }
+
+      index += 1
+    }
+
+    // Include the closing delimiter, optional comma, and the line ending.
+    index += 1
+    while (index < bibtex.length && /[ \t,]/.test(bibtex[index])) index += 1
+    if (bibtex[index] === "\r") index += 1
+    if (bibtex[index] === "\n") index += 1
+    output += bibtex.slice(cursor, match.index)
+    cursor = index
+    abstractField.lastIndex = index
+  }
+
+  return output + bibtex.slice(cursor)
+}
+
+function createCitationBibliography(sourcePath: string) {
+  const source = fs.readFileSync(sourcePath, "utf8")
+  const cacheDirectory = path.resolve(".quartz-cache")
+  const derivedPath = path.join(cacheDirectory, "citations-without-abstracts.bib")
+
+  fs.mkdirSync(cacheDirectory, { recursive: true })
+  fs.writeFileSync(derivedPath, stripAbstractFields(source))
+
+  // rehype-citation resolves local bibliography paths relative to the current
+  // working directory, so pass it a relative path rather than an absolute one.
+  return path.relative(process.cwd(), derivedPath)
+}
+
 export interface Options {
   bibliographyFile: string
   suppressBibliography: boolean
@@ -140,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 export const Citations: QuartzTransformerPlugin<Partial<Options>> = (userOpts) => {
   const opts = { ...defaultOptions, ...userOpts }
+  const citationBibliography = createCitationBibliography(path.resolve(opts.bibliographyFile))
 
   return {
     name: "Citations",
@@ -154,7 +218,7 @@ export const Citations: QuartzTransformerPlugin<Partial<Options>> = (userOpts) =
       plugins.push([
         rehypeCitation,
         {
-          bibliography: opts.bibliographyFile,
+          bibliography: citationBibliography,
           suppressBibliography: opts.suppressBibliography,
           linkCitations: opts.linkCitations,
           csl: opts.csl,

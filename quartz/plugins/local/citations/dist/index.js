@@ -124368,6 +124368,50 @@ function parseBibFile(filePath) {
   }
   return entries;
 }
+function stripAbstractFields(bibtex2) {
+  const abstractField = /^\s*abstract\s*=\s*([{"])/gim;
+  let output2 = "";
+  let cursor = 0;
+  let match;
+  while ((match = abstractField.exec(bibtex2)) !== null) {
+    const opener = match[1];
+    let index = abstractField.lastIndex;
+    let depth = opener === "{" ? 1 : 0;
+    while (index < bibtex2.length) {
+      const character = bibtex2[index];
+      if (character === "\\\\") {
+        index += 2;
+        continue;
+      }
+      if (opener === "{") {
+        if (character === "{") depth += 1;
+        if (character === "}") {
+          depth -= 1;
+          if (depth === 0) break;
+        }
+      } else if (character === '"') {
+        break;
+      }
+      index += 1;
+    }
+    index += 1;
+    while (index < bibtex2.length && /[ \t,]/.test(bibtex2[index])) index += 1;
+    if (bibtex2[index] === "\r") index += 1;
+    if (bibtex2[index] === "\n") index += 1;
+    output2 += bibtex2.slice(cursor, match.index);
+    cursor = index;
+    abstractField.lastIndex = index;
+  }
+  return output2 + bibtex2.slice(cursor);
+}
+function createCitationBibliography(sourcePath) {
+  const source = fs.readFileSync(sourcePath, "utf8");
+  const cacheDirectory = path2.resolve(".quartz-cache");
+  const derivedPath = path2.join(cacheDirectory, "citations-without-abstracts.bib");
+  fs.mkdirSync(cacheDirectory, { recursive: true });
+  fs.writeFileSync(derivedPath, stripAbstractFields(source));
+  return path2.relative(process.cwd(), derivedPath);
+}
 var defaultOptions2 = {
   bibliographyFile: "./bibliography.bib",
   suppressBibliography: true,
@@ -124429,6 +124473,7 @@ document.addEventListener("DOMContentLoaded", () => {
 `;
 var Citations = (userOpts) => {
   const opts = { ...defaultOptions2, ...userOpts };
+  const citationBibliography = createCitationBibliography(path2.resolve(opts.bibliographyFile));
   return {
     name: "Citations",
     htmlPlugins(ctx) {
@@ -124440,7 +124485,7 @@ var Citations = (userOpts) => {
       plugins2.push([
         rehypeCitation,
         {
-          bibliography: opts.bibliographyFile,
+          bibliography: citationBibliography,
           suppressBibliography: opts.suppressBibliography,
           linkCitations: opts.linkCitations,
           csl: opts.csl,
