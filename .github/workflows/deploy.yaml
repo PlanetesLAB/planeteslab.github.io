@@ -31,13 +31,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Cache Quartz plugins
-        uses: actions/cache@v6
-        with:
-          path: .quartz/plugins
-          key: ${{ runner.os }}-plugins-v3-${{ hashFiles('quartz.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-plugins-v3-
       - name: Install Dependencies
         run: npm ci
       - name: Build uncompiled git dependencies
