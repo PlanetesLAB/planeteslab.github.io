@@ -7,9 +7,10 @@ var ExplicitPublish = () => ({
   name: "ExplicitPublish",
   shouldPublish(_ctx, [_tree, vfile]) {
     const frontmatter = vfile.data?.frontmatter;
-    if (!frontmatter) return false;
+    if (!frontmatter) return true;
     const status = normalizeStatus(frontmatter.status);
-    return status === "live" || status === "writing" || status === "review";
+    const isCiBuild = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
+    return status !== "transient" || !isCiBuild;
   }
 });
 var index_default = ExplicitPublish;

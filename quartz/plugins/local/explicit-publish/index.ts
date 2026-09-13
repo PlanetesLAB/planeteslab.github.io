@@ -9,10 +9,14 @@ export const ExplicitPublish: QuartzFilterPlugin = () => ({
   name: "ExplicitPublish",
   shouldPublish(_ctx, [_tree, vfile]) {
     const frontmatter = vfile.data?.frontmatter as Record<string, unknown> | undefined
-    if (!frontmatter) return false
+    if (!frontmatter) return true
 
     const status = normalizeStatus(frontmatter.status)
-    return status === "live" || status === "writing" || status === "review"
+
+    // Transient notes are useful in a local build, but must never be included
+    // in a CI artifact (including the GitHub Pages deployment).
+    const isCiBuild = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true"
+    return status !== "transient" || !isCiBuild
   },
 })
 
