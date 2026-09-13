@@ -39,7 +39,15 @@ h1.article-title {
 #quartz-body:has(.article-title[class*="status-"]) .center {
   position: relative;
   padding: 0.75rem 1.25rem 1.5rem;
-  margin: 0 -1.25rem;
+  margin: $topSpacing -1.25rem 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+// The normal frame offsets its content via .page-header. Move that offset to
+// the status panel so the panel begins exactly alongside the site title and breadcrumb.
+#quartz-body:has(.article-title[class*="status-"]) .center .page-header {
+  margin-top: 0;
 }
 
 #quartz-body .article-title[class*="status-"]::before {
