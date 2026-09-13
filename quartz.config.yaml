@@ -118,11 +118,11 @@ plugins:
       body: Work Sans
       code: JetBrains Mono
   - source: github:quartz-community/remove-draft
-    enabled: true
+    enabled: false
   - source: ./quartz/plugins/local/explicit-publish
     enabled: true
   - source: ./quartz/plugins/local/unlisted-pages
-    enabled: true
+    enabled: false
     options: {}
     order: 45
   - source: github:quartz-community/encrypted-pages
