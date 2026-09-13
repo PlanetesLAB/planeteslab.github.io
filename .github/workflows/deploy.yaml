@@ -43,6 +43,12 @@ jobs:
           done
       - name: Install Quartz plugins
         run: npx quartz plugin install --from-config
+      - name: Build syntax highlighting plugin
+        run: |
+          cd .quartz/plugins/syntax-highlighting
+          npm install --ignore-scripts
+          npm run build
+          test -f dist/index.js
       - name: Build Quartz
         run: npx quartz build
       - name: Upload artifact
