@@ -4,7 +4,9 @@ tags:
   - journal
 status: writing
 ---
-# 2026-09-09
+# September 2026
+
+## 2026-09-09
 
 - The length of a paragraph or section is not proportional to the time spent in the preparation of it.
 - While writing the introduction section, don't review the history of your field altogether. 
@@ -14,26 +16,26 @@ status: writing
 - Avoid chronological events when describing your work.
 - Outline your paper early.
 
-## Introduction
+### Introduction
 - Prepare the reader for the main body of your work
 
-## Methods
+### Methods
 - Prepare a flowchart
 
-## Results 
+### Results 
 - ...
 
-## Conclusions
+### Conclusions
 - Needs to be an elaborated version of abstract.
 
-## How to use LLMs?
+### How to use LLMs?
 - Can the AI follow your logical flow?
 - Polish specific sections or sentences, not the whole thing
 
-## Plots
+### Plots
 - 3 Is: Informative, Interesting, Intuitive
 
-## Language
+### Language
 - Avoid jargon
 - Say what you mean, don't say what you don't mean
 - Never use "This" without an immediate noun (?)

@@ -4,7 +4,10 @@ tags:
   - journal
   - coursework
 ---
-# 2026-09-08
+
+# September 2026
+
+## 2026-09-08
 
 Multi-messenger:
 1. Photons (gamma)
