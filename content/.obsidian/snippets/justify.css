@@ -1,13 +1,28 @@
-/* reading mode */
+/*
+ * Justified prose with conservative line breaking.
+ *
+ * `line-break: strict` keeps opening and closing punctuation with the text it
+ * belongs to where the renderer supports it.
+ *
+ * This deliberately applies to Reading View only. In Live Preview, Obsidian's
+ * CodeMirror editor splits links and Markdown punctuation into separate inline
+ * elements. A justified editor can then wrap a closing `)` or `.` onto its own
+ * visual line; CSS cannot join those separate editor tokens reliably.
+ */
 .markdown-preview-view p {
 	text-align: justify;
 	text-justify: inter-word;
+	word-break: normal;
+	overflow-wrap: normal;
+	line-break: strict;
+	text-wrap: pretty;
 }
 
-/* source view and live preview */
-.markdown-source-view.mod-cm6 .cm-line {
-	text-align: justify;
-	text-justify: inter-word;
+/* Let first/last punctuation sit very slightly outside the text edge instead
+ * of forcing an otherwise awkward extra line.  Unsupported versions simply
+ * ignore this declaration. */
+.markdown-preview-view p {
+	hanging-punctuation: first last;
 }
 
 /* Fix heading sizes */
