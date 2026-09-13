@@ -9,5 +9,5 @@
   "accentColor": "#4583c9",
   "monospaceFontFamily": "IosevkaCustom Nerd Font",
   "baseFontSizeAction": false,
-  "translucency": false
+  "translucency": true
 }
