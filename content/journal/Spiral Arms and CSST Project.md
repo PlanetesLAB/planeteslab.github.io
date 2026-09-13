@@ -1,7 +1,7 @@
 ---
 tags:
   - journal
-status: writing
+status: transient
 ---
 # September 2026
 
