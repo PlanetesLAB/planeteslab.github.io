@@ -12,7 +12,7 @@ status: transient
 - [ ] PRIMA Slides 📅 2026-07-07
 
 # Runs to test
-1. Pure Gas phase chemistry
+1. Pure Gas phase chemistry (1.5 hrs/global iteration)
 2. Two phase chemistry (excluding type 14; only involving J species)
 3. Two phase chemistry (including type 14; only involving J species)
 4. Full three phase chemistry - (2-2.5 hrs/global iteration)
