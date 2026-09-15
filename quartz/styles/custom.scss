@@ -66,7 +66,11 @@ h1.article-title {
   background-color: color-mix(in srgb, var(--secondary) 3%, var(--light));
   background-image:
     linear-gradient(color-mix(in srgb, var(--secondary) 12%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--secondary) 12%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--secondary) 12%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 1.25rem 1.25rem;
 }
 
@@ -111,7 +115,11 @@ h1.article-title {
   padding: 0.35rem 0.5rem 0.45rem;
   margin-left: -0.5rem;
   border-bottom: 3px solid var(--secondary);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--secondary) 13%, transparent), transparent 70%);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--secondary) 13%, transparent),
+    transparent 70%
+  );
 }
 
 // Transient: local-only scratch work, expressed as a restrained graph-paper field.
@@ -616,18 +624,64 @@ a.data-footnote-backref {
   height: 100vh;
 }
 
+a.citation-link {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
+}
+
 .citation-popover {
-  position: absolute;
-  max-width: 320px;
-  padding: 10px;
+  position: fixed;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(36rem, calc(100vw - 24px));
+  padding: 1rem 1.1rem;
+  color: var(--dark);
   background: var(--light);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  display: none;
-  z-index: 1000;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+  font-family: var(--bodyFont);
+  font-size: 0.95rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.48;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 120ms ease,
+    visibility 120ms ease;
+
+  &.is-visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .citation-popover-publication {
+    font-style: italic;
+  }
+
+  .citation-popover-source {
+    color: var(--secondary);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media all and (max-width: 600px) {
+  .citation-popover {
+    display: none;
+  }
 }
 
 .canvas text {
