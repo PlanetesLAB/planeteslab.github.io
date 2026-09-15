@@ -160,7 +160,7 @@ For radiation travelling at an angle $\theta$ to the surface normal, there is on
 Thus, the momentum flux is
 
 $$
-p_{\nu} = \dfrac{1}{c} \int I_{\nu} \cos^2 \theta \mathrm d\omega
+p_{\nu} = \dfrac{1}{c} \int I_{\nu} \cos^2 \theta \mathrm d\Omega
 $$
 
 This is called the **second moment** because the angular dependence now contains two powers of the direction cosine, $\cos^2\theta$.

@@ -172,7 +172,7 @@ if (d <= epsilon) {
 
 # The Hydro-RT iteration
 
-For the solar-system models, we started with the @chiang1997spectral mid-plane profile given by their Equation (14a)
+For the solar-system models, we started with the @chiangSpectralEnergyDistributions1997 mid-plane profile given by their Equation (14a)
 
 $$
 T(R) = 150 \cdot \left(\dfrac{R}{\mathrm{AU}}\right)^{-3/7} \mathrm{K}
@@ -208,6 +208,6 @@ $$
 \end{equation}
 $$
 
-Ultimately, @chiang1997spectral says to have $\Sigma \propto r^{-3/2}$, so we can put values of $q$ and find $p$, which comes out to be $\approx -2.78$. 
+Ultimately, @chiangSpectralEnergyDistributions1997 says to have $\Sigma \propto r^{-3/2}$, so we can put values of $q$ and find $p$, which comes out to be $\approx -2.78$. 
 
-Now, upon performing a radiative transfer run, we will have the dust temperature profile. We take dust temperature equal to gas temperature at midplane and get a new estimate to improve our initial MMSN profile (reason for this is LTE, but look at Appendix B of  @speedie2022observing for a more quantitative treatment). The above hydro iteration gave me a temperature of $\sim 43\;\mathrm{K}$. First step is get the new $c^2_{s,0}$, which is straightforward, we just need to put the values with temperature now as 43 K instead of 74 K. This gives new value of $c_{s,0}^2 = 8.94 \times 10^{-4}$. To get the new value for $q$, we need to fit the midplane temperature profile. I used `np.polyfit` to get $q = -0.47557$, and thus $p = -2.7622$.
+Now, upon performing a radiative transfer run, we will have the dust temperature profile. We take dust temperature equal to gas temperature at midplane and get a new estimate to improve our initial MMSN profile (reason for this is LTE, but look at Appendix B of  @speedieObservingPlanetdrivenDust2022 for a more quantitative treatment). The above hydro iteration gave me a temperature of $\sim 43\;\mathrm{K}$. First step is get the new $c^2_{s,0}$, which is straightforward, we just need to put the values with temperature now as 43 K instead of 74 K. This gives new value of $c_{s,0}^2 = 8.94 \times 10^{-4}$. To get the new value for $q$, we need to fit the midplane temperature profile. I used `np.polyfit` to get $q = -0.47557$, and thus $p = -2.7622$.

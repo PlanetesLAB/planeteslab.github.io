@@ -830,7 +830,7 @@ The exoALMA paper also did not specify what order of orbital advection (FARGO) t
 
 ### Baseline
 
-The work of [@bergez2022constraining] forms one of our baselines. The thing to keep in mind is *images of the Solar System's natal protoplanetary disk*. We don't deal with dust-gas dynamics, just gas dynamics. And instead of looking in the ALMA range of mm/sub-mm, we are going to look in optical/infrared. This is perhaps the right time to introduce [Xuntian](https://en.wikipedia.org/wiki/Xuntian), or the [[The Chinese Space Station Survey Telescope (CSST)|Chinese space station survey telescope]] (CSST), the telescope that we will be targeting. 
+The work of @bergez-casalouConstrainingGiantPlanet2022 forms one of our baselines. The thing to keep in mind is *images of the Solar System's natal protoplanetary disk*. We don't deal with dust-gas dynamics, just gas dynamics. And instead of looking in the ALMA range of mm/sub-mm, we are going to look in optical/infrared. This is perhaps the right time to introduce [Xuntian](https://en.wikipedia.org/wiki/Xuntian), or the [[The Chinese Space Station Survey Telescope (CSST)|Chinese space station survey telescope]] (CSST), the telescope that we will be targeting. 
 
 ## 2025-12-02
 
@@ -842,7 +842,7 @@ When testing setups, especially for hydro models, it's always nice to test with 
 
 ### The exoALMA data
 
-The data provided by [@bae2025exoalma] is available on the [web](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/HE8DXM). A good starting point was to obviously see if I can at least recreate the plots from the paper, from the paper's data. 
+The data provided by @baeExoALMAVIIBenchmarking2025 is available on the [web](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/HE8DXM). A good starting point was to obviously see if I can at least recreate the plots from the paper, from the paper's data. 
 # November 2025
 
 ## 2025-11-29

@@ -25,4 +25,26 @@ Imagine two blackbody cavities (figure below), both at exactly temperature $T$, 
 
 ![[../images/blackbody-radiation-universality.png]]
 
-If we had $I_{\nu} > I_{\nu}'$ then energy would flow from left to right, which would violate the [[second law of thermodynamics]] as these two are at same temperature. Thus, $I_{\nu} = I_{\nu}'$, which in turn implies that it is only a universal function of $T$ and $\nu$. We denote this function as the [[Planck's law|Planck's function]] $B_{\nu} (T)$.  
+If we had $I_{\nu} > I_{\nu}'$ then energy would flow from left to right, which would violate the [[second law of thermodynamics]] as these two are at same temperature. Thus, $I_{\nu} = I_{\nu}'$, which in turn implies that it is only a universal function of $T$ and $\nu$. We denote this function as the [[Planck's law|Planck's function]] $B_{\nu} (T)$. 
+
+If we now place some material at temperature $T$ in the opening of the blackbody cavity with emission coefficient $j_{\nu}$ and absorption coefficient $\alpha_{\nu}$, it must also be in equilibrium with the surroundings as if $S_{\nu}$ is not equal to $B_{\nu} (T)$, then this matter will start to affect the radiation intensity in the system. We already know $I_{\nu} = B_{\nu} (T)$ as the condition of blackbody radiation, thus, we get following relation:
+
+$$
+j_{\nu} = \alpha_{\nu}\cdot B_{\nu} (T)
+$$
+
+This is Kirchhoff's law of thermal radiation. In other words, this law states, a material that is efficient at absorbing radiation at a particular frequency must also be efficient at thermally emitting at that frequency. It does not mean $j_{\nu} = \alpha_{\nu}$, but rather that their ratio equals a particular intensity.
+
+# Thermodynamics of blackbody radiation
+
+From derivations of [[Specific Intensity#Second moment (Momentum flux)|moments of specific intensity]], we know
+
+$$
+p = \dfrac{u}{3}
+$$
+
+Now consider a cavity (with volume $V$ and total energy $U = uV$) containing blackbody radiation with a movable piston. From first law of thermodynamics
+
+$$
+
+$$
