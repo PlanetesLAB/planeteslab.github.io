@@ -6927,18 +6927,18 @@ var require_citeproc_commonjs = __commonJS({
       if (this.opt.development_extensions.normalize_lang_keys_to_lowercase) {
         if (Item.multi) {
           if (Item.multi._keys) {
-            for (var field2 in Item.multi._keys) {
-              for (var key in Item.multi._keys[field2]) {
+            for (var field in Item.multi._keys) {
+              for (var key in Item.multi._keys[field]) {
                 if (key !== key.toLowerCase()) {
-                  Item.multi._keys[field2][key.toLowerCase()] = Item.multi._keys[field2][key];
-                  delete Item.multi._keys[field2][key];
+                  Item.multi._keys[field][key.toLowerCase()] = Item.multi._keys[field][key];
+                  delete Item.multi._keys[field][key];
                 }
               }
             }
           }
           if (Item.multi.main) {
-            for (var field2 in Item.multi.main) {
-              Item.multi.main[field2] = Item.multi.main[field2].toLowerCase();
+            for (var field in Item.multi.main) {
+              Item.multi.main[field] = Item.multi.main[field].toLowerCase();
             }
           }
         }
@@ -10146,9 +10146,9 @@ var require_citeproc_commonjs = __commonJS({
         }
         if (this.bibliography.opt.exclude_with_fields) {
           for (var i in this.bibliography.opt.exclude_with_fields) {
-            var field2 = this.bibliography.opt.exclude_with_fields[i];
+            var field = this.bibliography.opt.exclude_with_fields[i];
             bibsection.exclude.push({
-              field: field2,
+              field,
               value: true
             });
           }
@@ -12242,8 +12242,8 @@ var require_citeproc_commonjs = __commonJS({
               state2.tmp.done_vars.push("first-reference-note-number");
             }
             if (!state2.tmp.just_looking && state2.tmp.abbrev_trimmer && Item.jurisdiction) {
-              for (var field2 in state2.tmp.abbrev_trimmer.QUASHES[Item.jurisdiction]) {
-                state2.tmp.done_vars.push(field2);
+              for (var field in state2.tmp.abbrev_trimmer.QUASHES[Item.jurisdiction]) {
+                state2.tmp.done_vars.push(field);
               }
             }
             state2.tmp.rendered_name = false;
@@ -17145,7 +17145,7 @@ var require_citeproc_commonjs = __commonJS({
         }
         return value;
       }
-      function getFieldLocale(Item, field2) {
+      function getFieldLocale(Item, field) {
         var ret = state.opt["default-locale"][0].slice(0, 2);
         var localeRex;
         if (state.opt.development_extensions.strict_text_case_locales) {
@@ -17161,19 +17161,19 @@ var require_citeproc_commonjs = __commonJS({
             ret = "tlh";
           }
         }
-        if (Item.multi && Item.multi && Item.multi.main && Item.multi.main[field2]) {
-          ret = Item.multi.main[field2];
+        if (Item.multi && Item.multi && Item.multi.main && Item.multi.main[field]) {
+          ret = Item.multi.main[field];
         }
         if (!state.opt.development_extensions.strict_text_case_locales || state.opt.development_extensions.normalize_lang_keys_to_lowercase) {
           ret = ret.toLowerCase();
         }
         return ret;
       }
-      function getTextSubField(Item, field2, locale_type, use_default, stopOrig, family_var) {
+      function getTextSubField(Item, field, locale_type, use_default, stopOrig, family_var) {
         var opt, o, ret, opts;
         var usedOrig = stopOrig;
         var usingOrig = false;
-        if (!Item[field2]) {
+        if (!Item[field]) {
           return {
             name: "",
             usedOrig: stopOrig,
@@ -17181,34 +17181,34 @@ var require_citeproc_commonjs = __commonJS({
           };
         }
         var stickyLongForm = false;
-        if (CSL2.VARIABLES_WITH_SHORT_FORM.indexOf(field2) > -1 && family_var) {
-          field2 = field2 + "-short";
+        if (CSL2.VARIABLES_WITH_SHORT_FORM.indexOf(field) > -1 && family_var) {
+          field = field + "-short";
           stickyLongForm = true;
         }
         var breakMe = false;
         var firstValue = null;
         var fieldsToTry = [];
-        if (field2.slice(-6) === "-short") {
-          fieldsToTry.push(field2);
-          fieldsToTry.push(field2.slice(0, -6));
+        if (field.slice(-6) === "-short") {
+          fieldsToTry.push(field);
+          fieldsToTry.push(field.slice(0, -6));
         } else {
-          fieldsToTry.push(field2);
+          fieldsToTry.push(field);
         }
         for (var h2 = 0, hlen = fieldsToTry.length; h2 < hlen; h2++) {
           var variantMatch = false;
-          var field2 = fieldsToTry[h2];
-          ret = { name: "", usedOrig: stopOrig, locale: getFieldLocale(Item, field2) };
+          var field = fieldsToTry[h2];
+          ret = { name: "", usedOrig: stopOrig, locale: getFieldLocale(Item, field) };
           opts = state.opt[locale_type] ? state.opt[locale_type].slice() : [];
           var hasVal = false;
           if (locale_type === "locale-orig") {
             if (!stopOrig) {
-              ret.name = Item[field2];
+              ret.name = Item[field];
               ret.usedOrig = false;
             }
             hasVal = true;
             usingOrig = true;
           } else if (use_default && ("undefined" === typeof opts || opts.length === 0)) {
-            ret.name = Item[field2];
+            ret.name = Item[field];
             ret.usedOrig = true;
             hasVal = true;
             usingOrig = true;
@@ -17217,15 +17217,15 @@ var require_citeproc_commonjs = __commonJS({
             for (var i = 0, ilen = opts.length; i < ilen; i += 1) {
               opt = opts[i];
               o = opt.split(/[\-_]/)[0];
-              if (opt && Item.multi && Item.multi._keys[field2] && Item.multi._keys[field2][opt]) {
-                ret.name = Item.multi._keys[field2][opt];
+              if (opt && Item.multi && Item.multi._keys[field] && Item.multi._keys[field][opt]) {
+                ret.name = Item.multi._keys[field][opt];
                 ret.locale = opt;
                 hasVal = true;
                 variantMatch = true;
                 usingOrig = false;
                 break;
-              } else if (o && Item.multi && Item.multi._keys[field2] && Item.multi._keys[field2][o]) {
-                ret.name = Item.multi._keys[field2][o];
+              } else if (o && Item.multi && Item.multi._keys[field] && Item.multi._keys[field][o]) {
+                ret.name = Item.multi._keys[field][o];
                 ret.locale = o;
                 hasVal = true;
                 variantMatch = true;
@@ -17234,7 +17234,7 @@ var require_citeproc_commonjs = __commonJS({
               }
             }
             if (!ret.name && use_default) {
-              ret = { name: Item[field2], usedOrig: true, locale: getFieldLocale(Item, field2) };
+              ret = { name: Item[field], usedOrig: true, locale: getFieldLocale(Item, field) };
               usingOrig = true;
             }
           }
@@ -17253,12 +17253,12 @@ var require_citeproc_commonjs = __commonJS({
           } else {
             if (!stickyLongForm && !variantMatch && firstValue) {
               ret = firstValue;
-              field2 = fieldsToTry[0];
+              field = fieldsToTry[0];
             } else if (variantMatch) {
               ret.found_variant_ok = true;
             }
           }
-          if (["title", "container-title"].indexOf(field2) > -1) {
+          if (["title", "container-title"].indexOf(field) > -1) {
             if (!usedOrig && (!ret.token.strings["text-case"] || ret.token.strings["text-case"] === "sentence" || ret.token.strings["text-case"] === "normal")) {
               var locale = state.opt.lang;
               var lang;
@@ -17267,7 +17267,7 @@ var require_citeproc_commonjs = __commonJS({
               } else {
                 lang = ret.locale;
               }
-              var seg = field2.slice(0, -5);
+              var seg = field.slice(0, -5);
               var sentenceCase = ret.token.strings["text-case"] === "sentence" ? true : false;
               ret.name = CSL2.titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase);
               delete ret.token.strings["text-case"];
@@ -17346,23 +17346,23 @@ var require_citeproc_commonjs = __commonJS({
             for (var i = 0, ilen = fields.length; i < ilen; i += 1) {
               var rawField = fields[i];
               var mm = rawField.match(/^([-_a-z]+)(?:\:(.*))*$/);
-              var field2 = mm[1];
+              var field = mm[1];
               var trimmer = state.tmp.abbrev_trimmer;
               if (mm[2]) {
                 if (trimmer && jurisdiction) {
                   if (!trimmer[jurisdiction]) {
                     trimmer[jurisdiction] = {};
                   }
-                  trimmer[jurisdiction][field2] = mm[2];
+                  trimmer[jurisdiction][field] = mm[2];
                 }
-              } else if (state.tmp.done_vars.indexOf(field2) === -1) {
+              } else if (state.tmp.done_vars.indexOf(field) === -1) {
                 if (trimmer && jurisdiction) {
                   if (!trimmer.QUASHES[jurisdiction]) {
                     trimmer.QUASHES[jurisdiction] = {};
                   }
-                  trimmer.QUASHES[jurisdiction][field2] = true;
+                  trimmer.QUASHES[jurisdiction][field] = true;
                 }
-                state.tmp.done_vars.push(field2);
+                state.tmp.done_vars.push(field);
               }
             }
           }
@@ -17891,10 +17891,10 @@ var require_citeproc_commonjs = __commonJS({
       }
     };
     CSL2.Engine.prototype.dateParseArray = function(date_obj) {
-      var ret, field2, dp, exts;
+      var ret, field, dp, exts;
       ret = {};
-      for (field2 in date_obj) {
-        if (field2 === "date-parts") {
+      for (field in date_obj) {
+        if (field === "date-parts") {
           dp = date_obj["date-parts"];
           if (dp.length > 1) {
             if (dp[0].length !== dp[1].length) {
@@ -17911,12 +17911,12 @@ var require_citeproc_commonjs = __commonJS({
               }
             }
           }
-        } else if (date_obj.hasOwnProperty(field2)) {
-          if (field2 === "literal" && "object" === typeof date_obj.literal && "string" === typeof date_obj.literal.part) {
+        } else if (date_obj.hasOwnProperty(field)) {
+          if (field === "literal" && "object" === typeof date_obj.literal && "string" === typeof date_obj.literal.part) {
             CSL2.debug("Warning: fixing up weird literal date value");
             ret.literal = date_obj.literal.part;
           } else {
-            ret[field2] = date_obj[field2];
+            ret[field] = date_obj[field];
           }
         }
       }
@@ -21413,10 +21413,10 @@ var require_citeproc_commonjs = __commonJS({
           pkey = "" + itemid + pkey;
         }
       };
-      evalname = function(item_id, nameobj, namenum, request_base, form, initials) {
+      evalname = function(item_id, nameobj, namenum, request_base, form, initials2) {
         var param;
         if (state.tmp.area.slice(0, 12) === "bibliography" && !form) {
-          if ("string" === typeof initials) {
+          if ("string" === typeof initials2) {
             return 1;
           } else {
             return 2;
@@ -21434,7 +21434,7 @@ var require_citeproc_commonjs = __commonJS({
         }
         if ("short" === form) {
           param = 0;
-        } else if ("string" === typeof initials) {
+        } else if ("string" === typeof initials2) {
           param = 1;
         }
         if ("undefined" === typeof this.namereg[pkey] || "undefined" === typeof this.namereg[pkey].ikey[ikey]) {
@@ -21453,7 +21453,7 @@ var require_citeproc_commonjs = __commonJS({
           if (this.namereg[pkey].count > 1) {
             param = 1;
           }
-          if (this.namereg[pkey].ikey && this.namereg[pkey].ikey[ikey].count > 1 || this.namereg[pkey].count > 1 && "string" !== typeof initials) {
+          if (this.namereg[pkey].ikey && this.namereg[pkey].ikey[ikey].count > 1 || this.namereg[pkey].count > 1 && "string" !== typeof initials2) {
             param = 2;
           }
         } else if (gdropt === "all-names-with-initials" || gdropt === "primary-name-with-initials") {
@@ -21466,7 +21466,7 @@ var require_citeproc_commonjs = __commonJS({
         if (!state.registry.registry[item_id]) {
           if (form == "short") {
             return 0;
-          } else if ("string" == typeof initials) {
+          } else if ("string" == typeof initials2) {
             return 1;
           }
         } else {
@@ -36212,10 +36212,10 @@ function correctField(fieldName, value, bestGuessConversions) {
 function parseCsl(data2, bestGuessConversions = true) {
   return data2.map(function(entry) {
     const clean = {};
-    for (const field2 in entry) {
-      const correction = correctField(field2, entry[field2], bestGuessConversions);
+    for (const field in entry) {
+      const correction = correctField(field, entry[field], bestGuessConversions);
       if (correction !== void 0) {
-        clean[field2] = correction;
+        clean[field] = correction;
       }
     }
     return clean;
@@ -119225,7 +119225,7 @@ var formats$1 = {
         props: ["author", "editor"],
         match: "some",
         value(authors) {
-          return Array.isArray(authors) && authors[0] && authorNameFields.some((field2) => field2 in authors[0]);
+          return Array.isArray(authors) && authors[0] && authorNameFields.some((field) => field in authors[0]);
         }
       }]
     }
@@ -120721,13 +120721,13 @@ var bibtexGrammar = new Grammar({
       properties: {}
     };
     while (this.matchToken("identifier")) {
-      const [field2, value] = this.consumeRule("Field");
+      const [field, value] = this.consumeRule("Field");
       let annotationField;
       let annotationName = "default";
-      if (field2.endsWith(config$1.biber.annotationMarker)) {
-        annotationField = field2.slice(0, -config$1.biber.annotationMarker.length);
-      } else if (field2.includes(config$1.biber.annotationMarker + config$1.biber.namedAnnotationMarker)) {
-        [annotationField, annotationName] = field2.split(config$1.biber.annotationMarker + config$1.biber.namedAnnotationMarker);
+      if (field.endsWith(config$1.biber.annotationMarker)) {
+        annotationField = field.slice(0, -config$1.biber.annotationMarker.length);
+      } else if (field.includes(config$1.biber.annotationMarker + config$1.biber.namedAnnotationMarker)) {
+        [annotationField, annotationName] = field.split(config$1.biber.annotationMarker + config$1.biber.namedAnnotationMarker);
       }
       if (annotationField) {
         if (!output2.annotations) {
@@ -120738,7 +120738,7 @@ var bibtexGrammar = new Grammar({
         }
         output2.annotations[annotationField][annotationName] = value;
       } else {
-        output2.properties[field2] = value;
+        output2.properties[field] = value;
       }
       this.consumeRule("_");
       if (this.consumeToken("comma", true)) {
@@ -120750,12 +120750,12 @@ var bibtexGrammar = new Grammar({
     return output2;
   },
   Field() {
-    const field2 = this.consumeToken("identifier").value.toLowerCase();
+    const field = this.consumeToken("identifier").value.toLowerCase();
     this.consumeRule("_");
     this.consumeToken("equals");
     this.consumeRule("_");
     const value = this.consumeRule("Expression");
-    return [field2, value];
+    return [field, value];
   },
   Expression() {
     let output2 = this.consumeRule("ExpressionPart");
@@ -122682,8 +122682,8 @@ var valueGrammar = new Grammar({
         if (text2.every((char) => char in mathScripts[script])) {
           output2 += text2.map((char) => mathScripts[script][char]).join("");
         } else {
-          const formatName2 = mathScriptFormatting[script];
-          output2 += formatting[formatName2].join(text2.join(""));
+          const formatName3 = mathScriptFormatting[script];
+          output2 += formatting[formatName3].join(text2.join(""));
         }
         continue;
       }
@@ -122847,8 +122847,8 @@ function getLexerState(fieldType) {
       return "stringLiteral";
   }
 }
-function parse$2(text2, field2, languages = []) {
-  const fieldType = fieldTypes[field2] || [];
+function parse$2(text2, field, languages = []) {
+  const fieldType = fieldTypes[field] || [];
   return valueGrammar.parse(lexer.reset(text2, {
     state: getLexerState(fieldType),
     line: 0,
@@ -122920,11 +122920,11 @@ function validate(entries, requirements) {
   } of entries) {
     if (type2 in requirements) {
       const missing = [];
-      for (const field2 of requirements[type2]) {
-        if (Array.isArray(field2) && !field2.some((field3) => field3 in properties)) {
-          missing.push(field2.join("/"));
-        } else if (typeof field2 === "string" && !(field2 in properties)) {
-          missing.push(field2);
+      for (const field of requirements[type2]) {
+        if (Array.isArray(field) && !field.some((field2) => field2 in properties)) {
+          missing.push(field.join("/"));
+        } else if (typeof field === "string" && !(field in properties)) {
+          missing.push(field);
         }
       }
       if (missing.length) {
@@ -123133,11 +123133,11 @@ function formatAnnotationValue(values) {
     return '"' + escapeValue(values).replace(/(["])/g, "{$1}") + '"';
   }
 }
-function format$4(field2, value) {
-  if (!(field2 in fieldTypes)) {
+function format$4(field, value) {
+  if (!(field in fieldTypes)) {
     return formatSingleValue(value, "verbatim");
   }
-  const [listType, valueType] = fieldTypes[field2];
+  const [listType, valueType] = fieldTypes[field];
   if (listType in listDelimiters) {
     return formatList(value, valueType, listType);
   } else {
@@ -123186,15 +123186,15 @@ function formatEntryValues({
   };
   for (const property in properties) {
     const value = properties[property];
-    const [field2, annotation] = property.split("+an:");
+    const [field, annotation] = property.split("+an:");
     if (annotation) {
       if (!output2.annotations) {
         output2.annotations = {};
       }
-      if (!output2.annotations[field2]) {
-        output2.annotations[field2] = {};
+      if (!output2.annotations[field]) {
+        output2.annotations[field] = {};
       }
-      output2.annotations[field2][annotation] = formatAnnotation(value);
+      output2.annotations[field][annotation] = formatAnnotation(value);
     } else {
       output2.properties[property] = format$4(property, value);
     }
@@ -123207,20 +123207,20 @@ function format$3(entries) {
 function formatBibtex(entries) {
   return formatBibtex$1(entries).map(formatEntryValues);
 }
-function formatField(field2, value, dict2) {
-  return dict2.listItem.join(`${field2} = {${value}},`);
+function formatField(field, value, dict2) {
+  return dict2.listItem.join(`${field} = {${value}},`);
 }
 function formatEntry$1(entry, dict2) {
   const fields = [];
-  for (const field2 in entry.properties) {
-    fields.push(formatField(field2, entry.properties[field2], dict2));
-    if (entry.annotations && entry.annotations[field2]) {
-      for (const annotation in entry.annotations[field2]) {
-        let annotationField = field2 + config$1.biber.annotationMarker;
+  for (const field in entry.properties) {
+    fields.push(formatField(field, entry.properties[field], dict2));
+    if (entry.annotations && entry.annotations[field]) {
+      for (const annotation in entry.annotations[field]) {
+        let annotationField = field + config$1.biber.annotationMarker;
         if (annotation !== "default") {
           annotationField += config$1.biber.namedAnnotationMarker + annotation;
         }
-        fields.push(formatField(annotationField, entry.annotations[field2][annotation], dict2));
+        fields.push(formatField(annotationField, entry.annotations[field][annotation], dict2));
       }
     }
   }
@@ -123235,7 +123235,7 @@ function formatEntry({
   label: label2,
   properties
 }, dict2) {
-  const fields = Object.entries(properties).concat([["type", type2]]).map(([field2, value]) => dict2.listItem.join(`${field2}: ${value}`));
+  const fields = Object.entries(properties).concat([["type", type2]]).map(([field, value]) => dict2.listItem.join(`${field}: ${value}`));
   return dict2.entry.join(`[${label2}]${dict2.list.join(fields.join(""))}`);
 }
 function format$1(src, dict2) {
@@ -124333,41 +124333,13 @@ config.templates.add("chicago", chicago);
 var rehypeCitation = rehypeCitationGenerator(Cite);
 
 // index.ts
-function field(body, name2) {
-  const r = new RegExp(name2 + "\\s*=\\s*\\{([^}]+)\\}", "i");
-  const m = body.match(r);
-  return m ? m[1] : "";
-}
-function cleanBibTex(str) {
-  if (!str) return "";
-  return str.replace(/^\{+|\}+$/g, "").replace(/[{}]/g, "").replace(/_\{([^}]*)\}/g, "<sub>$1</sub>").replace(/\^\{([^}]*)\}/g, "<sup>$1</sup>").replace(/\$/g, "").replace(/\s+/g, " ").trim();
-}
-function formatAuthors(authors) {
-  const parts = authors.split(" and ");
-  if (parts.length === 0) return authors;
-  if (parts.length === 1) return parts[0];
-  return parts[0].split(",")[0] + " et al.";
-}
-function parseBibFile(filePath) {
-  const text2 = fs.readFileSync(filePath, "utf8");
-  const entries = {};
-  const entryRegex = /@.+?\{([^,]+),([\s\S]*?)\n\}/g;
-  let match;
-  while ((match = entryRegex.exec(text2)) !== null) {
-    const key = match[1].trim().toLowerCase();
-    const body = match[2];
-    const doi = field(body, "doi");
-    const url = field(body, "url");
-    entries[key] = {
-      title: cleanBibTex(field(body, "title")),
-      author: formatAuthors(cleanBibTex(field(body, "author"))),
-      year: cleanBibTex(field(body, "year")),
-      journal: normalizeJournal(field(body, "journal") || field(body, "booktitle")),
-      link: doi ? `https://doi.org/${doi}` : url
-    };
-  }
-  return entries;
-}
+var defaultOptions2 = {
+  bibliographyFile: "./bibliography.bib",
+  suppressBibliography: true,
+  linkCitations: true,
+  csl: "apa",
+  fallbackSearch: "ads"
+};
 function stripAbstractFields(bibtex2) {
   const abstractField = /^\s*abstract\s*=\s*([{"])/gim;
   let output2 = "";
@@ -124379,7 +124351,7 @@ function stripAbstractFields(bibtex2) {
     let depth = opener === "{" ? 1 : 0;
     while (index < bibtex2.length) {
       const character = bibtex2[index];
-      if (character === "\\\\") {
+      if (character === "\\") {
         index += 2;
         continue;
       }
@@ -124412,68 +124384,208 @@ function createCitationBibliography(sourcePath) {
   fs.writeFileSync(derivedPath, stripAbstractFields(source));
   return path2.relative(process.cwd(), derivedPath);
 }
-var defaultOptions2 = {
-  bibliographyFile: "./bibliography.bib",
-  suppressBibliography: true,
-  linkCitations: true,
-  csl: "apa"
-};
-var journalMacros = {
-  "\\apj": "The Astrophysical Journal",
-  "\\apjl": "The Astrophysical Journal Letters",
-  "\\apjs": "The Astrophysical Journal Supplement Series",
-  "\\aj": "The Astronomical Journal",
-  "\\aap": "Astronomy & Astrophysics",
-  "\\aapr": "Astronomy & Astrophysics Review",
-  "\\aaps": "Astronomy & Astrophysics Supplement Series",
-  "\\mnras": "Monthly Notices of the Royal Astronomical Society",
-  "\\nat": "Nature",
-  "\\sci": "Science",
-  "\\icarus": "Icarus",
-  "\\pasp": "Publications of the Astronomical Society of the Pacific",
-  "\\pasj": "Publications of the Astronomical Society of Japan"
-};
-function normalizeJournal(journal) {
-  if (!journal) return "";
-  const cleaned = journal.replace(/[{}]/g, "").trim();
-  if (journalMacros[cleaned]) {
-    return journalMacros[cleaned];
-  }
-  return cleaned;
+function initials(given = "") {
+  return given.trim().split(/\s+/).filter(Boolean).map(
+    (part) => part.split("-").map((section) => {
+      const initial = section.match(/[\p{L}\p{N}]/u)?.[0];
+      return initial ? `${initial.toUpperCase()}.` : "";
+    }).filter(Boolean).join("-")
+  ).filter(Boolean).join(" ");
 }
-var popoverScript = `
-document.addEventListener("DOMContentLoaded", () => {
-    const pop = document.createElement("div")
-    pop.className = "citation-popover"
-    document.body.appendChild(pop)
+function formatName2(name2) {
+  if (name2.literal) return name2.literal;
+  const family = name2.family?.trim() ?? "";
+  const givenInitials = initials(name2.given);
+  return [family, givenInitials].filter(Boolean).join(", ");
+}
+function formatNames(names = []) {
+  const formatted = names.map(formatName2).filter(Boolean);
+  if (formatted.length < 2) return formatted[0] ?? "";
+  if (formatted.length === 2) return `${formatted[0]}, & ${formatted[1]}`;
+  return `${formatted.slice(0, -1).join(", ")}, & ${formatted.at(-1)}`;
+}
+function publicationYear(issued) {
+  const year = issued?.["date-parts"]?.[0]?.[0];
+  return year ? String(year) : issued?.literal?.trim() ?? "";
+}
+function normalizeDoi(value = "") {
+  return value.trim().replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "").replace(/^doi:\s*/i, "");
+}
+function adsSearchUrl(entry) {
+  const title = entry.title?.trim() ?? "";
+  const firstAuthor = entry.author?.[0]?.family ?? entry.author?.[0]?.literal ?? "";
+  const terms = [title && `title:"${title}"`, firstAuthor && `author:"${firstAuthor}"`].filter(Boolean).join(" ");
+  return `https://ui.adsabs.harvard.edu/search/q=${encodeURIComponent(terms || entry.id || "")}`;
+}
+function googleSearchUrl(entry) {
+  const firstAuthor = entry.author?.[0]?.family ?? entry.author?.[0]?.literal ?? "";
+  const terms = [entry.title, firstAuthor].filter(Boolean).join(" ");
+  return `https://www.google.com/search?q=${encodeURIComponent(terms || entry.id || "")}`;
+}
+function citationLink(entry, fallbackSearch) {
+  const doi = normalizeDoi(entry.DOI);
+  if (doi) return `https://doi.org/${doi}`;
+  if (entry.URL?.trim()) return entry.URL.trim();
+  return fallbackSearch === "google" ? googleSearchUrl(entry) : adsSearchUrl(entry);
+}
+function parseCitationData(bibliographyPath, fallbackSearch) {
+  const bibliography2 = fs.readFileSync(bibliographyPath, "utf8");
+  const parsed = new Cite(bibliography2, {}).data;
+  const entries = {};
+  for (const entry of parsed) {
+    const key = String(entry["citation-key"] ?? entry.id ?? "").toLowerCase();
+    if (!key) continue;
+    const doi = normalizeDoi(entry.DOI);
+    entries[key] = {
+      title: entry.title?.trim() ?? "",
+      authors: formatNames(entry.author?.length ? entry.author : entry.editor),
+      year: publicationYear(entry.issued),
+      container: String(entry["container-title"] ?? entry.publisher ?? "").trim(),
+      volume: String(entry.volume ?? "").trim(),
+      issue: String(entry.issue ?? "").trim(),
+      pages: String(entry.page ?? "").trim(),
+      doi,
+      sourceUrl: entry.URL?.trim() ?? "",
+      link: citationLink(entry, fallbackSearch),
+      linkLabel: doi ? `https://doi.org/${doi}` : entry.URL?.trim() ? entry.URL.trim() : fallbackSearch === "google" ? "Search on Google" : "Search on NASA ADS"
+    };
+  }
+  return entries;
+}
+function classNames(value) {
+  if (Array.isArray(value)) return value.map(String);
+  if (typeof value === "string") return value.split(/\s+/).filter(Boolean);
+  return [];
+}
+var popoverScript = String.raw`
+(() => {
+  let hideTimer
+  let activeCitation = null
+  let popover = document.querySelector(".citation-popover")
 
-    document.querySelectorAll("a.citation-link").forEach((el) => {
-        el.addEventListener("mouseenter", () => {
-            const title = el.dataset.citeTitle || ""
-            const author = el.dataset.citeAuthor || ""
-            const year = el.dataset.citeYear || ""
-            const journal = el.dataset.citeJournal || ""
+  if (!popover) {
+    popover = document.createElement("div")
+    popover.className = "citation-popover"
+    popover.id = "citation-popover"
+    popover.setAttribute("role", "tooltip")
+    popover.setAttribute("aria-hidden", "true")
+    document.body.appendChild(popover)
+  }
 
-            pop.innerHTML =
-                "<strong>" + title + "</strong><br>" +
-                author + " (" + year + ")<br>" +
-                journal
+  const text = (tag, value, className) => {
+    const element = document.createElement(tag)
+    if (className) element.className = className
+    element.textContent = value
+    return element
+  }
 
-            const rect = el.getBoundingClientRect()
-            pop.style.left = rect.left + window.scrollX + "px"
-            pop.style.top = rect.bottom + window.scrollY + 8 + "px"
-            pop.style.display = "block"
-        })
+  const punctuation = (value) => popover.appendChild(document.createTextNode(value))
 
-        el.addEventListener("mouseleave", () => {
-            pop.style.display = "none"
-        })
+  const position = (citation) => {
+    const gap = 8
+    const edge = 12
+    const anchor = citation.getBoundingClientRect()
+    const card = popover.getBoundingClientRect()
+    const left = Math.min(
+      Math.max(edge, anchor.left),
+      Math.max(edge, window.innerWidth - card.width - edge),
+    )
+    let top = anchor.bottom + gap
+    if (top + card.height > window.innerHeight - edge) {
+      top = Math.max(edge, anchor.top - card.height - gap)
+    }
+    popover.style.transform = "translate(" + Math.round(left) + "px, " + Math.round(top) + "px)"
+  }
+
+  const render = (citation) => {
+    popover.replaceChildren()
+    const data = citation.dataset
+
+    if (data.citeAuthors) {
+      popover.appendChild(text("span", data.citeAuthors, "citation-popover-authors"))
+    }
+    if (data.citeYear) punctuation((data.citeAuthors ? " " : "") + "(" + data.citeYear + ").")
+    else if (data.citeAuthors) punctuation(".")
+    if (data.citeTitle) {
+      const titleEnd = /[.!?]$/.test(data.citeTitle) ? "" : "."
+      punctuation((popover.textContent ? " " : "") + data.citeTitle + titleEnd)
+    }
+
+    if (data.citeContainer || data.citeVolume) {
+      punctuation(" ")
+      const publication = [data.citeContainer, data.citeVolume].filter(Boolean).join(", ")
+      popover.appendChild(text("em", publication, "citation-popover-publication"))
+      if (data.citeIssue) punctuation("(" + data.citeIssue + ")")
+      if (data.citePages) punctuation(", " + data.citePages)
+      punctuation(".")
+    } else if (data.citePages) {
+      punctuation(" " + data.citePages + ".")
+    }
+
+    const sourceUrl = data.citeDoi
+      ? "https://doi.org/" + data.citeDoi
+      : data.citeSourceUrl || citation.href
+    if (sourceUrl) {
+      punctuation(" ")
+      const source = text("a", data.citeLinkLabel || sourceUrl, "citation-popover-source")
+      source.href = sourceUrl
+      source.target = "_blank"
+      source.rel = "noopener noreferrer"
+      popover.appendChild(source)
+    }
+  }
+
+  const show = (citation) => {
+    window.clearTimeout(hideTimer)
+    activeCitation = citation
+    render(citation)
+    popover.classList.add("is-visible")
+    popover.setAttribute("aria-hidden", "false")
+    citation.setAttribute("aria-describedby", popover.id)
+    position(citation)
+  }
+
+  const hide = () => {
+    if (activeCitation) activeCitation.removeAttribute("aria-describedby")
+    activeCitation = null
+    popover.classList.remove("is-visible")
+    popover.setAttribute("aria-hidden", "true")
+  }
+
+  const scheduleHide = () => {
+    window.clearTimeout(hideTimer)
+    hideTimer = window.setTimeout(hide, 120)
+  }
+
+  const setup = () => {
+    document.querySelectorAll("a.citation-link:not([data-citation-ready])").forEach((citation) => {
+      citation.dataset.citationReady = "true"
+      citation.addEventListener("mouseenter", () => show(citation))
+      citation.addEventListener("mouseleave", scheduleHide)
+      citation.addEventListener("focus", () => show(citation))
+      citation.addEventListener("blur", scheduleHide)
     })
-})
+  }
+
+  popover.addEventListener("mouseenter", () => window.clearTimeout(hideTimer))
+  popover.addEventListener("mouseleave", scheduleHide)
+  window.addEventListener("resize", hide)
+  window.addEventListener("scroll", () => {
+    const citation = activeCitation
+    if (citation) window.requestAnimationFrame(() => position(citation))
+  }, true)
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") hide()
+  })
+  document.addEventListener("nav", setup)
+  document.addEventListener("render", setup)
+  setup()
+})()
 `;
 var Citations = (userOpts) => {
   const opts = { ...defaultOptions2, ...userOpts };
   const citationBibliography = createCitationBibliography(path2.resolve(opts.bibliographyFile));
+  const citationData = parseCitationData(path2.resolve(citationBibliography), opts.fallbackSearch);
   return {
     name: "Citations",
     htmlPlugins(ctx) {
@@ -124493,30 +124605,28 @@ var Citations = (userOpts) => {
         }
       ]);
       plugins2.push(() => {
-        const bibPath = path2.resolve(opts.bibliographyFile);
-        const citationData = parseBibFile(bibPath);
         return (tree) => {
           visit(tree, "element", (node) => {
-            if (node.tagName === "a" && node.properties?.href) {
-              const href = String(node.properties.href);
-              if (href.startsWith("#bib-")) {
-                const key = node.properties.href.replace("#bib-", "").toLowerCase();
-                const entry = citationData[key];
-                if (entry?.link) {
-                  node.properties.href = entry.link;
-                  node.properties.target = "_blank";
-                  node.properties.rel = "noopener noreferrer";
-                  node.properties["data-cite-title"] = entry.title;
-                  node.properties["data-cite-author"] = entry.author;
-                  node.properties["data-cite-year"] = entry.year;
-                  node.properties["data-cite-journal"] = entry.journal;
-                  node.properties.className = [
-                    ...node.properties.className || [],
-                    "citation-link"
-                  ];
-                }
-              }
-            }
+            if (node.tagName !== "a" || !node.properties?.href) return;
+            const href = String(node.properties.href);
+            if (!href.startsWith("#bib-")) return;
+            const key = href.slice("#bib-".length).toLowerCase();
+            const entry = citationData[key];
+            if (!entry) return;
+            node.properties.href = entry.link;
+            node.properties.target = "_blank";
+            node.properties.rel = "noopener noreferrer";
+            node.properties["data-cite-title"] = entry.title;
+            node.properties["data-cite-authors"] = entry.authors;
+            node.properties["data-cite-year"] = entry.year;
+            node.properties["data-cite-container"] = entry.container;
+            node.properties["data-cite-volume"] = entry.volume;
+            node.properties["data-cite-issue"] = entry.issue;
+            node.properties["data-cite-pages"] = entry.pages;
+            node.properties["data-cite-doi"] = entry.doi;
+            node.properties["data-cite-source-url"] = entry.sourceUrl;
+            node.properties["data-cite-link-label"] = entry.linkLabel;
+            node.properties.className = [...classNames(node.properties.className), "citation-link"];
           });
         };
       });
