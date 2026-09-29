@@ -3,13 +3,13 @@ status: transient
 ---
 
 
-1. [ ] Disk physical params
+1. [x] Disk physical params
 2. Chemical params
 3. Physical structure plots
 4. Chemical abundance profiles (CO, N2H+, HCO+, H2CO, CH3OH, CCH, HC3N, HCN, CS) (r vs z)
 5. Integrated column density profiles for above molecules (Ncol vs r)
 6. Integrated flux and Moment-0 maps.
-- [ ] PRIMA Slides 📅 2026-07-07
+- [x] PRIMA Slides 📅 2026-07-07
 
 # Runs to test
 1. Pure Gas phase chemistry (1.5 hrs/global iteration)
