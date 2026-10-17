@@ -29,3 +29,6 @@ Minor planets in the solar system are objects in *direct* orbit around the Sun, 
 ### Centaurs
 
 ### Trans-Neptunian Objects (TNOs)
+
+#### KBOs
+

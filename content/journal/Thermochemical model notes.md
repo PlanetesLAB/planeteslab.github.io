@@ -25,3 +25,14 @@ z/r <1 Cold mid-plane
 
 
 - Try models with simple dust distribution to see how can we have UV flux reach midplane for UV photodesorption of molecules like Methanol.
+
+- [ ] C/O -> Super-solar (>1) from CCH transitions (inheritance)
+- [ ] CO, N2H+ 
+- [ ] HCO+ ionization
+- [ ] HD 1-0 for mass
+- [ ] X-ray prescription
+- [ ] CR prescription from limulus
+- [ ] Ice absorption SED from scorpia
+
+# Draft
+Methodology and Introduction

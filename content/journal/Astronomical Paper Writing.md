@@ -41,4 +41,10 @@ status: writing
 - Never use "This" without an immediate noun (?)
 - Limit clauses: subject/verb/object+1 clause max
 - Keep subjects near verbs (A sentence should clearly state *who* did *what action*)
-- 
+
+## 2026-09-16
+
+- What about cartoons?: How much you actually describe things depends on audience (applicable for figures too).
+- Think about each element of a plot: Axes, lines/scatters, symbols, contours/heat maps/color gradients, cartoons/schematic.
+- Figures should be modified accordingly depending on if it will be used in a paper or in a presentation.
+- Homework: send caption+cartoon+figure.

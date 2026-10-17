@@ -132,6 +132,10 @@ First large scale survey with focus on substructures. DSHARP was a mostly contin
 19. @fukagawaExoALMAXXIITwodimensional2026 — A very useful 2-D atlas of what might we want to work on.
 20. @ruzzaExoALMAXXIIIEstimating2026 — Simulation-based inference modeling. Can we also include gas dynamics here?
 
+---
+## Others
+1. @paneque-carrenoHighTurbulenceIM2023 — 
+
 
 
 # Current state of the Art
