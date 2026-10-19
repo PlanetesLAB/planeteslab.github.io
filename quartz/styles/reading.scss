@@ -1026,8 +1026,93 @@
         padding: 0 1rem;
       }
 
+      // The page already supplies the content gutter. Let the toolbar cover the
+      // full viewport, then give its controls and drawer one shared inner inset.
+      #quartz-body > .left.sidebar:has(.explorer) {
+        width: calc(100% + 2rem) !important;
+        margin: 0 -1rem !important;
+        padding: 0.75rem 1rem !important;
+        box-sizing: border-box;
+
+        .explorer {
+          flex: none !important;
+          min-width: 44px;
+        }
+
+        .mobile-explorer {
+          width: 44px;
+          height: 44px;
+          padding: 0;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .search {
+          display: block !important;
+          width: 44px;
+          min-width: 44px;
+          max-width: 44px !important;
+          flex: none;
+
+          > .search-button {
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: 0;
+            justify-content: center;
+
+            > p {
+              display: none;
+            }
+
+            svg {
+              width: 22px;
+              min-width: 22px;
+              margin: 0;
+            }
+          }
+        }
+
+        .explorer > .explorer-content {
+          position: fixed;
+          inset: 0;
+          width: auto;
+          max-width: none;
+          height: 100dvh;
+          max-height: 100dvh;
+          padding: 4.5rem max(1rem, env(safe-area-inset-right))
+            max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+          box-sizing: border-box;
+
+          > .explorer-ul {
+            height: 100%;
+            max-height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-gutter: stable;
+          }
+
+          .folder-container > div {
+            min-width: 0;
+            flex: 1;
+          }
+
+          a,
+          .folder-button,
+          .folder-title {
+            max-width: 100%;
+            white-space: normal;
+            overflow-wrap: anywhere;
+          }
+        }
+      }
+
       #quartz-body {
         padding: 0;
+
+        .center::before {
+          top: 0;
+        }
 
         .center::after {
           height: 1.25rem;

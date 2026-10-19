@@ -31,7 +31,7 @@ z/r <1 Cold mid-plane
 - [ ] HCO+ ionization
 - [ ] HD 1-0 for mass
 - [ ] X-ray prescription
-- [ ] CR prescription from limulus
+- [x] CR prescription from limulus
 - [ ] Ice absorption SED from scorpia
 
 # Draft
