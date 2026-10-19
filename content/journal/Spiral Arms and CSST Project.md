@@ -29,7 +29,7 @@ The comparison with Katie's result is now similar, though not identical. One pos
 
 ### CPI paper
 
-Ruobing shared the [CPI paper](https://arxiv.org/abs/2608.16215). Its HR 8799 planet examples are useful context for our instrument simulations. They are not a validation of our disk calculation.
+Ruobing shared the @zhuMockObservationsCSST2026 paper. Its HR 8799 planet examples are useful context for our instrument simulations. They are not a validation of our disk calculation.
 
 ## 2026-08-10
 

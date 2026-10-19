@@ -1,152 +1,9 @@
 @use "./variables.scss" as *;
+@use "./reading.scss";
 
 // put your custom CSS here!
 img {
   background-color: white;
-}
-
-.page-title {
-  font-size: 2.5rem;
-}
-
-article.popover-hint h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.3;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-article.popover-hint h2 {
-  font-size: 1.25rem;
-  margin-top: 1.25rem;
-  margin-bottom: 0.75rem;
-}
-
-article.popover-hint h3 {
-  font-size: 1rem;
-}
-
-h1.article-title {
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
-}
-
-// Page status treatments. Live pages deliberately receive no status class or styling.
-// The remaining states use the site's type, rules, and blue/peach palette—not badges.
-#quartz-body:has(.article-title[class*="status-"]) .center {
-  position: relative;
-  padding: 0.75rem 1.25rem 1.5rem;
-  margin: $topSpacing -1.25rem 0;
-  border-radius: 0.75rem;
-  overflow: hidden;
-}
-
-// The normal frame offsets its content via .page-header. Move that offset to
-// the status panel so the panel begins exactly alongside the site title and breadcrumb.
-#quartz-body:has(.article-title[class*="status-"]) .center .page-header {
-  margin-top: 0;
-}
-
-#quartz-body .article-title[class*="status-"]::before {
-  display: block;
-  margin: 0 0 0.45rem;
-  font-family: var(--headerFont);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-// Draft: an engineering-sheet grid, adapted from the site's blue link color.
-#quartz-body:has(.article-title.status-draft) .center {
-  border: 1px solid color-mix(in srgb, var(--secondary) 58%, var(--lightgray));
-  background-color: color-mix(in srgb, var(--secondary) 3%, var(--light));
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--secondary) 12%, transparent) 1px, transparent 1px),
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--secondary) 12%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 1.25rem 1.25rem;
-}
-
-#quartz-body .article-title.status-draft::before {
-  content: "Draft";
-  color: var(--secondary);
-}
-
-#quartz-body .article-title.status-draft {
-  padding-bottom: 0.45rem;
-  border-bottom: 2px solid var(--secondary);
-}
-
-// Review: a prominent editorial rule; polished, but deliberately not final.
-#quartz-body:has(.article-title.status-review) .center {
-  border-left: 4px solid var(--tertiary);
-  padding-left: calc(1.25rem - 4px);
-}
-
-#quartz-body .article-title.status-review::before {
-  content: "Review";
-  color: var(--tertiary);
-}
-
-#quartz-body .article-title.status-review {
-  padding-bottom: 0.45rem;
-  border-bottom: 2px solid var(--tertiary);
-}
-
-// Writing: a blue work-line and measured title wash, visible without visual noise.
-#quartz-body:has(.article-title.status-writing) .center {
-  border-left: 4px solid var(--secondary);
-  padding-left: calc(1.25rem - 4px);
-}
-
-#quartz-body .article-title.status-writing::before {
-  content: "Writing";
-  color: var(--secondary);
-}
-
-#quartz-body .article-title.status-writing {
-  padding: 0.35rem 0.5rem 0.45rem;
-  margin-left: -0.5rem;
-  border-bottom: 3px solid var(--secondary);
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--secondary) 13%, transparent),
-    transparent 70%
-  );
-}
-
-// Transient: local-only scratch work, expressed as a restrained graph-paper field.
-#quartz-body:has(.article-title.status-transient) .center {
-  border: 1px solid color-mix(in srgb, var(--gray) 70%, var(--lightgray));
-  background-color: color-mix(in srgb, var(--lightgray) 45%, transparent);
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--gray) 16%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--gray) 16%, transparent) 1px, transparent 1px);
-  background-size: 1.25rem 1.25rem;
-}
-
-#quartz-body .article-title.status-transient::before {
-  content: "Transient";
-  color: var(--gray);
-}
-
-#quartz-body .article-title.status-transient {
-  padding-bottom: 0.45rem;
-  border-bottom: 2px solid var(--gray);
-}
-
-@media all and ($mobile) {
-  #quartz-body:has(.article-title[class*="status-"]) .center {
-    padding: 0.25rem 0.75rem 1rem;
-    margin: 0;
-  }
 }
 
 /* Only style links inside the Explorer tree */
@@ -185,8 +42,7 @@ h1.article-title {
 .date-container {
   background-color: rgba(130, 130, 130, 0.1);
   /* A transparent light gray */
-  border-left: 3px solid var(--tertiary);
-  /* Uses your site's tertiary color variable */
+  border-block: 1px solid var(--lightgray);
   padding: 0.5rem 0.75rem;
   /* 0.5rem top/bottom, 0.75rem left/right */
   border-radius: 4px;
@@ -279,75 +135,10 @@ img[src$="apjs.png"] {
   height: auto;
 }
 
-// Paper Preview Container
-.paper-preview-container {
-  margin: 2rem 0 3rem 0;
-  padding: 0;
-}
-
-.paper-preview {
-  background-color: rgba(130, 130, 130, 0.05);
-  border-left: 4px solid #89b4fa; // Using the blue from your theme
-  border-radius: 6px;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: rgba(137, 180, 250, 0.08);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  }
-}
-
-// Dark mode support
-.darkmode .paper-preview {
-  background-color: rgba(180, 190, 254, 0.08);
-  border-left-color: #b4befe;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-
-  &:hover {
-    background-color: rgba(137, 180, 250, 0.12);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-  }
-}
-
-// Journal logo
-.journal-logo {
-  margin-bottom: 1.5rem;
-
-  img {
-    max-height: 60px;
-    max-width: 300px;
-  }
-}
-
-// Authors list (inline, comma-separated)
-.authors-list {
-  font-size: 0.95rem;
-  // color: var(--gray);
-  margin-bottom: 1rem;
-  line-height: 1.6;
-  font-weight: 500;
-}
-
-// Metadata section
-.metadata {
-  margin: 1rem 0;
-  padding: 1rem;
-  background-color: rgba(130, 130, 130, 0.1);
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-
-.darkmode .metadata {
-  background-color: rgba(180, 190, 254, 0.1);
-}
-
+// Structural metadata layout; its presentation lives in reading.scss.
 .metadata-row {
   display: flex;
-  gap: 1.5rem;
   flex-wrap: wrap;
-  margin-bottom: 0.5rem;
 
   &:last-child {
     margin-bottom: 0;
@@ -356,150 +147,15 @@ img[src$="apjs.png"] {
 
 .metadata-item {
   display: flex;
-  gap: 0.5rem;
 }
 
-.metadata-label {
-  font-weight: 600;
-  // color: var(--dark);
-}
+.metadata-value a {
+  text-decoration: none;
+  transition: color 0.2s ease;
 
-.metadata-value {
-  // color: var(--gray);
-
-  a {
-    color: #89b4fa;
-    text-decoration: none;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: #b4befe;
-      text-decoration: underline;
-    }
-  }
-}
-
-// CoCERI table (Context / Claim / Evidence / Reasoning / Implications)
-.coceri-section {
-  margin-top: 1rem;
-}
-
-// Undo Quartz's .table-container wrapper defaults (extra margin/padding + scroll)
-.coceri-section .table-container {
-  overflow: visible;
-}
-
-.coceri-section .coceri-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 0.95rem;
-  margin: 0;
-  padding: 0;
-  border: 1px solid var(--lightgray);
-  border-radius: 8px;
-  overflow: hidden;
-
-  tbody {
-    line-height: normal;
-  }
-}
-
-.coceri-row {
-  --coceri-accent: var(--secondary);
-  --coceri-fill: color-mix(in srgb, var(--coceri-accent) 13%, transparent);
-
-  &[data-entry="co"] {
-    --coceri-accent: #1e66f5;
-  }
-
-  &[data-entry="c"] {
-    --coceri-accent: #40a02b;
-  }
-
-  &[data-entry="e"] {
-    --coceri-accent: #df8e1d;
-  }
-
-  &[data-entry="r"] {
-    --coceri-accent: #fe640b;
-  }
-
-  &[data-entry="i"] {
-    --coceri-accent: #8839ef;
-  }
-
-  border-bottom: 1px solid var(--lightgray);
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  td {
-    padding: 0.5rem 0.75rem;
-    vertical-align: top;
-  }
-
-  .coceri-label {
-    width: 7.5rem;
-    text-align: left;
-    vertical-align: middle;
-    font-family: var(--headerFont);
-    font-weight: 700;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--coceri-accent);
-    background-color: var(--coceri-fill);
-    box-shadow: inset 3px 0 0 var(--coceri-accent);
-  }
-
-  .coceri-value {
-    line-height: 1.6;
-    white-space: pre-line;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-}
-
-// Rounded table corners (in addition to the table's own border-radius)
-.coceri-table tr:first-child td:first-child {
-  border-top-left-radius: 7px;
-}
-
-.coceri-table tr:first-child td:last-child {
-  border-top-right-radius: 7px;
-}
-
-.coceri-table tr:last-child td:first-child {
-  border-bottom-left-radius: 7px;
-}
-
-.coceri-table tr:last-child td:last-child {
-  border-bottom-right-radius: 7px;
-}
-
-html[saved-theme="dark"] .coceri-row {
-  --coceri-fill: color-mix(in srgb, var(--coceri-accent) 18%, transparent);
-
-  &[data-entry="co"] {
-    --coceri-accent: #82aaff;
-  }
-
-  &[data-entry="c"] {
-    --coceri-accent: #9ece6a;
-  }
-
-  &[data-entry="e"] {
-    --coceri-accent: #e0af68;
-  }
-
-  &[data-entry="r"] {
-    --coceri-accent: #ff9e64;
-  }
-
-  &[data-entry="i"] {
-    --coceri-accent: #bb9af7;
+  &:hover {
+    color: var(--tertiary);
+    text-decoration: underline;
   }
 }
 
@@ -557,46 +213,10 @@ a.data-footnote-backref {
     box-sizing: border-box !important;
   }
 
-  // Right sidebar (table of contents, backlinks, etc.) — stack below content
-  .right.sidebar {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 1rem !important;
-    box-sizing: border-box !important;
-  }
-
-  // Article title scale-down for narrow screens
-  h1.article-title {
-    font-size: 1.5rem;
-  }
-
-  // Paper preview: tighten padding on mobile
-  .paper-preview {
-    padding: 1rem 1.25rem;
-  }
-
-  // Journal logos: don't let them overflow
+  // Journal logos keep their natural aspect ratio on narrow screens.
   .journal-logo img {
     max-width: 100%;
     height: auto;
-  }
-
-  // Metadata rows: stack vertically instead of wrapping awkwardly
-  .metadata-row {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  // CoCERI table: tighten on narrow screens
-  .coceri-row td {
-    padding: 0.4rem 0.5rem;
-  }
-
-  .coceri-label {
-    width: 5.5rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.05em;
-    overflow-wrap: break-word;
   }
 
   // Prevent any wide images from causing horizontal scroll
@@ -1114,9 +734,8 @@ h1.journal-month-heading {
 // --- Entry block: <details> wrapper ---
 details.journal-entry-block {
   padding-left: 1rem;
-  border-left: 2px solid var(--j-accent);
+  border-top: 1px solid color-mix(in srgb, var(--j-accent) 35%, var(--lightgray));
   margin-bottom: 1.5rem;
-  border-radius: 0 4px 4px 0;
   transition: background-color 0.15s ease;
 
   // Expanded state bg
@@ -1282,7 +901,7 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
 }
 
 /* Domain Grid Cards - Base (Mobile First) */
-.domain-grid ul {
+#quartz-body .domain-grid ul {
   display: flex;
   flex-direction: column;
   list-style: none;
@@ -1292,7 +911,10 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
   gap: 0.75rem;
 }
 
-.domain-grid li {
+#quartz-body .domain-grid li {
+  container-type: inline-size;
+  --domain-label-inset: clamp(0.45rem, 4cqw, 1.5rem);
+  --domain-label-max: 1.25rem;
   position: relative;
   height: 120px;
   /* Compact height for mobile list cards */
@@ -1315,11 +937,11 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
 }
 
 /* Allow gradient overlay */
-.domain-grid li::before {
+#quartz-body .domain-grid li::before {
   display: none !important;
 }
 
-.domain-grid li::after {
+#quartz-body .domain-grid li::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -1334,7 +956,7 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
   pointer-events: none;
 }
 
-.domain-grid li:hover {
+#quartz-body .domain-grid li:is(:hover, :focus-within) {
   background-color: rgba(137, 180, 250, 0.08);
   border-color: #89b4fa !important;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
@@ -1342,15 +964,15 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
 }
 
 /* Show gradient overlay ONLY if there's an image, ensuring perfect legibility */
-.domain-grid li:has(img):hover::after {
+#quartz-body .domain-grid li:has(img):is(:hover, :focus-within)::after {
   opacity: 1;
 }
 
-.domain-grid a.internal {
+#quartz-body .domain-grid a.internal {
   position: absolute;
   top: 50%;
-  left: 1.5rem;
-  right: 1.5rem;
+  left: var(--domain-label-inset);
+  right: var(--domain-label-inset);
   transform: translateY(-50%);
 
   background: transparent !important;
@@ -1359,16 +981,32 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
   color: var(--dark);
   font-family: var(--headerFont, "Inter", sans-serif);
   font-weight: 600;
-  font-size: 1.25rem;
+  // The longest word, Retrospectives, must fit even while adjacent cards shrink.
+  font-size: min(var(--domain-label-max), calc((100cqw - 2 * var(--domain-label-inset)) / 11));
   line-height: 1.2;
   letter-spacing: 0.01em;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  white-space: normal;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
-  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  // Container units already animate with the tracks. A font-size transition
+  // would lag behind a shrinking card and temporarily clip its label.
+  transition:
+    top 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    padding-bottom 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    letter-spacing 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.5s ease;
   z-index: 2;
 }
 
 /* Make the entire card clickable by using a massive pseudo-element clipped by the li's overflow: hidden */
-.domain-grid a.internal::after {
+#quartz-body .domain-grid a.internal::after {
   content: "";
   position: absolute;
   top: -1000px;
@@ -1378,11 +1016,11 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
   z-index: 1;
 }
 
-.domain-grid li:hover a.internal {
+#quartz-body .domain-grid li:is(:hover, :focus-within) a.internal {
+  --domain-label-max: 1.6rem;
   top: 100%;
   transform: translateY(-100%);
-  padding-bottom: 1.5rem;
-  font-size: 1.6rem;
+  padding-bottom: clamp(0.65rem, 5cqw, 1.5rem);
   letter-spacing: -0.02em;
   font-weight: 800;
   color: var(--tertiary);
@@ -1391,13 +1029,13 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
 /* Smart text contrast (removed for light mode compatibility) */
 
 /* Intensify the text shadow on hover over an image */
-.domain-grid li:has(img):hover a.internal {
+#quartz-body .domain-grid li:has(img):is(:hover, :focus-within) a.internal {
   color: #ffffff !important;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
 }
 
 /* Styling for future card graphics as backgrounds */
-.domain-grid li img {
+#quartz-body .domain-grid li img {
   position: absolute;
   top: 0;
   left: 0;
@@ -1418,7 +1056,7 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
   /* Performance hint for heavy filters */
 }
 
-.domain-grid li:hover img {
+#quartz-body .domain-grid li:is(:hover, :focus-within) img {
   transform: scale(1.15) translateZ(0);
   /* Keep zooming in dynamically when hovered */
   opacity: 0.95;
@@ -1426,26 +1064,30 @@ details.journal-entry-block:not([open]) summary.journal-entry-heading {
   /* Snap into crystal clear focus on hover */
 }
 
-.domain-grid li p {
+#quartz-body .domain-grid li p {
   margin: 0;
   display: contents;
 }
 
 /* Dark mode adjustments */
-html[saved-theme="dark"] .domain-grid li,
-.darkmode .domain-grid li {
+html[saved-theme="dark"] #quartz-body .domain-grid li,
+.darkmode #quartz-body .domain-grid li {
   background-color: rgba(180, 190, 254, 0.05);
 }
 
-html[saved-theme="dark"] .domain-grid li:hover,
-.darkmode .domain-grid li:hover {
+html[saved-theme="dark"] #quartz-body .domain-grid li:is(:hover, :focus-within),
+.darkmode #quartz-body .domain-grid li:is(:hover, :focus-within) {
   background-color: rgba(137, 180, 250, 0.12);
   border-color: #b4befe !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-html[saved-theme="dark"] .domain-grid li:hover a.internal:not(:has(img)),
-.darkmode .domain-grid li:hover a.internal:not(:has(img)) {
+html[saved-theme="dark"]
+  #quartz-body
+  .domain-grid
+  li:is(:hover, :focus-within)
+  a.internal:not(:has(img)),
+.darkmode #quartz-body .domain-grid li:is(:hover, :focus-within) a.internal:not(:has(img)) {
   color: #b4befe;
 }
 
@@ -1488,7 +1130,7 @@ html[saved-theme="dark"] .domain-grid li:hover a.internal:not(:has(img)),
 
 /* Domain Grid Cards - Desktop Grid & Magnification */
 @media (min-width: 1200px) {
-  .domain-grid ul {
+  #quartz-body .domain-grid ul {
     display: grid;
     /* 3x3 Grid driven by smoothly-animatable custom properties */
     grid-template-columns: var(--grid-col-1) var(--grid-col-2) var(--grid-col-3);
@@ -1506,7 +1148,7 @@ html[saved-theme="dark"] .domain-grid li:hover a.internal:not(:has(img)),
       --grid-row-3 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  .domain-grid li {
+  #quartz-body .domain-grid li {
     height: auto;
     /* Reset fixed height so CSS Grid controls height */
     margin: 6px;
@@ -1514,38 +1156,40 @@ html[saved-theme="dark"] .domain-grid li:hover a.internal:not(:has(img)),
   }
 
   /* Column expansion: which column is hovered */
-  .domain-grid ul:has(li:nth-child(3n + 1):hover) {
+  #quartz-body .domain-grid ul:has(li:nth-child(3n + 1):is(:hover, :focus-within)) {
     --grid-col-1: 55%;
     --grid-col-2: 22.5%;
     --grid-col-3: 22.5%;
   }
 
-  .domain-grid ul:has(li:nth-child(3n + 2):hover) {
+  #quartz-body .domain-grid ul:has(li:nth-child(3n + 2):is(:hover, :focus-within)) {
     --grid-col-1: 22.5%;
     --grid-col-2: 55%;
     --grid-col-3: 22.5%;
   }
 
-  .domain-grid ul:has(li:nth-child(3n + 3):hover) {
+  #quartz-body .domain-grid ul:has(li:nth-child(3n + 3):is(:hover, :focus-within)) {
     --grid-col-1: 22.5%;
     --grid-col-2: 22.5%;
     --grid-col-3: 55%;
   }
 
   /* Row expansion: which row is hovered */
-  .domain-grid ul:has(li:nth-child(-n + 3):hover) {
+  #quartz-body .domain-grid ul:has(li:nth-child(-n + 3):is(:hover, :focus-within)) {
     --grid-row-1: 55%;
     --grid-row-2: 22.5%;
     --grid-row-3: 22.5%;
   }
 
-  .domain-grid ul:has(li:nth-child(n + 4):nth-child(-n + 6):hover) {
+  #quartz-body
+    .domain-grid
+    ul:has(li:nth-child(n + 4):nth-child(-n + 6):is(:hover, :focus-within)) {
     --grid-row-1: 22.5%;
     --grid-row-2: 55%;
     --grid-row-3: 22.5%;
   }
 
-  .domain-grid ul:has(li:nth-child(n + 7):hover) {
+  #quartz-body .domain-grid ul:has(li:nth-child(n + 7):is(:hover, :focus-within)) {
     --grid-row-1: 22.5%;
     --grid-row-2: 22.5%;
     --grid-row-3: 55%;
@@ -1568,628 +1212,6 @@ mjx-container.MathJax[display="true"] > svg {
   display: inline-block;
   margin: 0 auto;
   max-width: none !important;
-}
-
-/* ==========================================================================
-   Footnote Details Tag & Side Margin Rendering (Local Sidenotes Plugin)
-   ========================================================================== */
-
-details.footnote-details {
-  display: inline !important;
-  position: static !important;
-  vertical-align: baseline !important;
-
-  &[open]::details-content {
-    display: contents !important;
-  }
-
-  &:not([open]) > .footnote-body {
-    display: none !important;
-  }
-}
-
-details.footnote-details > summary.footnote-summary {
-  display: inline !important;
-  cursor: pointer;
-  list-style: none;
-  outline: none;
-  user-select: none;
-  position: relative;
-  z-index: 5;
-}
-
-details.footnote-details > summary.footnote-summary::-webkit-details-marker,
-details.footnote-details > summary.footnote-summary::marker {
-  display: none !important;
-  content: "" !important;
-}
-
-.footnote-ref-num {
-  color: var(--secondary);
-  font-weight: 600;
-  font-size: 0.78em;
-  line-height: 0;
-  vertical-align: super;
-  padding: 0 1px;
-  transition: opacity 0.15s ease;
-}
-
-details.footnote-details > summary.footnote-summary:hover .footnote-ref-num {
-  opacity: 0.75;
-}
-
-.footnote-body {
-  font-size: 0.82rem;
-  line-height: 1.45;
-  color: var(--darkgray);
-
-  a {
-    color: var(--secondary);
-    text-decoration: underline;
-
-    &:hover {
-      opacity: 0.85;
-    }
-  }
-}
-
-.footnote-num {
-  color: var(--secondary);
-  font-weight: 600;
-  font-size: 0.85em;
-  vertical-align: super;
-  margin-right: 0.2rem;
-}
-
-/* Desktop layout: Footnote displayed in the right margin beside corresponding line */
-@media all and (min-width: 1200px) {
-  article {
-    position: relative;
-  }
-
-  details.footnote-details > summary.footnote-summary {
-    cursor: default;
-    pointer-events: none;
-  }
-
-  details.footnote-details > .footnote-body,
-  .footnote-body {
-    display: block !important;
-    position: absolute;
-    left: calc(100% + 2rem);
-    width: 280px;
-    margin-top: -0.15em;
-    padding: 0;
-    pointer-events: auto;
-    z-index: 5;
-    transition: top 0.15s ease;
-  }
-
-  .page > #quartz-body .sidebar.right {
-    position: sticky !important;
-    top: 0 !important;
-    height: 100vh !important;
-    display: flex !important;
-    flex-direction: column !important;
-    pointer-events: none !important;
-    z-index: 50 !important;
-    padding-top: 5rem !important;
-  }
-
-  .sidebar.right > * {
-    pointer-events: auto;
-  }
-
-  .toc {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    width: 290px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    z-index: 50 !important;
-    pointer-events: auto !important;
-    background: var(--light) !important;
-    border: 1px solid var(--lightgray) !important;
-    border-radius: 10px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-    overflow: hidden !important;
-    transition: all 0.2s ease !important;
-    flex: none !important;
-    height: auto !important;
-    min-height: unset !important;
-
-    &:has(button.toc-header.collapsed) {
-      flex: none !important;
-      height: auto !important;
-      min-height: unset !important;
-      max-height: none !important;
-    }
-
-    button.toc-header {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0.6rem 0.85rem !important;
-      background: transparent !important;
-      border: none !important;
-      border-radius: 0 !important;
-      color: var(--dark) !important;
-      cursor: pointer !important;
-      box-shadow: none !important;
-      transition:
-        background-color 0.15s ease,
-        color 0.15s ease !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      height: auto !important;
-      min-height: unset !important;
-
-      h3,
-      .toc-title {
-        font-size: 0.82rem !important;
-        line-height: 1.25 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        font-weight: 600 !important;
-        color: var(--dark) !important;
-        display: block !important;
-        transition: color 0.15s ease !important;
-      }
-
-      svg.fold {
-        width: 14px !important;
-        height: 14px !important;
-        stroke: var(--darkgray) !important;
-        transition:
-          transform 0.2s ease,
-          stroke 0.15s ease !important;
-        transform: rotate(0deg) !important;
-        flex-shrink: 0 !important;
-        display: block !important;
-        margin: 0 !important;
-      }
-
-      &:hover {
-        background-color: var(--lightgray) !important;
-        color: var(--dark) !important;
-
-        h3,
-        .toc-title {
-          color: var(--dark) !important;
-        }
-
-        svg.fold {
-          stroke: var(--secondary) !important;
-        }
-      }
-
-      &.collapsed svg.fold {
-        transform: rotate(-90deg) !important;
-      }
-    }
-
-    // Accordion In-Flow Content Menu
-    ul.toc-content {
-      position: static !important;
-      width: 100% !important;
-      max-height: 45vh !important;
-      overflow-y: auto !important;
-      background: transparent !important;
-      border: none !important;
-      border-top: 1px solid var(--lightgray) !important;
-      border-radius: 0 0 10px 10px !important;
-      padding: 0.5rem 0.4rem 0.6rem 0.4rem !important;
-      margin: 0 !important;
-      list-style: none !important;
-      box-shadow: none !important;
-      transition: all 0.2s ease !important;
-
-      &.collapsed {
-        display: none !important;
-      }
-
-      &:not(.collapsed) {
-        display: block !important;
-      }
-
-      li {
-        margin: 0.2rem 0 !important;
-        padding: 0 !important;
-        line-height: 1.35 !important;
-
-        a {
-          display: block !important;
-          padding: 0.3rem 0.55rem !important;
-          border-radius: 6px !important;
-          color: var(--darkgray) !important;
-          font-size: 0.8rem !important;
-          text-decoration: none !important;
-          transition:
-            background-color 0.15s ease,
-            color 0.15s ease !important;
-
-          &:hover {
-            background-color: var(--lightgray) !important;
-            color: var(--dark) !important;
-            text-decoration: none !important;
-          }
-
-          &.in-view {
-            color: var(--secondary) !important;
-            font-weight: 600 !important;
-          }
-        }
-
-        &.depth-1 a {
-          padding-left: 0.55rem !important;
-        }
-
-        &.depth-2 a {
-          padding-left: 1rem !important;
-        }
-
-        &.depth-3 a {
-          padding-left: 1.5rem !important;
-          font-size: 0.76rem !important;
-        }
-
-        &.depth-4 a {
-          padding-left: 2rem !important;
-          font-size: 0.74rem !important;
-        }
-      }
-    }
-  }
-
-  // In-Flow Backlinks Accordion Card
-  .backlinks {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    width: 290px !important;
-    margin: 0 0 1rem 0 !important;
-    padding: 0 !important;
-    z-index: 50 !important;
-    pointer-events: auto !important;
-    background: var(--light) !important;
-    border: 1px solid var(--lightgray) !important;
-    border-radius: 10px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-    overflow: hidden !important;
-    transition: all 0.2s ease !important;
-    flex: none !important;
-    height: auto !important;
-    min-height: unset !important;
-
-    button.backlinks-header {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0.6rem 0.85rem !important;
-      background: transparent !important;
-      border: none !important;
-      border-radius: 0 !important;
-      color: var(--dark) !important;
-      cursor: pointer !important;
-      box-shadow: none !important;
-      transition:
-        background-color 0.15s ease,
-        color 0.15s ease !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      height: auto !important;
-      min-height: unset !important;
-
-      h3 {
-        font-size: 0.82rem !important;
-        line-height: 1.25 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        font-weight: 600 !important;
-        color: var(--dark) !important;
-        display: block !important;
-        transition: color 0.15s ease !important;
-      }
-
-      .backlinks-count {
-        background: var(--lightgray) !important;
-        color: var(--dark) !important;
-        font-size: 0.72rem !important;
-        font-weight: 600 !important;
-        padding: 0.05rem 0.45rem !important;
-        border-radius: 9999px !important;
-      }
-
-      svg.fold {
-        width: 14px !important;
-        height: 14px !important;
-        stroke: var(--darkgray) !important;
-        transition:
-          transform 0.2s ease,
-          stroke 0.15s ease !important;
-        transform: rotate(0deg) !important;
-        flex-shrink: 0 !important;
-        display: block !important;
-        margin: 0 !important;
-      }
-
-      &:hover {
-        background-color: var(--lightgray) !important;
-        color: var(--dark) !important;
-
-        h3 {
-          color: var(--dark) !important;
-        }
-
-        svg.fold {
-          stroke: var(--secondary) !important;
-        }
-      }
-
-      &.collapsed svg.fold {
-        transform: rotate(-90deg) !important;
-      }
-    }
-
-    ul.backlinks-content {
-      position: static !important;
-      width: 100% !important;
-      max-height: 40vh !important;
-      overflow-y: auto !important;
-      background: transparent !important;
-      border: none !important;
-      border-top: 1px solid var(--lightgray) !important;
-      border-radius: 0 0 10px 10px !important;
-      padding: 0.5rem 0.4rem 0.6rem 0.4rem !important;
-      margin: 0 !important;
-      list-style: none !important;
-      box-shadow: none !important;
-      transition: all 0.2s ease !important;
-
-      &.collapsed {
-        display: none !important;
-      }
-
-      &:not(.collapsed) {
-        display: block !important;
-      }
-
-      li {
-        margin: 0.2rem 0 !important;
-        padding: 0 !important;
-        line-height: 1.35 !important;
-
-        a.internal {
-          display: block !important;
-          padding: 0.3rem 0.55rem !important;
-          border-radius: 6px !important;
-          color: var(--darkgray) !important;
-          font-size: 0.8rem !important;
-          text-decoration: none !important;
-          transition:
-            background-color 0.15s ease,
-            color 0.15s ease !important;
-
-          &:hover {
-            background-color: var(--lightgray) !important;
-            color: var(--dark) !important;
-            text-decoration: none !important;
-          }
-        }
-
-        &.overflow-end {
-          display: none !important;
-        }
-      }
-    }
-  }
-}
-
-/* Mobile & Tablet layout: Footnote expands directly below the line when clicked */
-@media all and (max-width: 1199px) {
-  details.footnote-details {
-    position: relative !important;
-    display: inline !important;
-  }
-
-  details.footnote-details > summary.footnote-summary {
-    cursor: pointer !important;
-    pointer-events: auto !important;
-  }
-
-  details.footnote-details:not([open]) > .footnote-body {
-    display: none !important;
-  }
-
-  details.footnote-details[open] > .footnote-body {
-    display: block !important;
-    position: static !important;
-    width: auto !important;
-    margin: 0.5rem 0 !important;
-    padding: 0.6rem 0.85rem !important;
-    background-color: var(--lightgray) !important;
-    border-left: 3px solid var(--secondary) !important;
-    border-radius: 6px !important;
-    color: var(--dark) !important;
-    font-size: 0.85rem !important;
-  }
-
-  // Mobile Right Sidebar and Accordion Cards
-  .page > #quartz-body .sidebar.right {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    gap: 0.75rem !important;
-    padding: 1rem 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .toc,
-  .backlinks {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 0 0.5rem 0 !important;
-    padding: 0 !important;
-    background: var(--light) !important;
-    border: 1px solid var(--lightgray) !important;
-    border-radius: 10px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-    overflow: hidden !important;
-    flex: none !important;
-    height: auto !important;
-    min-height: unset !important;
-
-    &:has(button.toc-header.collapsed) {
-      flex: none !important;
-      height: auto !important;
-      min-height: unset !important;
-      max-height: none !important;
-    }
-
-    button.toc-header,
-    button.backlinks-header {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0.6rem 0.85rem !important;
-      background: transparent !important;
-      border: none !important;
-      border-radius: 0 !important;
-      color: var(--dark) !important;
-      cursor: pointer !important;
-      box-shadow: none !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      height: auto !important;
-      min-height: unset !important;
-
-      h3,
-      .toc-title {
-        font-size: 0.82rem !important;
-        line-height: 1.25 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        font-weight: 600 !important;
-        color: var(--dark) !important;
-        display: block !important;
-      }
-
-      .backlinks-count {
-        background: var(--lightgray) !important;
-        color: var(--dark) !important;
-        font-size: 0.72rem !important;
-        font-weight: 600 !important;
-        padding: 0.05rem 0.45rem !important;
-        border-radius: 9999px !important;
-      }
-
-      svg.fold {
-        width: 14px !important;
-        height: 14px !important;
-        stroke: var(--darkgray) !important;
-        transition: transform 0.2s ease !important;
-        transform: rotate(0deg) !important;
-        flex-shrink: 0 !important;
-        display: block !important;
-        margin: 0 !important;
-      }
-
-      &.collapsed svg.fold {
-        transform: rotate(-90deg) !important;
-      }
-
-      &:hover {
-        background-color: var(--lightgray) !important;
-        color: var(--dark) !important;
-      }
-    }
-
-    ul.toc-content,
-    ul.backlinks-content {
-      position: static !important;
-      width: 100% !important;
-      max-height: 40vh !important;
-      overflow-y: auto !important;
-      background: transparent !important;
-      border: none !important;
-      border-top: 1px solid var(--lightgray) !important;
-      border-radius: 0 0 10px 10px !important;
-      padding: 0.5rem 0.4rem 0.6rem 0.4rem !important;
-      margin: 0 !important;
-      list-style: none !important;
-
-      &.collapsed {
-        display: none !important;
-      }
-
-      &:not(.collapsed) {
-        display: block !important;
-      }
-
-      li {
-        margin: 0.2rem 0 !important;
-        padding: 0 !important;
-        line-height: 1.35 !important;
-
-        a {
-          display: block !important;
-          padding: 0.3rem 0.55rem !important;
-          border-radius: 6px !important;
-          color: var(--darkgray) !important;
-          font-size: 0.8rem !important;
-          text-decoration: none !important;
-
-          &:hover {
-            background-color: var(--lightgray) !important;
-            color: var(--dark) !important;
-          }
-
-          &.in-view {
-            color: var(--secondary) !important;
-            font-weight: 600 !important;
-          }
-        }
-
-        &.depth-1 a {
-          padding-left: 0.55rem !important;
-        }
-
-        &.depth-2 a {
-          padding-left: 1rem !important;
-        }
-
-        &.depth-3 a {
-          padding-left: 1.5rem !important;
-          font-size: 0.76rem !important;
-        }
-
-        &.depth-4 a {
-          padding-left: 2rem !important;
-          font-size: 0.74rem !important;
-        }
-
-        &.overflow-end {
-          display: none !important;
-        }
-      }
-    }
-  }
-}
-
-/* Reader Mode compatibility: Keep footnote bodies fully visible when sidebars are dimmed */
-:root[reader-mode="on"] details.footnote-details > .footnote-body {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* Hide original bottom footnotes section once processed */
-section[data-footnotes],
-.footnotes {
-  display: none;
 }
 
 /* ==========================================================================
@@ -2228,3 +1250,6 @@ section[data-footnotes],
     stroke: var(--dark);
   }
 }
+
+// Shared reading presentation uses only local extension points.
+@include reading.styles;

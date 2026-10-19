@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Planetes LAB
+  pageTitle: PlanetesLAB
   pageTitleSuffix: ""
   enableSPA: false
   enablePopovers: true
@@ -148,7 +148,7 @@ plugins:
   - source: github:quartz-community/favicon
     enabled: true
   - source: github:quartz-community/og-image
-    enabled: true
+    enabled: false
   - source: github:quartz-community/content-page
     enabled: true
   - source: github:quartz-community/folder-page

@@ -5,7 +5,9 @@ tags:
   - protoplanetary-disks
 status: writing
 ---
-# [[DM Tau]]
+# DM Tau
+
+[[DM Tau]] is a M1 star surrounded by $\gtrsim 1000$ AU molecular disk. 
 
 # AA Tau
 

@@ -1,0 +1,1058 @@
+@use "./journal-logos.scss";
+
+// Shared editorial reading system. Uses Quartz markup and the existing font roles.
+@mixin styles {
+  body:not([data-slug="404"]) {
+    --reading-rule: color-mix(in srgb, var(--dark) 19%, var(--light));
+    --reading-muted: color-mix(in srgb, var(--dark) 70%, var(--light));
+    --reading-status: var(--dark);
+    --reading-grid: var(--secondary);
+
+    &:has(#quartz-body > .center > .page-header .article-title.status-writing) {
+      --reading-status: color-mix(in srgb, var(--secondary) 90%, var(--dark));
+    }
+
+    &:has(#quartz-body > .center > .page-header .article-title.status-review) {
+      --reading-status: color-mix(in srgb, var(--tertiary) 40%, var(--dark));
+    }
+
+    &:has(#quartz-body > .center > .page-header .article-title.status-draft) {
+      --reading-status: #8a6400;
+    }
+
+    &:has(#quartz-body > .center > .page-header .article-title.status-transient) {
+      --reading-status: var(--gray);
+      --reading-grid: var(--gray);
+    }
+
+    html[saved-theme="dark"]
+      &:has(#quartz-body > .center > .page-header .article-title.status-draft) {
+      --reading-status: #e5c07b;
+    }
+
+    .page {
+      max-width: 84rem;
+      padding: 0 1.5rem;
+      box-sizing: border-box;
+    }
+
+    #quartz-body {
+      column-gap: 2rem;
+
+      .center {
+        min-width: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        overflow: visible;
+        background: none;
+        position: relative;
+        isolation: isolate;
+      }
+
+      .center::before {
+        content: "";
+        position: absolute;
+        inset: -0.75rem -0.9rem;
+        border-radius: 0.5rem;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      // A quiet texture field occupies unused space above the breadcrumbs.
+      // It never crosses title or body text, so mixed typography need not be
+      // forced onto a document-wide baseline grid.
+      .center::after {
+        position: absolute;
+        top: -0.75rem;
+        left: -0.9rem;
+        right: -0.9rem;
+        height: 2.5rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+        mask-image: linear-gradient(to bottom, #000 12%, transparent 100%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      &:has(.article-title.status-draft) .center::after,
+      &:has(.article-title.status-transient) .center::after {
+        content: "";
+        background-image:
+          linear-gradient(
+            color-mix(in srgb, var(--reading-grid) 15%, transparent) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--reading-grid) 15%, transparent) 1px,
+            transparent 1px
+          );
+        background-size: 1.25rem 1.25rem;
+      }
+
+      &:has(.article-title.status-review) .center::after {
+        content: "";
+        background-image: radial-gradient(
+          circle at 0.75px 0.75px,
+          color-mix(in srgb, var(--tertiary) 30%, transparent) 0.65px,
+          transparent 0.9px
+        );
+        background-size: 1.25rem 1.25rem;
+      }
+
+      &:has(.article-title.status-draft) .center::before {
+        background-color: color-mix(in srgb, var(--secondary) 3%, var(--light));
+      }
+
+      &:has(.article-title.status-transient) .center::before {
+        background-color: color-mix(in srgb, var(--gray) 3%, var(--light));
+      }
+
+      &:has(.article-title.status-writing) .center::before {
+        background: linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--secondary) 6%, var(--light)),
+          color-mix(in srgb, var(--secondary) 1.5%, var(--light)) 42rem
+        );
+      }
+
+      &:has(.article-title.status-review) .center::before {
+        background-color: color-mix(in srgb, var(--tertiary) 2%, var(--light));
+      }
+
+      .page-header {
+        margin-top: 2.5rem;
+      }
+
+      .sidebar {
+        padding: 2.5rem 0 1.5rem;
+        gap: 1rem;
+      }
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 1.8rem;
+      line-height: 1.25;
+    }
+
+    .left.sidebar .explorer a {
+      padding: 0.22rem 0.35rem;
+      margin: 0.08rem 0;
+      border-radius: 0;
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .breadcrumb-container {
+      gap: 0.4rem;
+      margin: 0 0 1rem;
+      font-size: 0.7rem;
+      line-height: 1.5;
+
+      a,
+      p {
+        font-size: inherit;
+        color: var(--reading-muted);
+      }
+
+      .breadcrumb-element:last-child {
+        display: none;
+      }
+    }
+
+    @media (min-width: 801px) {
+      .page[data-frame="default"] > #quartz-body {
+        --reading-header-top: 2.5rem;
+        --reading-header-row: 2.5rem;
+
+        > .sidebar.left {
+          // Override the legacy 6rem sidebar inset only within the reading layout.
+          padding-top: var(--reading-header-top) !important;
+
+          > .page-title {
+            display: flex;
+            align-items: center;
+            min-height: var(--reading-header-row);
+          }
+        }
+
+        > .center > .page-header {
+          margin-top: var(--reading-header-top);
+
+          > .popover-hint > .breadcrumb-container {
+            align-items: center;
+            min-height: var(--reading-header-row);
+          }
+        }
+
+        @media (min-width: 1200px) {
+          > .sidebar.right {
+            padding-top: var(--reading-header-top);
+
+            > :is(.toc, .backlinks) > button {
+              // The surrounding pill contributes the remaining two border pixels.
+              min-height: calc(var(--reading-header-row) - 2px);
+            }
+          }
+        }
+      }
+    }
+
+    #quartz-body > .center > .page-header .article-title {
+      margin: 0.8rem 0 0.65rem;
+      padding: 0;
+      border: 0;
+      background: none;
+      font-size: 1.85rem;
+      font-weight: 700;
+      line-height: 1.28;
+      letter-spacing: -0.025em;
+      color: color-mix(in srgb, var(--reading-status) 12%, var(--dark));
+
+      &::before {
+        display: block;
+        margin-bottom: 0.65rem;
+        font-family: var(--headerFont);
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.13em;
+        color: var(--reading-status);
+      }
+
+      // Quartz copies title classes into hover previews outside #quartz-body.
+      // Keep page-status labels on the actual page header only.
+      &.status-draft::before {
+        content: "Draft";
+      }
+      &.status-review::before {
+        content: "Review";
+      }
+      &.status-writing::before {
+        content: "Writing";
+      }
+      &.status-transient::before {
+        content: "Transient";
+      }
+    }
+
+    .tags {
+      margin: 0.5rem 0 1rem;
+      gap: 0.3rem 0.65rem;
+
+      a {
+        padding: 0;
+        border-radius: 0;
+        background: none;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+    }
+
+    :is(article.popover-hint, .center article:has(> .markdown-preview-view)) {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--dark);
+
+      p:not(:where(.reading-sticky-toc *)),
+      li:not(:where(.reading-sticky-toc *)),
+      td:not(:where(.reading-sticky-toc *)),
+      .math:not(:where(.reading-sticky-toc *)) {
+        color: var(--dark);
+      }
+
+      p:not(:where(.domain-grid *, .reading-sticky-toc *)) {
+        margin: 0.7rem 0;
+      }
+
+      > .markdown-preview-view > h1,
+      > .markdown-preview-view > h2 {
+        margin: 1.8rem 0 0.65rem;
+        padding-top: 0;
+        border-top: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        line-height: 1.4;
+        letter-spacing: -0.015em;
+      }
+
+      > .markdown-preview-view > h3 {
+        margin: 1.2rem 0 0.4rem;
+        font-size: 1rem;
+        line-height: 1.45;
+      }
+
+      a.internal:not(.tag-link):not(:where(.domain-grid *, .reading-sticky-toc *)) {
+        padding: 0;
+        background: none;
+        border-radius: 0;
+        font-weight: 500;
+        text-decoration-line: underline;
+        text-decoration-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+        text-underline-offset: 0.15em;
+        text-decoration-thickness: 1px;
+      }
+
+      ul:not(:where(.domain-grid *, .reading-sticky-toc *)),
+      ol:not(:where(.domain-grid *, .reading-sticky-toc *)) {
+        padding-left: 1.3rem;
+        margin: 0.55rem 0;
+      }
+
+      blockquote:not(.callout):not(.callout-content) {
+        margin: 1rem 0;
+        padding: 0 1.25rem;
+        border: 0;
+        font-style: italic;
+      }
+    }
+
+    .paper-preview-container {
+      margin: 1.1rem 0 1.6rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--reading-rule);
+    }
+
+    .paper-preview,
+    .paper-preview:hover {
+      padding: 0.85rem 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      box-shadow: none;
+      transition: none;
+    }
+
+    .journal-logo {
+      margin-bottom: 0.6rem;
+      @include journal-logos.sizes;
+    }
+
+    .authors-list {
+      margin: 0 0 0.45rem;
+      font-size: 0.83rem;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .metadata {
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      background: none;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--reading-muted);
+    }
+
+    .metadata-row {
+      flex-direction: row;
+      gap: 0.2rem 1rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .metadata-item {
+      flex-wrap: wrap;
+      gap: 0 0.35rem;
+      min-width: 0;
+    }
+
+    .metadata-label {
+      font-weight: 500;
+    }
+
+    .metadata-value a {
+      color: var(--secondary);
+      overflow-wrap: anywhere;
+    }
+
+    .coceri-section {
+      margin-top: 0.6rem;
+
+      .table-container {
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+      }
+
+      .coceri-table {
+        display: table;
+        width: 100%;
+        border-spacing: 0;
+        margin: 0;
+        border: 0;
+        border-collapse: collapse;
+        border-radius: 0;
+        font-size: 0.85rem;
+        background: none;
+      }
+    }
+
+    .coceri-row {
+      border: 0;
+
+      td {
+        padding: 0.4rem 0;
+        border: 0;
+        border-radius: 0;
+        background: none;
+      }
+
+      .coceri-label {
+        width: 7.5rem;
+        padding-right: 1.1rem;
+        vertical-align: top;
+        text-align: left;
+        text-transform: uppercase;
+        font-family: var(--headerFont);
+        color: var(--reading-muted);
+        font-size: 0.65rem;
+        font-weight: 500;
+        line-height: 1.9;
+        letter-spacing: 0.065em;
+        background: none;
+        box-shadow: none;
+      }
+
+      .coceri-value {
+        line-height: 1.5;
+        white-space: pre-line;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+    }
+
+    // Keep Quartz's title, content, fold affordance, and collapse mechanism intact.
+    article .callout {
+      margin: 1.1rem 0;
+      padding: 0.65rem 0 0.25rem;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      --color: var(--dark);
+
+      > .callout-title {
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0 0 0.35rem;
+        font-family: var(--bodyFont);
+        font-size: 0.8rem;
+        line-height: 1.5;
+        letter-spacing: 0.035em;
+        color: var(--reading-muted);
+
+        > .callout-title-inner {
+          min-width: 0;
+          overflow-wrap: anywhere;
+        }
+
+        > .callout-title-inner > p {
+          color: inherit;
+          margin: 0;
+        }
+
+        > .callout-icon {
+          display: none;
+        }
+
+        > .fold-callout-icon {
+          margin-left: auto;
+          --icon-size: 14px;
+          background-color: currentColor;
+        }
+      }
+
+      > .callout-content {
+        min-width: 0;
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      &.is-collapsible > .callout-title {
+        cursor: pointer;
+      }
+
+      &:is(
+          [data-callout="warning"],
+          [data-callout="caution"],
+          [data-callout="attention"],
+          [data-callout="danger"],
+          [data-callout="error"],
+          [data-callout="failure"],
+          [data-callout="fail"],
+          [data-callout="missing"]
+        )
+        > .callout-title {
+        color: color-mix(in srgb, var(--tertiary) 40%, var(--dark));
+      }
+
+      &:is([data-callout="warning"], [data-callout="caution"], [data-callout="attention"])
+        > .callout-title::before {
+        content: "Caution ·";
+        font-size: 0.7rem;
+        font-weight: 600;
+      }
+
+      &:is(
+        [data-callout="warning"],
+        [data-callout="caution"],
+        [data-callout="attention"],
+        [data-callout="danger"],
+        [data-callout="error"],
+        [data-callout="failure"],
+        [data-callout="fail"],
+        [data-callout="missing"]
+      ) {
+        padding: 0.75rem 0 0.4rem;
+        border-block: 1px solid color-mix(in srgb, var(--tertiary) 25%, var(--reading-rule));
+      }
+
+      &[data-callout="example"] {
+        padding-left: 1rem;
+      }
+
+      &[data-callout="quote"] > .callout-content {
+        font-style: italic;
+      }
+
+      .callout {
+        margin: 0.6rem 0 0.3rem 1rem;
+      }
+
+      &.is-collapsed > .callout-content > * {
+        height: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+      }
+
+      &.is-collapsed {
+        overflow: clip;
+
+        > .callout-content {
+          overflow: clip;
+        }
+      }
+    }
+
+    // Footnotes remain native disclosures; their bodies share the note margin.
+    details.footnote-details {
+      display: inline !important;
+      position: static !important;
+      vertical-align: baseline;
+
+      &[open]::details-content {
+        display: contents !important;
+      }
+      &:not([open]) > .footnote-body {
+        display: none !important;
+      }
+    }
+
+    details.footnote-details > summary.footnote-summary {
+      display: inline !important;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      position: relative;
+      z-index: 5;
+
+      &::-webkit-details-marker,
+      &::marker {
+        display: none;
+        content: "";
+      }
+    }
+
+    .footnote-ref-num {
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.78em;
+      line-height: 0;
+      vertical-align: super;
+      padding: 0 1px;
+    }
+
+    .footnote-body {
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--reading-muted);
+      box-shadow: none;
+
+      a {
+        color: var(--secondary);
+        text-decoration: underline;
+      }
+    }
+
+    details.footnote-details[open] > .footnote-body {
+      display: block;
+      position: static;
+      width: auto;
+      margin: 0.5rem 0;
+      padding: 0.6rem 0.85rem;
+      background: var(--lightgray);
+      border: 0;
+      font-size: 0.85rem;
+    }
+
+    .footnote-num {
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.85em;
+      vertical-align: super;
+      margin-right: 0.2rem;
+    }
+
+    :root[reader-mode="on"] & .footnote-body {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    #quartz-body > .right.sidebar:empty,
+    #quartz-body > .right.sidebar:not(:has(> :not(.reading-toc-slot))) {
+      display: none;
+    }
+
+    .reading-note-anchor {
+      display: none;
+    }
+
+    // One shared pill treatment; Backlinks remains in flow on narrow displays.
+    .right.sidebar .toc,
+    .right.sidebar .backlinks,
+    .reading-sticky-toc {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      min-height: unset;
+      height: auto;
+      flex: none;
+      z-index: 50;
+      pointer-events: auto;
+      background: var(--light);
+      border: 1px solid var(--reading-rule);
+      border-radius: 0.8rem;
+      box-shadow: none;
+      overflow: hidden;
+
+      &:has(> button.collapsed) {
+        flex: none;
+      }
+
+      > button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.6rem 0.85rem;
+        border: 0;
+        border-radius: inherit;
+        background: transparent;
+        color: var(--dark);
+        cursor: pointer;
+        box-shadow: none;
+        transition:
+          background-color 0.15s ease,
+          color 0.15s ease;
+
+        h3,
+        .toc-title {
+          display: block;
+          margin: 0;
+          padding: 0;
+          font-size: 0.82rem;
+          line-height: 1.25;
+          font-weight: 600;
+          color: inherit;
+        }
+
+        .backlinks-count {
+          background: var(--lightgray);
+          color: var(--dark);
+          font-size: 0.72rem;
+          font-weight: 600;
+          padding: 0.05rem 0.45rem;
+          border-radius: 999px;
+        }
+
+        .backlinks-header-meta {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+        }
+
+        svg.fold {
+          display: block;
+          width: 14px;
+          height: 14px;
+          margin: 0;
+          flex-shrink: 0;
+          stroke: var(--darkgray);
+          transform: rotate(0deg);
+          transition: transform 0.2s ease;
+        }
+
+        &.collapsed svg.fold {
+          transform: rotate(-90deg);
+        }
+        &:hover {
+          background-color: var(--lightgray);
+        }
+      }
+
+      > ul.toc-content,
+      > ul.backlinks-content {
+        position: static;
+        width: 100%;
+        box-sizing: border-box;
+        max-height: 40vh;
+        margin: 0;
+        padding: 0.5rem 0.4rem 0.6rem;
+        list-style: none;
+        background: var(--light);
+        border: 0;
+        border-top: 1px solid var(--reading-rule);
+        border-radius: 0 0 0.8rem 0.8rem;
+        box-shadow: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        &.collapsed {
+          display: none;
+        }
+        &:not(.collapsed) {
+          display: block;
+        }
+
+        li {
+          margin: 0.2rem 0;
+          padding: 0;
+          line-height: 1.35;
+
+          a {
+            display: block;
+            padding: 0.3rem 0.55rem;
+            border-radius: 6px;
+            background: none;
+            color: var(--darkgray);
+            font-size: 0.8rem;
+            text-decoration: none;
+
+            &:hover {
+              background: var(--lightgray);
+              color: var(--dark);
+            }
+            &.in-view {
+              color: var(--secondary);
+              font-weight: 600;
+            }
+          }
+
+          &.depth-1 a {
+            padding-left: 0.55rem;
+          }
+          &.depth-2 a {
+            padding-left: 1rem;
+          }
+          &.depth-3 a {
+            padding-left: 1.5rem;
+            font-size: 0.76rem;
+          }
+          &.depth-4 a {
+            padding-left: 2rem;
+            font-size: 0.74rem;
+          }
+          &.overflow-end {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .reading-toc-slot {
+      display: none;
+    }
+
+    #quartz-body .reading-sticky-toc {
+      position: sticky;
+      top: 0.5rem;
+      align-self: start;
+      border-radius: 999px;
+      overflow: visible;
+      overflow-anchor: none;
+      z-index: 70 !important;
+
+      > button {
+        border-radius: inherit;
+      }
+
+      > ul.toc-content {
+        position: absolute !important;
+        top: calc(100% + 0.45rem);
+        left: 0;
+        width: 100%;
+        max-height: min(55dvh, 28rem, calc(100dvh - 4rem)) !important;
+        border: 1px solid var(--reading-rule);
+        border-radius: 0.65rem;
+        background: var(--light);
+        box-shadow: none;
+      }
+    }
+
+    :root[reader-mode="on"] & .right.sidebar:focus-within {
+      opacity: 1;
+    }
+
+    // Reader mode can dim the remaining rail without hiding its navigation.
+    :root[reader-mode="on"] & #quartz-body > .right.sidebar:has(> .reading-sticky-toc) {
+      opacity: 1;
+
+      > :not(.reading-sticky-toc):not(.reading-toc-slot) {
+        opacity: 0;
+      }
+      &:is(:hover, :focus-within) > :not(.reading-sticky-toc):not(.reading-toc-slot) {
+        opacity: 1;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .page[data-frame="default"] > #quartz-body {
+        grid-template-columns: 16rem minmax(0, 1fr) 15rem;
+        grid-template-areas:
+          "grid-sidebar-left grid-header grid-sidebar-right"
+          "grid-sidebar-left grid-center grid-sidebar-right"
+          "grid-sidebar-left grid-footer grid-sidebar-right";
+
+        &:not(:has(> .right.sidebar > *)):not(:has(> .center > article.popover-hint)),
+        &:has(.domain-grid):not(:has(> .right.sidebar > *)) {
+          grid-template-columns: 16rem minmax(0, 1fr);
+          grid-template-areas:
+            "grid-sidebar-left grid-header"
+            "grid-sidebar-left grid-center"
+            "grid-sidebar-left grid-footer";
+        }
+
+        &:not(:has(> .left.sidebar)) {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-areas: "grid-header" "grid-center" "grid-footer";
+        }
+
+        > .right.sidebar:empty {
+          display: none;
+        }
+      }
+
+      #quartz-body .sidebar.right {
+        --reading-rail-gap: 1rem;
+        position: static;
+        height: auto;
+        align-self: stretch;
+        gap: var(--reading-rail-gap);
+        padding-top: 2.5rem;
+        pointer-events: none;
+        z-index: 50;
+
+        > * {
+          pointer-events: auto;
+        }
+      }
+
+      #quartz-body .right.sidebar > .reading-toc-slot {
+        display: block;
+        flex: none;
+        height: 0;
+        padding: 0;
+        margin: 0 0 calc(-1 * var(--reading-rail-gap));
+        pointer-events: none;
+      }
+
+      article {
+        position: relative;
+      }
+
+      .right.sidebar .toc,
+      .right.sidebar .backlinks {
+        width: 100% !important;
+        margin: 0 !important;
+        border: 1px solid var(--reading-rule) !important;
+        border-radius: 999px !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        overflow-anchor: none;
+
+        &:has(> button:not(.collapsed)) {
+          z-index: 60 !important;
+        }
+
+        > button {
+          border-radius: 999px !important;
+        }
+
+        > ul.toc-content,
+        > ul.backlinks-content {
+          position: absolute !important;
+          top: calc(100% + 0.45rem);
+          left: 0;
+          width: 100% !important;
+          box-sizing: border-box;
+          border: 1px solid var(--reading-rule) !important;
+          border-radius: 0.65rem !important;
+          background: var(--light) !important;
+          box-shadow: none !important;
+          overflow-x: hidden !important;
+          overflow-y: auto !important;
+          max-height: min(45vh, 28rem) !important;
+          transition: none !important;
+        }
+      }
+
+      &[data-reading-margin="true"] {
+        details.footnote-details > summary.footnote-summary {
+          cursor: default;
+          pointer-events: none;
+        }
+
+        article {
+          min-height: var(--reading-article-height, auto);
+        }
+
+        .reading-note-anchor {
+          display: block;
+          height: 0;
+        }
+
+        article .callout.reading-margin-note,
+        details.footnote-details[open] > .footnote-body {
+          display: block;
+          position: absolute;
+          top: var(--reading-note-top, 0px) !important;
+          width: 15rem;
+          left: calc(100% + 2rem);
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background: none;
+          font-size: 0.78rem;
+          line-height: 1.5;
+          transition: none;
+          pointer-events: auto;
+          z-index: 5;
+        }
+
+        article .callout.reading-margin-note {
+          overflow: visible;
+
+          &.is-collapsed {
+            overflow: clip;
+          }
+
+          > .callout-title {
+            font-size: 0.77rem;
+            letter-spacing: 0;
+            color: var(--dark);
+          }
+
+          > .callout-content {
+            font-size: 0.8rem;
+            line-height: 1.5;
+
+            p,
+            li {
+              color: var(--reading-muted);
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1199px) {
+      // Hidden horizontal overflow creates a scroll ancestor that traps sticky.
+      // Clip preserves the site's horizontal bounds without changing scrolling.
+      &,
+      #quartz-root,
+      .page,
+      .page-wrapper {
+        overflow-x: clip !important;
+      }
+
+      #quartz-body .center > .reading-sticky-toc,
+      #quartz-body .center .markdown-preview-view > .reading-sticky-toc {
+        margin: 0.75rem 0 1rem;
+      }
+
+      #quartz-body .right.sidebar {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+        padding: 1rem 0;
+        box-sizing: border-box;
+      }
+
+      details.footnote-details {
+        position: relative !important;
+      }
+    }
+
+    @media (min-width: 801px) and (max-width: 1199px) {
+      .center .markdown-preview-view :is(h1, h2, h3, h4, h5, h6) {
+        scroll-margin-top: 4rem;
+      }
+
+      .page[data-frame="default"] > #quartz-body {
+        grid-template-columns: 16rem minmax(0, 1fr);
+        padding: 0;
+      }
+
+      details.footnote-details > .footnote-body {
+        position: static;
+        width: auto;
+        margin: 0.5rem 0;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .page {
+        padding: 0 1rem;
+      }
+
+      #quartz-body {
+        padding: 0;
+
+        .center::after {
+          height: 1.25rem;
+        }
+
+        .center,
+        :is(article.popover-hint, .center article:has(> .markdown-preview-view)) {
+          padding: 0 !important;
+        }
+
+        .page-header {
+          margin-top: 0.8rem;
+        }
+
+        .article-title {
+          font-size: 1.4rem;
+        }
+      }
+
+      .coceri-row .coceri-label {
+        width: 5.75rem;
+        padding-right: 0.75rem;
+        font-size: 0.6rem;
+        letter-spacing: 0.035em;
+      }
+    }
+  }
+}

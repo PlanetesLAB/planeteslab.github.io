@@ -1,0 +1,34 @@
+// Set a logo's width here, for example "natastro.svg": 300px.
+// null preserves its current default size. Height always follows the aspect ratio.
+$widths: (
+  "natastro.svg": 300px,
+  "logo_aa.svg": 200px,
+  "mnras.svg": 300px,
+  "apj.png": 500px,
+  "apjl.png": 500px,
+  "apjs.png": 500px,
+  "arxiv.svg": 150px,
+  "sciadv-logo.svg": 300px,
+  ) !default;
+
+@mixin sizes {
+  img {
+    width: auto;
+    height: auto;
+    max-height: 30px;
+    max-width: 210px;
+    margin: 0;
+    background: none;
+  }
+
+  @each $filename, $width in $widths {
+    @if $width !=null {
+      img[src$="#{$filename}"] {
+        width: $width;
+        height: auto;
+        max-width: 100%;
+        max-height: none;
+      }
+    }
+  }
+}
