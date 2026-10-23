@@ -48,3 +48,29 @@ status: writing
 - Think about each element of a plot: Axes, lines/scatters, symbols, contours/heat maps/color gradients, cartoons/schematic.
 - Figures should be modified accordingly depending on if it will be used in a paper or in a presentation.
 - Homework: send caption+cartoon+figure.
+
+# 2026-10-21
+Opinion -> Size -> Age -> Shape -> Color -> Origin -> Material -> Purpose -> Noun
+
+## How to write a good proposal?
+
+- Be as aggressive as possible (marketing)
+- Submit as many as you can? (not necessarily a good thing)
+- In-field and out-of-field impact?
+- Suitability and feasibility
+- ALMA: explain the spatial and spectral measurement (scientific importance and the suitability of the proposed observations)
+- How unique your proposal? It's not about being *generic*, but if the TAC gets proposals which want to do very similar things, chances of your proposals getting selected goes down.
+
+Scientific rationale on one page:
+1. Why this question matters? — The physical process and the unresolved issue.
+2. What is missing? — The decisive measurement absent from existing work.
+3. What this program will test? — Predictions, targets and measurable outcomes
+4. Why the result will have impact? — In-field and out-of-field impact
+
+Transform what you want into a scientific question. Is it a good idea for "what you want" to be broad enough so you can do multiple science investigations into it?
+
+- JWST: Late Sep–Mid Oct
+- ALMA: April
+- ESO: End of Sep
+- Other optical: March and Sep
+- Radio (VLA): Feb and Aug

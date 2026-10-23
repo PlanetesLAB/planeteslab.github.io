@@ -22,6 +22,7 @@ export const PaperPreviewInjector: QuartzTransformerPlugin = () => {
               const published = frontmatter?.published || ""
               const doi = frontmatter?.doi || ""
               const journalLogo = frontmatter?.journal_logo || ""
+              const headerTag = doi ? "a" : "div"
 
               const coceriEntries = [
                 { key: "Co", label: "Context", slug: "co" },
@@ -64,7 +65,7 @@ export const PaperPreviewInjector: QuartzTransformerPlugin = () => {
                 type: "html",
                 value: `
                   <div class="paper-preview-container">
-                    <div class="paper-preview">
+                    <${headerTag} class="paper-preview${doi ? ' paper-preview-link' : ''}"${doi ? ` href="https://doi.org/${doi}" target="_blank" rel="noopener noreferrer"` : ''}>
                       ${journalLogo ? `
                       <div class="journal-logo">
                         <img src="${journalLogo}" alt="Journal Logo">
@@ -72,7 +73,7 @@ export const PaperPreviewInjector: QuartzTransformerPlugin = () => {
                       
                       ${authorsHTML}
                       
-                      ${volume || issue || published || doi ? `
+                      ${volume || issue || published ? `
                       <div class="metadata">
                         ${volume || issue || published ? `
                         <div class="metadata-row">
@@ -87,17 +88,8 @@ export const PaperPreviewInjector: QuartzTransformerPlugin = () => {
                             <span class="metadata-value">${published}</span>
                           </div>` : ''}
                         </div>` : ''}
-                        ${doi ? `
-                        <div class="metadata-row">
-                          <div class="metadata-item">
-                            <span class="metadata-label">DOI:</span>
-                            <span class="metadata-value">
-                              <a href="https://doi.org/${doi}" target="_blank">${doi}</a>
-                            </span>
-                          </div>
-                        </div>` : ''}
                       </div>` : ''}
-                    </div>
+                    </${headerTag}>
                     ${coceriHTML}
                   </div>
                 `

@@ -2,6 +2,10 @@
 
 // Shared editorial reading system. Uses Quartz markup and the existing font roles.
 @mixin styles {
+  a[href] {
+    cursor: pointer;
+  }
+
   body:not([data-slug="404"]) {
     --reading-rule: color-mix(in srgb, var(--dark) 19%, var(--light));
     --reading-muted: color-mix(in srgb, var(--dark) 70%, var(--light));
@@ -324,6 +328,69 @@
       background: none;
       box-shadow: none;
       transition: none;
+    }
+
+    a.paper-preview-link {
+      display: block;
+      position: relative;
+      isolation: isolate;
+      margin: 0 -0.75rem;
+      padding: calc(0.85rem - 1px) calc(0.75rem - 1px);
+      color: inherit;
+      font-weight: inherit;
+      text-decoration: none;
+      background: none;
+      border: 1px solid transparent;
+      border-radius: 0.45rem;
+
+      > .external-icon {
+        display: none;
+      }
+
+      &:hover {
+        padding: calc(0.85rem - 1px) calc(0.75rem - 1px);
+        border: 1px solid transparent;
+        border-radius: 0.45rem;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        z-index: -1;
+        pointer-events: none;
+        background: linear-gradient(
+          135deg,
+          color-mix(in srgb, var(--dark) 6%, transparent),
+          color-mix(in srgb, var(--dark) 2%, transparent)
+        );
+        border: 1px solid color-mix(in srgb, var(--dark) 18%, transparent);
+        border-radius: 0.45rem;
+        -webkit-backdrop-filter: blur(8px) saturate(1.1);
+        backdrop-filter: blur(8px) saturate(1.1);
+        opacity: 0;
+        transition: opacity 220ms ease-out;
+
+        html[saved-theme="light"] & {
+          background: linear-gradient(135deg, rgb(255 255 255 / 60%), rgb(255 255 255 / 20%));
+          border-color: rgb(255 255 255 / 70%);
+        }
+      }
+
+      &:hover::before {
+        opacity: 1;
+      }
+
+      &:focus-visible {
+        outline: 1px solid var(--secondary);
+        outline-offset: 2px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        &::before {
+          transition: none;
+        }
+      }
     }
 
     .journal-logo {
