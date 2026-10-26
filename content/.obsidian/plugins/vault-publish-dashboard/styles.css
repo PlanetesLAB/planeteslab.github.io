@@ -172,6 +172,10 @@
 }
 
 /* Color definitions for pipeline stages (industrial muted tones) */
+.vpd-stage-bg-no-status {
+  background-color: var(--background-modifier-border);
+}
+
 .vpd-stage-bg-transient {
   background: repeating-linear-gradient(
     -45deg,

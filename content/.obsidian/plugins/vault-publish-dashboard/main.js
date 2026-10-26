@@ -17,6 +17,11 @@ var DEFAULT_STAGES = [
   { id: 'live', label: 'LIVE', progress: 100, isPublished: true, isTransient: false }
 ];
 
+// Display-only group: viewing an unassigned note must not write a status.
+var NO_STATUS_STAGE = {
+  id: 'no-status', label: 'NO STATUS', isPublished: false, isTransient: false, isUnassigned: true
+};
+
 var DEFAULT_SETTINGS = {
   stages: DEFAULT_STAGES,
   statusProperty: 'status',
@@ -26,6 +31,7 @@ var DEFAULT_SETTINGS = {
 };
 
 function getRelativeTimeString(timestamp) {
+  if (!Number.isFinite(timestamp)) return 'Unknown date';
   var diff = Date.now() - timestamp;
   var seconds = Math.floor(diff / 1000);
   if (seconds < 60) return 'just now';
@@ -33,10 +39,15 @@ function getRelativeTimeString(timestamp) {
   if (minutes < 60) return minutes + 'm ago';
   var hours = Math.floor(minutes / 60);
   if (hours < 24) return hours + 'h ago';
-  var days = Math.floor(days / 24);
+  var days = Math.floor(hours / 24);
   if (days < 30) return days + 'd ago';
   var months = Math.floor(days / 30);
   return months + 'mo ago';
+}
+
+function getNoteDateTooltip(file) {
+  return 'Modified: ' + new Date(file.stat.mtime).toLocaleString() +
+    '\nCreated: ' + new Date(file.stat.ctime).toLocaleString();
 }
 
 class PublishDashboardView extends obsidian.ItemView {
@@ -104,7 +115,7 @@ class PublishDashboardView extends obsidian.ItemView {
     titleGroup.createEl('h2', { text: 'PUBLISH DASHBOARD', cls: 'vpd-title' });
 
     var totalNotes = this.notesData.length;
-    var publishableNotes = this.notesData.filter(n => !n.stage.isTransient).length;
+    var publishableNotes = this.notesData.filter(n => !n.stage.isTransient && !n.stage.isUnassigned).length;
     var publishedNotes = this.notesData.filter(n => n.stage.isPublished).length;
     var progressPercent = publishableNotes > 0 ? ((publishedNotes / publishableNotes) * 100).toFixed(1) : '0.0';
 
@@ -142,7 +153,7 @@ class PublishDashboardView extends obsidian.ItemView {
     statOverall.createDiv({ cls: 'vpd-stat-value', text: progressPercent + '%' });
     statOverall.createDiv({ cls: 'vpd-stat-sub', text: publishedNotes + ' OF ' + publishableNotes + ' LIVE' });
 
-    this.plugin.settings.stages.forEach(stage => {
+    this.plugin.getDashboardStages().forEach(stage => {
       var count = this.notesData.filter(n => n.stage.id === stage.id).length;
       var pct = totalNotes > 0 ? ((count / totalNotes) * 100).toFixed(0) : '0';
       var box = statsStrip.createDiv({ cls: 'vpd-stat-box ' + (stage.isTransient ? 'vpd-stat-transient' : '') });
@@ -153,7 +164,7 @@ class PublishDashboardView extends obsidian.ItemView {
 
     // Segmented Progress Bar
     var progressBarEl = headerEl.createDiv({ cls: 'vpd-progress-bar' });
-    this.plugin.settings.stages.forEach((stage) => {
+    this.plugin.getDashboardStages().forEach((stage) => {
       var count = this.notesData.filter(n => n.stage.id === stage.id).length;
       var pct = totalNotes > 0 ? (count / totalNotes) * 100 : 0;
       if (pct > 0) {
@@ -198,7 +209,7 @@ class PublishDashboardView extends obsidian.ItemView {
     // Stage Filter
     var stageSelect = toolbar.createEl('select', { cls: 'vpd-select' });
     stageSelect.createEl('option', { value: 'all', text: 'ALL STAGES' });
-    this.plugin.settings.stages.forEach(s => {
+    this.plugin.getDashboardStages().forEach(s => {
       stageSelect.createEl('option', { value: s.id, text: s.label });
     });
     stageSelect.value = this.selectedStage;
@@ -310,7 +321,7 @@ class PublishDashboardView extends obsidian.ItemView {
     var boardContainer = contentEl.createDiv({ cls: 'vpd-board-container' });
     var filteredNotes = this.getFilteredNotes();
 
-    this.plugin.settings.stages.forEach(stage => {
+    this.plugin.getDashboardStages().forEach(stage => {
       var stageNotes = filteredNotes.filter(n => n.stage.id === stage.id);
 
       var column = boardContainer.createDiv({ cls: 'vpd-column ' + (stage.isTransient ? 'vpd-column-transient' : '') });
@@ -348,6 +359,7 @@ class PublishDashboardView extends obsidian.ItemView {
 
     var cardFooter = card.createDiv({ cls: 'vpd-card-footer' });
     var timeEl = cardFooter.createSpan({ cls: 'vpd-card-time', text: getRelativeTimeString(noteData.file.stat.mtime) });
+    timeEl.title = getNoteDateTooltip(noteData.file);
 
     var actionsGroup = cardFooter.createDiv({ cls: 'vpd-card-actions' });
 
@@ -415,6 +427,10 @@ class PublishDashboardView extends obsidian.ItemView {
       // Status selector
       var tdStatus = row.createEl('td', { cls: 'vpd-td-status' });
       var select = tdStatus.createEl('select', { cls: 'vpd-status-select vpd-status-pill-' + noteData.stage.id });
+      if (noteData.stage.isUnassigned) {
+        var placeholder = select.createEl('option', { value: NO_STATUS_STAGE.id, text: NO_STATUS_STAGE.label });
+        placeholder.disabled = true;
+      }
       this.plugin.settings.stages.forEach(s => {
         select.createEl('option', { value: s.id, text: s.label });
       });
@@ -425,7 +441,8 @@ class PublishDashboardView extends obsidian.ItemView {
       });
 
       // Modified
-      row.createEl('td', { cls: 'vpd-td-mtime', text: getRelativeTimeString(noteData.file.stat.mtime) });
+      var modifiedEl = row.createEl('td', { cls: 'vpd-td-mtime', text: getRelativeTimeString(noteData.file.stat.mtime) });
+      modifiedEl.title = getNoteDateTooltip(noteData.file);
 
       // Actions
       var tdActions = row.createEl('td', { cls: 'vpd-td-actions' });
@@ -652,6 +669,10 @@ class VaultPublishDashboardPlugin extends obsidian.Plugin {
     return this.settings.stages.findIndex(s => s.id === stageId);
   }
 
+  getDashboardStages() {
+    return [NO_STATUS_STAGE].concat(this.settings.stages);
+  }
+
   isExcluded(path) {
     var excluded = this.settings.excludedFolders.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
     var parts = path.toLowerCase().split('/');
@@ -670,10 +691,8 @@ class VaultPublishDashboardPlugin extends obsidian.Plugin {
 
       var currentStatus = fm[this.settings.statusProperty];
 
-      if (currentStatus === undefined || currentStatus === null) return;
-
       var norm = normalizeStatus(currentStatus);
-      var matchedStage = this.settings.stages.find(s => normalizeStatus(s.id) === norm);
+      var matchedStage = norm === '' ? NO_STATUS_STAGE : this.settings.stages.find(s => normalizeStatus(s.id) === norm);
 
       if (!matchedStage) return;
 
@@ -697,7 +716,7 @@ class VaultPublishDashboardPlugin extends obsidian.Plugin {
     this.statusBarItem.style.display = '';
 
     var data = this.collectNotesData();
-    var publishable = data.filter(d => !d.stage.isTransient);
+    var publishable = data.filter(d => !d.stage.isTransient && !d.stage.isUnassigned);
     var total = publishable.length;
     var published = publishable.filter(d => d.stage.isPublished).length;
     var pct = total > 0 ? ((published / total) * 100).toFixed(0) : '0';
@@ -757,8 +776,8 @@ class VaultPublishDashboardPlugin extends obsidian.Plugin {
 
   openNextUnfinishedNote() {
     var data = this.collectNotesData();
-    // Exclude transient and published notes
-    var unfinished = data.filter(d => !d.stage.isPublished && !d.stage.isTransient);
+    // Only assigned publishing stages participate in the unfinished-note queue.
+    var unfinished = data.filter(d => !d.stage.isPublished && !d.stage.isTransient && !d.stage.isUnassigned);
     if (unfinished.length === 0) {
       new obsidian.Notice('All publishable notes in vault are completed.');
       return;
