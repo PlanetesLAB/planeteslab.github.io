@@ -2,7 +2,7 @@
 tags:
   - coursework
   - journal
-status: writing
+status: transient
 ---
 # September 2026
 
@@ -74,3 +74,26 @@ Transform what you want into a scientific question. Is it a good idea for "what 
 - ESO: End of Sep
 - Other optical: March and Sep
 - Radio (VLA): Feb and Aug
+
+# 2026-10-28
+
+## Postdoc/research position applications
+1. Cover letter (second most important)
+2. CV
+3. Publication list
+4. Research statement (summary, proposal, fit)
+5. Personal statement
+6. Reference letters (most important; advisor's most important)
+
+How many letters we need?
+- For exchange programs - Just advisor support is enough
+- For postdoc - Three letters (at least?)
+
+# 2026-10-30
+
+## A good cover letter
+- First paragraph: introduce yourself
+- Second paragraph: have some "tags" for yourself, that describe yourself. describe previous research. mention your big science goals as a list
+- Third paragraph: Speak positively about your own skills
+- Fourth paragraph: what you will do if you are offered a position
+- Last paragraph: wrap up by mentioning synergy
