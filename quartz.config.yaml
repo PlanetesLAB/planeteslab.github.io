@@ -88,6 +88,9 @@ plugins:
     options:
       markdownLinkResolution: shortest
     order: 60
+  - source: ./quartz/plugins/local/inline-favicons
+    enabled: true
+    order: 61
   - source: github:quartz-community/description
     enabled: true
     order: 70

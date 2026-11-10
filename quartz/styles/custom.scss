@@ -6,6 +6,18 @@ img {
   background-color: white;
 }
 
+.link-favicon-tail {
+  white-space: nowrap;
+}
+
+.link-favicon {
+  width: 0.8em;
+  height: 0.8em;
+  margin-inline-start: 0.2em;
+  vertical-align: -0.05em;
+  fill: var(--dark);
+}
+
 /* Only style links inside the Explorer tree */
 .left.sidebar .explorer a {
   display: block;

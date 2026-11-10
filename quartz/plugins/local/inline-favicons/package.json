@@ -1,0 +1,15 @@
+{
+  "name": "inline-favicons",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "build": "node --experimental-strip-types --check index.ts"
+  },
+  "quartz": {
+    "name": "inline-favicons",
+    "displayName": "Inline Favicons",
+    "category": "transformer",
+    "defaultOrder": 61
+  }
+}

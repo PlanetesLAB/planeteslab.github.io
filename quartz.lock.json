@@ -151,6 +151,12 @@
       "commit": "0d448f38a24c568c5539ff2cd57d813293430ccd",
       "installedAt": "2026-06-27T03:51:33.560Z"
     },
+    "inline-favicons": {
+      "source": "./quartz/plugins/local/inline-favicons",
+      "resolved": "./quartz/plugins/local/inline-favicons",
+      "commit": "local",
+      "installedAt": "2026-11-10T14:01:25.736Z"
+    },
     "journal-entry": {
       "source": "./quartz/plugins/local/journal-entry",
       "resolved": "./quartz/plugins/local/journal-entry",
