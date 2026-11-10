@@ -124404,9 +124404,27 @@ function formatNames(names = []) {
   if (formatted.length === 2) return `${formatted[0]}, & ${formatted[1]}`;
   return `${formatted.slice(0, -1).join(", ")}, & ${formatted.at(-1)}`;
 }
+function formatReviewAuthor(name2) {
+  if (name2.literal) return name2.literal;
+  return [
+    initials(name2.given),
+    name2["dropping-particle"],
+    name2["non-dropping-particle"],
+    name2.family,
+    name2.suffix
+  ].filter(Boolean).join(" ");
+}
 function publicationYear(issued) {
   const year = issued?.["date-parts"]?.[0]?.[0];
   return year ? String(year) : issued?.literal?.trim() ?? "";
+}
+var monthFormatter = new Intl.DateTimeFormat("en", { month: "long", timeZone: "UTC" });
+function publicationMonthAndYear(issued) {
+  const year = publicationYear(issued);
+  const month = Number(issued?.["date-parts"]?.[0]?.[1]);
+  if (!year || !Number.isInteger(month) || month < 1 || month > 12) return year;
+  const monthName = monthFormatter.format(Date.UTC(2e3, month - 1));
+  return `${monthName} ${year}`;
 }
 function normalizeDoi(value = "") {
   return value.trim().replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "").replace(/^doi:\s*/i, "");
@@ -124432,17 +124450,28 @@ function parseCitationData(bibliographyPath, fallbackSearch) {
   const bibliography2 = fs.readFileSync(bibliographyPath, "utf8");
   const parsed = new Cite(bibliography2, {}).data;
   const entries = {};
+  const reviewsByDoi = /* @__PURE__ */ new Map();
   for (const entry of parsed) {
+    const doi = normalizeDoi(entry.DOI);
+    const volume = String(entry.volume ?? "").trim();
+    const issue = String(entry.issue ?? "").trim();
+    if (doi) {
+      reviewsByDoi.set(doi.toLowerCase(), {
+        authors: (entry.author ?? []).map(formatReviewAuthor).filter(Boolean),
+        volume,
+        issue,
+        published: publicationMonthAndYear(entry.issued)
+      });
+    }
     const key = String(entry["citation-key"] ?? entry.id ?? "").toLowerCase();
     if (!key) continue;
-    const doi = normalizeDoi(entry.DOI);
     entries[key] = {
       title: entry.title?.trim() ?? "",
       authors: formatNames(entry.author?.length ? entry.author : entry.editor),
       year: publicationYear(entry.issued),
       container: String(entry["container-title"] ?? entry.publisher ?? "").trim(),
-      volume: String(entry.volume ?? "").trim(),
-      issue: String(entry.issue ?? "").trim(),
+      volume,
+      issue,
       pages: String(entry.page ?? "").trim(),
       doi,
       sourceUrl: entry.URL?.trim() ?? "",
@@ -124450,7 +124479,7 @@ function parseCitationData(bibliographyPath, fallbackSearch) {
       linkLabel: doi ? `https://doi.org/${doi}` : entry.URL?.trim() ? entry.URL.trim() : fallbackSearch === "google" ? "Search on Google" : "Search on NASA ADS"
     };
   }
-  return entries;
+  return { entries, reviewsByDoi };
 }
 function classNames(value) {
   if (Array.isArray(value)) return value.map(String);
@@ -124585,9 +124614,22 @@ var popoverScript = String.raw`
 var Citations = (userOpts) => {
   const opts = { ...defaultOptions2, ...userOpts };
   const citationBibliography = createCitationBibliography(path2.resolve(opts.bibliographyFile));
-  const citationData = parseCitationData(path2.resolve(citationBibliography), opts.fallbackSearch);
+  const { entries: citationData, reviewsByDoi } = parseCitationData(
+    path2.resolve(citationBibliography),
+    opts.fallbackSearch
+  );
   return {
     name: "Citations",
+    markdownPlugins() {
+      return [
+        () => (_tree, file) => {
+          const doi = file.data.frontmatter?.doi;
+          if (typeof doi !== "string") return;
+          const review = reviewsByDoi.get(normalizeDoi(doi).toLowerCase());
+          if (review) file.data.bibliographyReview = review;
+        }
+      ];
+    },
     htmlPlugins(ctx) {
       const plugins2 = [];
       let lang = "en-US";

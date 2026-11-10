@@ -50,6 +50,134 @@ function getNoteDateTooltip(file) {
     '\nCreated: ' + new Date(file.stat.ctime).toLocaleString();
 }
 
+var ACTIVITY_DAYS = 365;
+
+function activityDate(date, offset) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset, 12);
+}
+
+function activityDayKey(date) {
+  var month = String(date.getMonth() + 1).padStart(2, '0');
+  var day = String(date.getDate()).padStart(2, '0');
+  return date.getFullYear() + '-' + month + '-' + day;
+}
+
+function editedNotesLabel(count) {
+  return count + (count === 1 ? ' note edited' : ' notes edited');
+}
+
+function parseGitActivity(output) {
+  var byDay = new Map();
+  var fields = output.split('\0');
+  var notes;
+  var commit;
+  for (var index = 0; index < fields.length; index++) {
+    var field = fields[index];
+    if (field === '') {
+      var [hash, timestamp] = (fields[++index] || '').split('\n');
+      var date = new Date(timestamp);
+      notes = undefined;
+      if (!Number.isFinite(date.getTime())) continue;
+      var day = activityDayKey(date);
+      if (!byDay.has(day)) byDay.set(day, new Map());
+      notes = byDay.get(day);
+      commit = hash;
+      // Git adds a newline before the first status in each commit.
+      field = fields[++index]?.replace(/^\n/, '');
+    }
+    if (!notes || !field) continue;
+    var oldPath = /^[RC]/.test(field) ? fields[++index] : null;
+    var path = fields[++index];
+    if (!path) continue;
+    if (!notes.has(path)) notes.set(path, []);
+    notes.get(path).push({ commit, oldPath });
+  }
+  return byDay;
+}
+
+function renderActivityPatch(container, patch) {
+  var code = container.createEl('pre', { cls: 'vpd-activity-patch', attr: { tabindex: '0', 'aria-label': 'Text diff' } });
+  patch.replace(/\n$/, '').split('\n').forEach(line => {
+    var cls = '';
+    if (line.startsWith('@@')) cls = 'vpd-patch-hunk';
+    else if (line.startsWith('+') && !line.startsWith('+++ ')) cls = 'vpd-patch-add';
+    else if (line.startsWith('-') && !line.startsWith('--- ')) cls = 'vpd-patch-remove';
+    code.createSpan({ cls, text: line + '\n' });
+  });
+}
+
+class ActivityDayModal extends obsidian.Modal {
+  constructor(app, plugin, date) {
+    super(app);
+    this.plugin = plugin;
+    this.date = date;
+  }
+
+  onOpen() {
+    this.modalEl.addClass('vpd-activity-modal');
+    this.titleEl.setText(new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(this.date));
+    var day = activityDayKey(this.date);
+    var { edited, committed } = this.plugin.getActivityForDay(day);
+    var paths = [...new Set([...edited, ...committed.keys()])].sort((a, b) => a.localeCompare(b));
+    this.contentEl.createDiv({ cls: 'vpd-activity-day-summary', text: editedNotesLabel(paths.length) });
+    if (!paths.length) {
+      this.contentEl.createDiv({ text: 'No notes were recorded on this day.' });
+      return;
+    }
+
+    var list = this.contentEl.createDiv({ cls: 'vpd-activity-notes' });
+    var isToday = day === activityDayKey(new Date());
+    paths.forEach(path => {
+      var commits = committed.get(path) || [];
+      var note = list.createEl('details', { cls: 'vpd-activity-note' });
+      var summary = note.createEl('summary');
+      summary.createSpan({ cls: 'vpd-activity-note-path', text: path });
+      var source = commits.length ? commits.length + (commits.length === 1 ? ' commit' : ' commits') : 'Editor';
+      summary.createSpan({ cls: 'vpd-activity-note-badge', text: source });
+
+      var loaded = false;
+      note.addEventListener('toggle', async () => {
+        if (!note.open || loaded) return;
+        loaded = true;
+        var body = note.createDiv({ cls: 'vpd-activity-note-body' });
+        var file = this.app.vault.getAbstractFileByPath(path);
+        if (file instanceof obsidian.TFile) {
+          var open = body.createEl('button', { cls: 'vpd-activity-open-note', text: 'Open note', attr: { type: 'button' } });
+          open.addEventListener('click', () => {
+            this.close();
+            this.plugin.openFile(file);
+          });
+        }
+        var diffs = body.createDiv();
+        var loading = diffs.createDiv({ cls: 'vpd-activity-diff-label', text: 'Loading changes…' });
+        for (var entry of commits) {
+          await this.renderDiff(diffs, 'Commit ' + entry.commit.slice(0, 7),
+            () => this.plugin.getCommitPatch(path, entry), 'This commit has no text changes for the note.');
+        }
+        if (isToday && edited.has(path) && this.plugin.getGitDirectory()) {
+          await this.renderDiff(diffs, 'Current changes since the last commit',
+            () => this.plugin.getWorkingPatch(path), 'No current Git diff for this note.');
+        } else if (!commits.length) {
+          diffs.createDiv({ cls: 'vpd-activity-diff-label', text: 'No saved diff is available for this editor activity.' });
+        }
+        loading.remove();
+      });
+    });
+  }
+
+  async renderDiff(container, label, readPatch, emptyMessage) {
+    var section = container.createDiv({ cls: 'vpd-activity-diff' });
+    section.createDiv({ cls: 'vpd-activity-diff-label', text: label });
+    try {
+      var patch = await readPatch();
+      if (patch) renderActivityPatch(section, patch);
+      else section.createDiv({ text: emptyMessage });
+    } catch {
+      section.createDiv({ text: 'Could not load this Git diff.' });
+    }
+  }
+}
+
 class PublishDashboardView extends obsidian.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
@@ -89,11 +217,14 @@ class PublishDashboardView extends obsidian.ItemView {
   render() {
     this.refreshData();
     var container = this.containerEl.children[1];
+    var previousCalendar = container.querySelector('.vpd-activity-scroll');
+    var activityScrollLeft = previousCalendar ? previousCalendar.scrollLeft : null;
     container.empty();
     container.addClass('vpd-container');
 
     // 1. Header & Metric Progress Strip
     this.renderHeader(container);
+    this.renderActivity(container, activityScrollLeft);
 
     // 2. Controls Toolbar (Search, Filter, Sort, View Toggle)
     this.renderToolbar(container);
@@ -105,6 +236,116 @@ class PublishDashboardView extends obsidian.ItemView {
     } else {
       this.renderTableView(contentEl);
     }
+  }
+
+  renderActivity(container, scrollLeft) {
+    var today = new Date();
+    var days = Array.from({ length: ACTIVITY_DAYS }, (_, index) =>
+      activityDate(today, index + 1 - ACTIVITY_DAYS)
+    );
+    var counts = days.map(date => this.plugin.getActivityCounts(date));
+    var activeDays = counts.filter(day => day.total > 0).length;
+    var todayCount = counts[ACTIVITY_DAYS - 1].total;
+    var streak = 0;
+    var offset = todayCount ? 0 : -1;
+    while (this.plugin.getActivityCounts(activityDate(today, offset)).total) {
+      streak++;
+      offset--;
+    }
+
+    var section = container.createEl('section', {
+      cls: 'vpd-activity',
+      attr: { 'aria-label': 'Writing activity' }
+    });
+    var header = section.createDiv({ cls: 'vpd-activity-header' });
+    header.createEl('h3', { text: 'Writing activity', cls: 'vpd-activity-title' });
+    header.createSpan({
+      text: editedNotesLabel(todayCount) + ' today · ' + streak + '-day streak · ' +
+        activeDays + ' active ' + (activeDays === 1 ? 'day' : 'days') + ' in the last year'
+    });
+
+    var scroller = section.createDiv({ cls: 'vpd-activity-scroll' });
+    var grid = scroller.createDiv({ cls: 'vpd-activity-grid' });
+    var footer = section.createDiv({ cls: 'vpd-activity-footer' });
+    var details = footer.createSpan();
+    var legend = footer.createDiv({ cls: 'vpd-activity-legend', attr: { 'aria-hidden': 'true' } });
+    legend.createSpan({ text: 'Fewer' });
+    for (var level = 0; level <= 4; level++) {
+      legend.createSpan({ cls: 'vpd-activity-cell vpd-activity-level-' + level });
+    }
+    legend.createSpan({ text: 'More' });
+
+    var startWeekday = (days[0].getDay() + 6) % 7;
+    var monthFormat = new Intl.DateTimeFormat(undefined, { month: 'short' });
+    var dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'long' });
+    var idleDetails = activeDays
+      ? 'Select a day to see its notes and changes.'
+      : 'Edit a note in Obsidian to start your activity history.';
+    if (this.plugin.gitActivityByDay?.size) idleDetails += ' Includes activity by Git commit date.';
+    if (this.plugin.gitActivityUnavailable) idleDetails += ' Git history is unavailable.';
+    details.setText(idleDetails);
+
+    ['Mon', '', 'Wed', '', 'Fri'].forEach((day, index) => {
+      if (!day) return;
+      var label = grid.createSpan({ text: day, attr: { 'aria-hidden': 'true' } });
+      label.style.gridArea = (index + 2) + ' / 1';
+    });
+
+    var todayIndex = ACTIVITY_DAYS - 1;
+    var rememberedDay = days.findIndex(date => activityDayKey(date) === this.selectedActivityDay);
+    var selectedDay = rememberedDay < 0 ? todayIndex : rememberedDay;
+    var cells = days.map((date, index) => {
+      var { total: count, committed } = counts[index];
+      var weekdayIndex = index + startWeekday;
+      var column = Math.floor(weekdayIndex / 7) + 2;
+      if (date.getDate() === 1 || (index === 0 && date.getDate() <= 22)) {
+        var label = grid.createSpan({ text: monthFormat.format(date), attr: { 'aria-hidden': 'true' } });
+        label.style.gridArea = '1 / ' + column;
+      }
+      var description = dateFormat.format(date) + ' · ' + editedNotesLabel(count);
+      if (committed) description += ' (' + committed + ' in Git commits)';
+      var cell = grid.createEl('button', {
+        cls: 'vpd-activity-cell vpd-activity-level-' + Math.min(count, 4),
+        attr: {
+          type: 'button',
+          title: description,
+          'aria-label': description,
+          'aria-haspopup': 'dialog',
+          tabindex: index === selectedDay ? '0' : '-1',
+          'data-day-index': String(index)
+        }
+      });
+      cell.style.gridArea = (weekdayIndex % 7 + 2) + ' / ' + column;
+      if (index === todayIndex) cell.setAttribute('aria-current', 'date');
+      if (index === rememberedDay) cell.addClass('vpd-activity-selected');
+      return cell;
+    });
+    grid.addEventListener('focusin', event => {
+      var index = event.target.dataset.dayIndex;
+      if (index === undefined) return;
+      cells[selectedDay].tabIndex = -1;
+      selectedDay = Number(index);
+      cells[selectedDay].tabIndex = 0;
+      details.setText(event.target.title);
+    });
+    grid.addEventListener('click', event => {
+      var index = event.target.dataset.dayIndex;
+      if (index === undefined) return;
+      var date = days[Number(index)];
+      this.selectedActivityDay = activityDayKey(date);
+      grid.querySelector('.vpd-activity-selected')?.removeClass('vpd-activity-selected');
+      event.target.addClass('vpd-activity-selected');
+      new ActivityDayModal(this.app, this.plugin, date).open();
+    });
+    grid.addEventListener('keydown', event => {
+      var shifts = { ArrowUp: -1, ArrowDown: 1, ArrowLeft: -7, ArrowRight: 7 };
+      var shift = shifts[event.key];
+      if (shift === undefined) return;
+      event.preventDefault();
+      var next = Math.max(0, Math.min(cells.length - 1, selectedDay + shift));
+      cells[next].focus();
+    });
+    scroller.scrollLeft = scrollLeft ?? scroller.scrollWidth;
   }
 
   renderHeader(container) {
@@ -143,6 +384,7 @@ class PublishDashboardView extends obsidian.ItemView {
     });
     refreshBtn.addEventListener('click', () => {
       this.render();
+      this.plugin.refreshGitActivity();
     });
 
     // Metric summary line
@@ -643,10 +885,17 @@ class VaultPublishDashboardPlugin extends obsidian.Plugin {
     this.registerEvent(this.app.vault.on('rename', debouncedUpdate));
     this.registerEvent(this.app.metadataCache.on('changed', debouncedUpdate));
     this.registerEvent(this.app.metadataCache.on('resolve', debouncedUpdate));
+    this.registerEvent(this.app.workspace.on('editor-change', (editor, info) => {
+      if (editor.hasFocus()) this.recordActivity(info.file);
+    }));
+    this.registerEvent(this.app.vault.on('rename', (file, oldPath) => {
+      this.updateActivityPath(oldPath, file.path);
+    }));
 
-    // Initial status bar calculation
+    // Load the local commit history once the vault is ready.
     this.app.workspace.onLayoutReady(() => {
       this.updateStatusBar();
+      this.refreshGitActivity();
     });
   }
 
@@ -655,14 +904,132 @@ class VaultPublishDashboardPlugin extends obsidian.Plugin {
   }
 
   async loadSettings() {
-    var loaded = await this.loadData();
+    var { activityByDay = {}, ...loaded } = (await this.loadData()) || {};
     this.settings = Object.assign({}, DEFAULT_SETTINGS, loaded);
     this.settings.stages = DEFAULT_STAGES;
+    this.activityByDay = activityByDay;
+    this.pendingSave = Promise.resolve();
   }
 
   async saveSettings() {
-    await this.saveData(this.settings);
+    await this.saveDashboardData();
     this.refreshActiveDashboardViews();
+  }
+
+  saveDashboardData() {
+    var write = () => this.saveData({
+      ...this.settings,
+      activityByDay: this.activityByDay
+    });
+    this.pendingSave = this.pendingSave.then(write, write);
+    return this.pendingSave;
+  }
+
+  getGitDirectory() {
+    var adapter = this.app.vault.adapter;
+    if (!obsidian.Platform.isDesktopApp || !(adapter instanceof obsidian.FileSystemAdapter)) return null;
+    return adapter.getBasePath();
+  }
+
+  runGit(args, allowDifferences = false) {
+    return new Promise((resolve, reject) => {
+      var { execFile } = require('child_process');
+      execFile('git', ['--no-pager', ...args], {
+        cwd: this.getGitDirectory(),
+        maxBuffer: 8 * 1024 * 1024,
+        timeout: 10000,
+        windowsHide: true
+      }, (error, output) => {
+        if (error && !(allowDifferences && error.code === 1)) reject(error);
+        else resolve(output);
+      });
+    });
+  }
+
+  async refreshGitActivity() {
+    if (!this.getGitDirectory() || this.gitActivityLoading) return;
+
+    var firstDay = activityDate(new Date(), 1 - ACTIVITY_DAYS);
+    firstDay.setHours(0, 0, 0, 0);
+    this.gitActivityLoading = true;
+    try {
+      var output = await this.runGit([
+        'log', '--relative', '--format=%x00%H%n%cI', '--name-status', '-z', '--find-renames',
+        '--no-color', '--no-notes', '--no-show-signature', '--no-ext-diff', '--no-textconv',
+        '--since-as-filter=' + firstDay.toISOString(),
+        '--', ':(icase,glob)**/*.md', ':(exclude,icase,glob).obsidian/**'
+      ]);
+      this.gitActivityByDay = parseGitActivity(output);
+      this.gitActivityUnavailable = false;
+    } catch {
+      this.gitActivityUnavailable = true;
+    } finally {
+      this.gitActivityLoading = false;
+      this.refreshActiveDashboardViews();
+    }
+  }
+
+  getActivityForDay(day) {
+    var gitNotes = this.gitActivityByDay?.get(day);
+    var committed = new Map();
+    gitNotes?.forEach((commits, path) => {
+      if (!this.isExcluded(path)) committed.set(path, commits);
+    });
+    var edited = new Set(this.activityByDay[day] || []);
+    return { edited, committed };
+  }
+
+  getActivityCounts(date) {
+    var { edited, committed } = this.getActivityForDay(activityDayKey(date));
+    return { total: new Set([...edited, ...committed.keys()]).size, committed: committed.size };
+  }
+
+  getCommitPatch(path, entry) {
+    var paths = [':(literal)' + path];
+    if (entry.oldPath && !this.isExcluded(entry.oldPath)) paths.push(':(literal)' + entry.oldPath);
+    return this.runGit([
+      'show', '--format=', '--patch', '--relative', '--find-renames',
+      '--no-color', '--no-ext-diff', '--no-textconv', '--no-notes', '--no-show-signature',
+      entry.commit, '--', ...paths
+    ]);
+  }
+
+  async getWorkingPatch(path) {
+    var literal = ':(literal)' + path;
+    var options = ['--no-color', '--no-ext-diff', '--no-textconv'];
+    var patch = await this.runGit(['diff', ...options, '--relative', '--no-renames', 'HEAD', '--', literal]);
+    if (patch) return patch;
+    var untracked = await this.runGit(['ls-files', '--others', '--exclude-standard', '-z', '--', literal]);
+    if (!untracked) return '';
+    return this.runGit(['diff', '--no-index', ...options, '--', '/dev/null', './' + path], true);
+  }
+
+  recordActivity(file) {
+    if (file?.extension !== 'md' || this.isExcluded(file.path)) return;
+    var key = activityDayKey(new Date());
+    var paths = this.activityByDay[key] || [];
+    if (paths.includes(file.path)) return;
+    this.activityByDay[key] = paths.concat(file.path);
+    this.saveActivity();
+    this.refreshActiveDashboardViews();
+  }
+
+  updateActivityPath(oldPath, newPath) {
+    var key = activityDayKey(new Date());
+    var paths = this.activityByDay[key];
+    if (!paths) return;
+    var renamed = paths.map(path => path === oldPath || path.startsWith(oldPath + '/')
+      ? newPath + path.slice(oldPath.length)
+      : path);
+    if (renamed.every((path, index) => path === paths[index])) return;
+    this.activityByDay[key] = [...new Set(renamed)];
+    this.saveActivity();
+  }
+
+  saveActivity() {
+    this.saveDashboardData().catch(error => {
+      console.error('Publish Dashboard could not save writing activity', error);
+    });
   }
 
   getStageIndex(stageId) {

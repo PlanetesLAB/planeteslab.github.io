@@ -4,12 +4,6 @@ tags:
   - solar-system
   - planet-formation
   - comets
-authors:
-  - B. Srivastava
-  - A. Izidoro
-volume: Vol. 11
-issue: Issue 43
-published: October 2025
 doi: 10.1126/sciadv.ady4823
 journal_logo: sciadv-logo.svg
 status: writing

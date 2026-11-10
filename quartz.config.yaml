@@ -281,6 +281,7 @@ plugins:
     order: 50
   - source: ./quartz/plugins/local/paper-preview
     enabled: true
+    order: 86 # Read bibliography authors after the citations transformer.
   - source: ./quartz/plugins/local/journal-entry
     enabled: true
   - source: ./quartz/plugins/local/preserve-tag-case

@@ -8,6 +8,7 @@ tsconfig.tsbuildinfo
 **/.obsidian/workspace-mobile.json
 **/.obsidian/cache/
 **/.obsidian/plugins/*/.git
+**/.obsidian/plugins/vault-publish-dashboard/data.json
 .quartz-cache
 private/
 .replit

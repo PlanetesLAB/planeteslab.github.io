@@ -9,6 +9,9 @@ type CslName = {
   family?: string
   given?: string
   literal?: string
+  "non-dropping-particle"?: string
+  "dropping-particle"?: string
+  suffix?: string
 }
 
 type CslDate = {
@@ -44,6 +47,13 @@ type CitationMetadata = {
   sourceUrl: string
   link: string
   linkLabel: string
+}
+
+export type ReviewMetadata = {
+  authors: string[]
+  volume: string
+  issue: string
+  published: string
 }
 
 export interface Options {
@@ -155,9 +165,31 @@ function formatNames(names: CslName[] = []) {
   return `${formatted.slice(0, -1).join(", ")}, & ${formatted.at(-1)}`
 }
 
+function formatReviewAuthor(name: CslName) {
+  if (name.literal) return name.literal
+  return [
+    initials(name.given),
+    name["dropping-particle"],
+    name["non-dropping-particle"],
+    name.family,
+    name.suffix,
+  ].filter(Boolean).join(" ")
+}
+
 function publicationYear(issued?: CslDate) {
   const year = issued?.["date-parts"]?.[0]?.[0]
   return year ? String(year) : (issued?.literal?.trim() ?? "")
+}
+
+const monthFormatter = new Intl.DateTimeFormat("en", { month: "long", timeZone: "UTC" })
+
+function publicationMonthAndYear(issued?: CslDate) {
+  const year = publicationYear(issued)
+  const month = Number(issued?.["date-parts"]?.[0]?.[1])
+  if (!year || !Number.isInteger(month) || month < 1 || month > 12) return year
+
+  const monthName = monthFormatter.format(Date.UTC(2000, month - 1))
+  return `${monthName} ${year}`
 }
 
 function normalizeDoi(value = "") {
@@ -196,19 +228,31 @@ function parseCitationData(bibliographyPath: string, fallbackSearch: Options["fa
   const bibliography = fs.readFileSync(bibliographyPath, "utf8")
   const parsed = new Cite(bibliography, {}).data as CslEntry[]
   const entries: Record<string, CitationMetadata> = {}
+  const reviewsByDoi = new Map<string, ReviewMetadata>()
 
   for (const entry of parsed) {
+    const doi = normalizeDoi(entry.DOI)
+    const volume = String(entry.volume ?? "").trim()
+    const issue = String(entry.issue ?? "").trim()
+    if (doi) {
+      reviewsByDoi.set(doi.toLowerCase(), {
+        authors: (entry.author ?? []).map(formatReviewAuthor).filter(Boolean),
+        volume,
+        issue,
+        published: publicationMonthAndYear(entry.issued),
+      })
+    }
+
     const key = String(entry["citation-key"] ?? entry.id ?? "").toLowerCase()
     if (!key) continue
 
-    const doi = normalizeDoi(entry.DOI)
     entries[key] = {
       title: entry.title?.trim() ?? "",
       authors: formatNames(entry.author?.length ? entry.author : entry.editor),
       year: publicationYear(entry.issued),
       container: String(entry["container-title"] ?? entry.publisher ?? "").trim(),
-      volume: String(entry.volume ?? "").trim(),
-      issue: String(entry.issue ?? "").trim(),
+      volume,
+      issue,
       pages: String(entry.page ?? "").trim(),
       doi,
       sourceUrl: entry.URL?.trim() ?? "",
@@ -223,7 +267,7 @@ function parseCitationData(bibliographyPath: string, fallbackSearch: Options["fa
     }
   }
 
-  return entries
+  return { entries, reviewsByDoi }
 }
 
 function classNames(value: unknown) {
@@ -361,10 +405,24 @@ const popoverScript = String.raw`
 export const Citations: QuartzTransformerPlugin<Partial<Options>> = (userOpts) => {
   const opts = { ...defaultOptions, ...userOpts }
   const citationBibliography = createCitationBibliography(path.resolve(opts.bibliographyFile))
-  const citationData = parseCitationData(path.resolve(citationBibliography), opts.fallbackSearch)
+  const { entries: citationData, reviewsByDoi } = parseCitationData(
+    path.resolve(citationBibliography),
+    opts.fallbackSearch,
+  )
 
   return {
     name: "Citations",
+    markdownPlugins() {
+      return [
+        () => (_tree, file) => {
+          const doi = file.data.frontmatter?.doi
+          if (typeof doi !== "string") return
+
+          const review = reviewsByDoi.get(normalizeDoi(doi).toLowerCase())
+          if (review) file.data.bibliographyReview = review
+        },
+      ]
+    },
     htmlPlugins(ctx) {
       const plugins: PluggableList = []
 

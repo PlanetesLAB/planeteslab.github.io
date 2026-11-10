@@ -54,6 +54,29 @@ img {
 }
 
 // Logos adjustments
+// Accept either theme variant (and the existing short OJA frontmatter value).
+img[src$="ojap-light.svg"],
+img[src$="ojap-dark.svg"],
+img[src="oja"] {
+  content: url("/images/assets/ojap-light.svg");
+}
+
+html[saved-theme="dark"] img[src$="ojap-light.svg"],
+html[saved-theme="dark"] img[src$="ojap-dark.svg"],
+html[saved-theme="dark"] img[src="oja"] {
+  content: url("/images/assets/ojap-dark.svg");
+}
+
+img[src$="ppvii-black.svg"],
+img[src$="ppvii-white.svg"] {
+  content: url("/images/assets/ppvii-black.svg");
+}
+
+html[saved-theme="dark"] img[src$="ppvii-black.svg"],
+html[saved-theme="dark"] img[src$="ppvii-white.svg"] {
+  content: url("/images/assets/ppvii-white.svg");
+}
+
 img[src$="sciadv-logo.svg"] {
   background: none !important;
   display: block;

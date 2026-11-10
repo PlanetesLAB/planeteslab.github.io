@@ -203,6 +203,213 @@
   background-color: #a6e3a1; /* Sage / Green */
 }
 
+/* Writing activity calendar */
+.vpd-activity,
+.vpd-activity-modal {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.vpd-activity {
+  --vpd-activity-empty: #151b23;
+  --vpd-activity-outline: #ffffff0c;
+  --vpd-activity-1: #0e4429;
+  --vpd-activity-2: #006d32;
+  --vpd-activity-3: #26a641;
+  --vpd-activity-4: #39d353;
+  container-type: inline-size;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1160px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 10px;
+  background: var(--background-primary);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.theme-light .vpd-activity {
+  --vpd-activity-empty: #eff2f5;
+  --vpd-activity-outline: #1f23280d;
+  --vpd-activity-1: #9be9a8;
+  --vpd-activity-2: #40c463;
+  --vpd-activity-3: #30a14e;
+  --vpd-activity-4: #216e39;
+}
+
+.vpd-activity-header,
+.vpd-activity-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
+.vpd-activity-title {
+  margin: 0;
+  color: var(--text-normal);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.vpd-activity-scroll {
+  --vpd-activity-size: 11px;
+  --vpd-activity-size: clamp(11px, calc((100cqw - 196px) / 54), 18px);
+  overflow-x: auto;
+  margin: 12px 0 8px;
+  padding: 2px;
+}
+
+.vpd-activity-grid {
+  display: grid;
+  grid-template-columns: 30px;
+  grid-template-rows: 16px repeat(7, var(--vpd-activity-size));
+  grid-auto-columns: var(--vpd-activity-size);
+  align-items: center;
+  gap: 3px;
+  width: max-content;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.vpd-activity-legend {
+  --vpd-activity-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: auto;
+}
+
+.vpd-activity-cell,
+.vpd-activity-grid button.vpd-activity-cell {
+  display: block;
+  width: var(--vpd-activity-size);
+  min-width: 0;
+  height: var(--vpd-activity-size);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: var(--vpd-activity-fill, var(--vpd-activity-empty));
+  box-shadow: inset 0 0 0 1px var(--vpd-activity-outline);
+}
+
+.vpd-activity-grid button {
+  cursor: pointer;
+}
+
+.vpd-activity-grid button[aria-current="date"] {
+  box-shadow: inset 0 0 0 1px var(--text-muted);
+}
+
+.vpd-activity-grid button:hover,
+.vpd-activity-grid button:focus-visible,
+.vpd-activity-grid button.vpd-activity-selected {
+  position: relative;
+  z-index: 1;
+  outline: 1px solid var(--text-normal);
+  outline-offset: 1px;
+}
+
+.vpd-activity-level-1 { --vpd-activity-fill: var(--vpd-activity-1); }
+.vpd-activity-level-2 { --vpd-activity-fill: var(--vpd-activity-2); }
+.vpd-activity-level-3 { --vpd-activity-fill: var(--vpd-activity-3); }
+.vpd-activity-level-4 { --vpd-activity-fill: var(--vpd-activity-4); }
+
+.modal.vpd-activity-modal {
+  width: min(880px, 94vw);
+  border-radius: 12px;
+}
+
+.vpd-activity-day-summary,
+.vpd-activity-diff-label {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.vpd-activity-day-summary {
+  margin-bottom: 14px;
+}
+
+.vpd-activity-notes {
+  display: grid;
+  gap: 8px;
+}
+
+.vpd-activity-note {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vpd-activity-note summary {
+  background: var(--background-secondary);
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.vpd-activity-note summary:hover {
+  background: var(--background-modifier-hover);
+}
+
+.vpd-activity-note-path {
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.vpd-activity-note-badge {
+  display: inline-block;
+  margin-inline-start: 8px;
+  padding: 0 7px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 20px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.vpd-activity-note-body {
+  padding: 12px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.vpd-activity-open-note {
+  margin-bottom: 10px;
+}
+
+.vpd-activity-diff + .vpd-activity-diff {
+  margin-top: 12px;
+}
+
+.vpd-activity-patch {
+  max-height: 45vh;
+  overflow: auto;
+  margin: 5px 0 0;
+  padding: 8px 0;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font: 12px/1.5 ui-monospace, "SF Mono", Menlo, monospace;
+  white-space: pre;
+}
+
+.vpd-activity-patch span {
+  display: block;
+  min-width: 100%;
+  width: max-content;
+  min-height: 1.5em;
+  padding-inline: 10px;
+}
+
+.vpd-patch-hunk { background: #388bfd24; }
+.vpd-patch-add { background: #2ea04326; }
+.vpd-patch-remove { background: #f8514926; }
+
 /* Toolbar */
 .vpd-toolbar {
   display: flex;

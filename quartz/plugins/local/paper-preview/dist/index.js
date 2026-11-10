@@ -1,4 +1,8 @@
 // index.ts
+var htmlEntities = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" };
+function escapeHtml(value) {
+  return value.replace(/[&<>"]/g, (char) => htmlEntities[char]);
+}
 var PaperPreviewInjector = () => {
   return {
     name: "PaperPreviewInjector",
@@ -12,12 +16,16 @@ var PaperPreviewInjector = () => {
               (tag) => tag.toLowerCase() === "review" || tag.toLowerCase() === "#review"
             );
             if (hasReviewTag) {
-              const authors = frontmatter?.authors || [];
-              const volume = frontmatter?.volume || "";
-              const issue = frontmatter?.issue || "";
-              const published = frontmatter?.published || "";
-              const doi = frontmatter?.doi || "";
-              const journalLogo = frontmatter?.journal_logo || "";
+              const bibliography = file.data.bibliographyReview;
+              const manualAuthors = frontmatter?.authors;
+              const authors = Array.isArray(manualAuthors) && manualAuthors.length > 0 ? manualAuthors : bibliography?.authors;
+              const volume = frontmatter?.volume || (bibliography?.volume ? `Vol. ${bibliography.volume}` : "");
+              const issue = frontmatter?.issue || (bibliography?.issue ? `Issue ${bibliography.issue}` : "");
+              const volumeIssue = [volume, issue].filter(Boolean).join(", ");
+              const published = frontmatter?.published || bibliography?.published || "";
+              const doi = typeof frontmatter?.doi === "string" ? frontmatter.doi.trim().replace(/^https?:\/\/(?:dx\.)?doi\.org\/|^doi:\s*/i, "") : "";
+              const journalLogoValue = frontmatter?.journal_logo || "";
+              const journalLogo = journalLogoValue === "oja" ? "/images/assets/ojap-light.svg" : journalLogoValue;
               const headerTag = doi ? "a" : "div";
               const coceriEntries = [
                 { key: "Co", label: "Context", slug: "co" },
@@ -31,7 +39,7 @@ var PaperPreviewInjector = () => {
                 const authorNames = authors.map((author) => {
                   return typeof author === "string" ? author : author.name || author;
                 });
-                authorsHTML = `<div class="authors-list">${authorNames.join(", ")}</div>`;
+                authorsHTML = `<div class="authors-list">${escapeHtml(authorNames.join(", "))}</div>`;
               }
               const coceriRows = [];
               for (const entry of coceriEntries) {
@@ -56,7 +64,7 @@ var PaperPreviewInjector = () => {
                 type: "html",
                 value: `
                   <div class="paper-preview-container">
-                    <${headerTag} class="paper-preview${doi ? " paper-preview-link" : ""}"${doi ? ` href="https://doi.org/${doi}" target="_blank" rel="noopener noreferrer"` : ""}>
+                    <${headerTag} class="paper-preview${doi ? " paper-preview-link" : ""}"${doi ? ` href="https://doi.org/${escapeHtml(doi)}" target="_blank" rel="noopener noreferrer"` : ""}>
                       ${journalLogo ? `
                       <div class="journal-logo">
                         <img src="${journalLogo}" alt="Journal Logo">
@@ -64,21 +72,20 @@ var PaperPreviewInjector = () => {
                       
                       ${authorsHTML}
                       
-                      ${volume || issue || published ? `
+                      ${volumeIssue || published ? `
                       <div class="metadata">
-                        ${volume || issue || published ? `
                         <div class="metadata-row">
-                          ${volume || issue ? `
+                          ${volumeIssue ? `
                           <div class="metadata-item">
                             <span class="metadata-label">Volume/Issue:</span>
-                            <span class="metadata-value">${volume}${issue ? ", " + issue : ""}</span>
+                            <span class="metadata-value">${escapeHtml(volumeIssue)}</span>
                           </div>` : ""}
                           ${published ? `
                           <div class="metadata-item">
                             <span class="metadata-label">Published:</span>
-                            <span class="metadata-value">${published}</span>
+                            <span class="metadata-value">${escapeHtml(String(published))}</span>
                           </div>` : ""}
-                        </div>` : ""}
+                        </div>
                       </div>` : ""}
                     </${headerTag}>
                     ${coceriHTML}
