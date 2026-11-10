@@ -2,7 +2,7 @@
   "name": "graph-button",
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/components/index.js",
   "exports": {
     "./components": "./dist/components/index.js"
   },
