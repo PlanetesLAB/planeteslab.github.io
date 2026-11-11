@@ -40,6 +40,13 @@ configuration:
         tertiary: "#fab387"
         highlight: rgba(6, 18, 39, 0.08)
         textHighlight: rgba(249, 226, 175, 0.20)
+  links:
+    markdownLinkResolution: shortest
+  drafts:
+    publish: true
+  contentIndex:
+    enableSiteMap: true
+    enableRSS: true
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: false
@@ -83,11 +90,6 @@ plugins:
     layout:
       position: right
       priority: 30
-  - source: github:quartz-community/crawl-links
-    enabled: true
-    options:
-      markdownLinkResolution: shortest
-    order: 60
   - source: ./quartz/plugins/local/inline-favicons
     enabled: true
     order: 61
@@ -120,11 +122,9 @@ plugins:
       header: Zalando Sans Expanded
       body: Work Sans
       code: JetBrains Mono
-  - source: github:quartz-community/remove-draft
-    enabled: false
   - source: ./quartz/plugins/local/explicit-publish
     enabled: true
-  - source: ./quartz/plugins/local/unlisted-pages
+  - source: github:quartz-community/unlisted-pages
     enabled: false
     options: {}
     order: 45
@@ -135,6 +135,8 @@ plugins:
       passwordField: password
       unlistWhenEncrypted: false
       outputPath: static/encryptedContentIndex.json
+    layout:
+      position: beforeBody
   - source: github:quartz-community/stacked-pages
     enabled: false
     layout:
@@ -143,11 +145,6 @@ plugins:
       display: all
   - source: github:quartz-community/alias-redirects
     enabled: true
-  - source: github:quartz-community/content-index
-    enabled: true
-    options:
-      enableSiteMap: true
-      enableRSS: true
   - source: github:quartz-community/favicon
     enabled: true
   - source: github:quartz-community/og-image
@@ -261,8 +258,6 @@ plugins:
       includeAll: false
       excludedProperties: []
       hidePropertiesView: true
-      delimiters: ---
-      language: yaml
     order: 5
     layout:
       position: beforeBody
