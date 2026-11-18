@@ -32,3 +32,4 @@ Minor planets in the solar system are objects in *direct* orbit around the Sun, 
 
 #### KBOs
 
+### ETNOs

@@ -39,5 +39,9 @@ where $m$ is the mass of the clearing body, $a$ its semi-major axis, and $k$ is 
 
 ### Margot's $\Pi$
 
+## Flaws in the IAU definition
+
+The IAU definition attracts debate to this day, and rightfully so. What is immediately apparent is that it is very [[The Solar System|Solar System]]-centric, and thus excludes exoplanets. Works like @margotQuantitativeCriteriaDefining2024 and @metzgerMoonsArePlanets2022 have tried to further clarify the notion of clearing the neighborhood in a more quantitative way.
+
 
 [^1]: [[Rogue planet|Rogue planets]] may exist. But it is more appropriate to refer to them as *planetary-mass objects*.

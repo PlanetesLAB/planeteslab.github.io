@@ -34,5 +34,9 @@ z/r <1 Cold mid-plane
 - [x] CR prescription from limulus
 - [ ] Ice absorption SED from scorpia
 
+# Follow up to `g4j`
+- Have a bit more CO in gas phase -> 
+
+
 # Draft
 Methodology and Introduction

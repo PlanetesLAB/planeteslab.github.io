@@ -7,8 +7,22 @@ var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __export = (target, all) => {
   __markAsModule(target);
@@ -51,105 +65,159 @@ var __async = (__this, __arguments, generator) => {
 __export(exports, {
   default: () => ScrollOffset
 });
-var import_obsidian = __toModule(require("obsidian"));
+var import_obsidian2 = __toModule(require("obsidian"));
 
 // src/ScrollOffsetCM6.ts
 var import_view = __toModule(require("@codemirror/view"));
 var import_state = __toModule(require("@codemirror/state"));
-var eventHandlers = {
-  mousedown(event, view) {
-    this.switch = false;
-  },
-  keydown(event, view) {
-    this.switch = true;
+var scrollOffFacet = import_state.Facet.define({
+  combine: (values) => values.length ? values[0] : { percentageMode: false, offset: 5 }
+});
+var scrollOffCompartment = new import_state.Compartment();
+var scrollOffPlugin = import_view.ViewPlugin.fromClass(class {
+  constructor(view) {
+    this._cachedOffset = 5;
+    this.actualOffset = 5;
+    this.mouseActing = false;
+    this.view = view;
   }
-};
-function generateScrollOffsetCM6Plugin(calcRequiredOffset) {
-  return import_state.Prec.highest(import_view.ViewPlugin.fromClass(class {
-    constructor(_view) {
-      this.margin = 200;
-      this.switch = true;
+  calcRequiredDistance(windowHeight, cursorHeight, isPercentage, distance) {
+    const limitDistance = Math.floor((windowHeight - cursorHeight) / 2);
+    const requiredDistance = isPercentage ? windowHeight * distance / 100 : distance;
+    return Math.max(5, Math.min(requiredDistance, limitDistance));
+  }
+  getViewportRect(view) {
+    var _a;
+    return ((_a = view.dom.querySelector(".cm-scroller")) == null ? void 0 : _a.getBoundingClientRect()) || null;
+  }
+  getCursorCoords(view) {
+    const head = view.state.selection.main.head;
+    return view.coordsAtPos(head);
+  }
+  setCacheOffset(offset) {
+    this._cachedOffset = offset;
+  }
+  getCacheOffset() {
+    return this._cachedOffset;
+  }
+  update(update) {
+    const view = update.view;
+    const previousSetting = update.startState.facet(scrollOffFacet);
+    const currentSetting = update.state.facet(scrollOffFacet);
+    const settingChanged = currentSetting !== previousSetting;
+    const { percentageMode, offset } = currentSetting;
+    if (this.mouseActing) {
+      this.mouseActing = false;
+      return;
     }
-    update(_update) {
-      if (!_update.selectionSet)
-        return;
-      const view = _update.view;
-      view.requestMeasure({
-        read: () => {
-          return {
-            cursor: view.coordsAtPos(view.state.selection.main.head)
-          };
-        },
-        write: ({ cursor }) => {
-          if (!cursor)
+    ;
+    if (!update.selectionSet && !settingChanged && !update.geometryChanged)
+      return;
+    view.requestMeasure({
+      read: () => {
+        const isCellInTable = !!view.dom.closest("td");
+        if (isCellInTable)
+          return;
+        if (settingChanged || update.geometryChanged) {
+          const rect = this.getViewportRect(view);
+          if (!rect || rect.height <= 0)
             return;
-          if (this.switch) {
-            const cursorHeight = cursor.bottom - cursor.top + 5;
-            const requiredOffset = calcRequiredOffset(view.dom, cursorHeight);
-            this.margin = requiredOffset;
-          } else {
-            this.margin = 0;
-          }
+          const coords = this.getCursorCoords(view);
+          if (!coords)
+            return;
+          const cursorHeight = coords.bottom - coords.top;
+          const requiredOffset = this.calcRequiredDistance(rect.height, cursorHeight, percentageMode, offset);
+          if (requiredOffset >= 0)
+            this.setCacheOffset(requiredOffset);
+        } else if (update.selectionSet) {
+          this.actualOffset = this.mouseActing ? 5 : this.getCacheOffset();
         }
-      });
+      }
+    });
+  }
+}, {
+  eventHandlers: {
+    mousedown: function(event, view) {
+      this.mouseActing = true;
+    },
+    mouseup: function(event, view) {
+      this.mouseActing = true;
     }
-  }, {
-    eventHandlers,
-    provide: (plugin) => import_view.EditorView.scrollMargins.of((view) => {
-      const value = view.plugin(plugin);
-      return {
-        top: value.margin,
-        bottom: value.margin
-      };
-    })
-  }));
+  },
+  provide: (plugin) => import_view.EditorView.scrollMargins.of((view) => {
+    const value = view.plugin(plugin);
+    return {
+      top: value == null ? void 0 : value.actualOffset,
+      bottom: value == null ? void 0 : value.actualOffset
+    };
+  })
+});
+var ScrollOffsetCM6Extension = [
+  scrollOffCompartment.of(scrollOffFacet.of({ percentageMode: false, offset: 5 })),
+  scrollOffPlugin
+];
+function reconfigureOffset(view, newSetting) {
+  view.dispatch({
+    effects: scrollOffCompartment.reconfigure(scrollOffFacet.of(newSetting))
+  });
 }
-var ScrollOffsetCM6_default = generateScrollOffsetCM6Plugin;
 
-// src/main.ts
+// src/settings.ts
+var import_obsidian = __toModule(require("obsidian"));
 var DEFAULT_SETTINGS = {
   percentageMode: true,
-  offset: "25"
+  offset: 25
 };
-var ScrollOffset = class extends import_obsidian.Plugin {
+var ScrollOffsetSettingTab = class extends import_obsidian.PluginSettingTab {
+  constructor(app, plugin) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
+  getSettingDefinitions() {
+    return [
+      {
+        name: "Use percentage offset",
+        desc: "Use percentage offset, or use fixed number of distance instead",
+        control: {
+          type: "toggle",
+          key: "percentageMode"
+        }
+      },
+      {
+        name: "Distances",
+        desc: 'unit in "px", or "%" if using percentage offset, 0 to disable this plugin',
+        control: {
+          type: "number",
+          key: "offset"
+        }
+      }
+    ];
+  }
+  setControlValue(key, value) {
+    var __superGet = (key2) => super[key2];
+    return __async(this, null, function* () {
+      yield __superGet("setControlValue").call(this, key, value);
+      this.plugin.applyOffset(true);
+    });
+  }
+};
+
+// src/main.ts
+var ScrollOffset = class extends import_obsidian2.Plugin {
   constructor() {
     super(...arguments);
-    this.clickSwitch = true;
-    this.mouseDownHandler = () => {
-      this.clickSwitch = false;
+    this.originSettings = {
+      percentageMode: false,
+      offset: 5
     };
-    this.cursorActiveHandler = (cm) => {
-      if (!this.clickSwitch) {
-        this.clickSwitch = true;
-        return;
-      }
-      this.scrollLaunch(cm);
-    };
-    this.calcRequiredOffset = (container, cursorHeight) => {
-      const { settings } = this;
-      const maxOffset = (container.offsetHeight - cursorHeight) / 2;
-      let requiredOffset = settings.percentageMode ? container.offsetHeight * +settings.offset / 100 : +settings.offset;
-      requiredOffset = Math.min(requiredOffset, maxOffset);
-      return requiredOffset;
-    };
-    this.scrollLaunch = (cm) => {
-      const cursor = cm.charCoords(cm.getCursor());
-      const cursorHeight = cursor.bottom - cursor.top + 5;
-      const container = cm.getWrapperElement();
-      const requiredOffset = this.calcRequiredOffset(container, cursorHeight);
-      cm.scrollIntoView(null, requiredOffset);
-    };
-    this.enableScrollOffset = () => {
-      this.registerCodeMirror((cm) => {
-        cm.on("mousedown", this.mouseDownHandler);
-        cm.on("cursorActivity", this.cursorActiveHandler);
-      });
-      this.registerEditorExtension(ScrollOffsetCM6_default(this.calcRequiredOffset));
-    };
-    this.disableScrollOffset = () => {
-      this.app.workspace.iterateCodeMirrors((cm) => {
-        cm.off("mousedown", this.mouseDownHandler);
-        cm.off("cursorActivity", this.cursorActiveHandler);
+    this.applyOffset = (enabled) => {
+      this.app.workspace.getLeavesOfType("markdown").forEach((leaf) => {
+        const editor = leaf.view.editor;
+        const view = editor == null ? void 0 : editor.cm;
+        if (!view)
+          return;
+        const settings = enabled ? __spreadValues({}, this.settings) : __spreadValues({}, this.originSettings);
+        reconfigureOffset(view, settings);
       });
     };
   }
@@ -157,12 +225,16 @@ var ScrollOffset = class extends import_obsidian.Plugin {
     return __async(this, null, function* () {
       console.log("Loading Scroll Offset.");
       yield this.loadSettings();
+      this.registerEditorExtension(ScrollOffsetCM6Extension);
       this.addSettingTab(new ScrollOffsetSettingTab(this.app, this));
-      this.enableScrollOffset();
+      this.applyOffset(true);
+      this.registerEvent(this.app.workspace.on("active-leaf-change", () => {
+        this.applyOffset(true);
+      }));
     });
   }
   onunload() {
-    this.disableScrollOffset();
+    this.applyOffset(false);
     console.log("Scroll Offset unloaded.");
   }
   loadSettings() {
@@ -170,31 +242,6 @@ var ScrollOffset = class extends import_obsidian.Plugin {
       this.settings = Object.assign({}, DEFAULT_SETTINGS, yield this.loadData());
     });
   }
-  saveSettings() {
-    return __async(this, null, function* () {
-      yield this.saveData(this.settings);
-    });
-  }
 };
-var ScrollOffsetSettingTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app, plugin) {
-    super(app, plugin);
-    this.plugin = plugin;
-  }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    containerEl.createEl("h2", { text: "Scroll Offset Settings." });
-    new import_obsidian.Setting(containerEl).setName("Use percentage offset").setDesc("Use percentage offset, or use fixed number of distance instead").addToggle((comp) => comp.setValue(this.plugin.settings.percentageMode).onChange((value) => {
-      this.plugin.settings.percentageMode = value;
-      this.plugin.saveSettings();
-    }));
-    new import_obsidian.Setting(containerEl).setName("Distance").setDesc('unit in "px", or "%" if using percentage offset, 0 to disable this plugin').addText((text) => text.setValue(this.plugin.settings.offset).onChange((value) => {
-      this.plugin.settings.offset = value;
-      this.plugin.saveSettings();
-    }));
-  }
-};
-
 
 /* nosourcemap */

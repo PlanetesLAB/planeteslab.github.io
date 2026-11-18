@@ -49,10 +49,11 @@ status: transient
 - Figures should be modified accordingly depending on if it will be used in a paper or in a presentation.
 - Homework: send caption+cartoon+figure.
 
-# 2026-10-21
+# October 2026
+## 2026-10-21
 Opinion -> Size -> Age -> Shape -> Color -> Origin -> Material -> Purpose -> Noun
 
-## How to write a good proposal?
+###  How to write a good proposal?
 
 - Be as aggressive as possible (marketing)
 - Submit as many as you can? (not necessarily a good thing)
@@ -75,9 +76,9 @@ Transform what you want into a scientific question. Is it a good idea for "what 
 - Other optical: March and Sep
 - Radio (VLA): Feb and Aug
 
-# 2026-10-28
+## 2026-10-28
 
-## Postdoc/research position applications
+###  Postdoc/research position applications
 1. Cover letter (second most important)
 2. CV
 3. Publication list
@@ -89,11 +90,60 @@ How many letters we need?
 - For exchange programs - Just advisor support is enough
 - For postdoc - Three letters (at least?)
 
-# 2026-10-30
+## 2026-10-30
 
-## A good cover letter
+### A good cover letter
 - First paragraph: introduce yourself
 - Second paragraph: have some "tags" for yourself, that describe yourself. describe previous research. mention your big science goals as a list
 - Third paragraph: Speak positively about your own skills
 - Fourth paragraph: what you will do if you are offered a position
 - Last paragraph: wrap up by mentioning synergy
+
+# November 2026
+## 2026-11-10
+
+### CSST paper
+- How do you plan a paper when you are not writing the whole manuscript, and just your part? 
+
+(My part's) Outline:
+1. {1} CPI-C simulation framework
+2. Simulating observations of protoplanetary disks
+	1. {a} Target selection
+	2. Source templates and input preparation
+		1. {i} HD 142527
+		2. RX J1604
+	3. Simulated observations and image processing
+3. Simulating observations of the Solar System debris disk
+	1. {a} Disk model construction
+	2. Scattered-light image synthesis
+	3. Simulated observations and image processing
+4. Discussion
+
+### Thermochemical model paper
+
+1. {1} Introduction
+2. Model description
+	1. {a} Introduction of the code and some technical things
+	2. Model parameters specific to the disk we are modeling with the aforementioned code (TW Hydra)
+3. Comparison with existing and previous modeling and observational studies (establishing the benchmark)
+	1. {a} Continuum observations
+	2. CO line emission observations
+	3. HD line emission observations
+	4. $\mathrm{N_2H}^{+}$, $\mathrm{HCO}^{+}$ and CCH observations (maybe also $\mathrm{C[I]}$, $\mathrm{H_2O}$?)
+4. HD as a mass tracer (trying to answer two science questions)
+	1. {a} Is HD genuinely chemistry-robust as a gas-mass tracer?
+	2. Does HD J=2-1 improve the mass measurement?
+	3. Prospects for PRIMA(?)
+5. Comparison to other chemical mass tracers (again trying to answer three science questions)
+	1. {a} How strongly does chemical complexity bias conventional ALMA gas-mass tracers? (Conventional chemical mass tracers are $\mathrm{C^{18}O}$ and $\mathrm{N_2H}^{+}$)
+	2. Is the N2H+/C18O mass calibration itself chemistry-model dependent?
+	3. At what level of chemical complexity do the inferred masses converge, and why?
+6. HD-derived mass as probe to disk chemistry
+7. Discussion (mainly covering things I have noticed while running a series of models) (also include limitations and differences from older models or observations)
+8. Summary
+
+### Telescope proposal guidelines
+- Scientific merit
+- Importance to Astronomy
+- Unique capabilities
+- Complexity assessment

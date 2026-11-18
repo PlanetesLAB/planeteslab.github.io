@@ -1,0 +1,9 @@
+{
+  "id": "more-lists",
+  "name": "More Lists",
+  "version": "1.0.1",
+  "minAppVersion": "1.5.0",
+  "description": "Style ordered and nested lists with inline directives such as {A}, {i}, or {lower-greek}, in Reading view and Live Preview.",
+  "author": "dorian-zh",
+  "isDesktopOnly": false
+}

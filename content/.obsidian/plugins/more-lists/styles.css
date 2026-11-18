@@ -1,0 +1,27 @@
+/* Direct children only: styling one level never overrides a nested list. */
+ol.ols-list,
+ol.ols-list > li {
+  list-style-type: var(--ols-style);
+}
+
+.ols-directive {
+  display: none;
+}
+
+/* A local counter value makes markers stable when CodeMirror virtualizes lines. */
+.ols-marker {
+  display: inline-block;
+  min-width: 1ch;
+  text-align: end;
+  white-space: nowrap;
+  color: var(--list-marker-color, var(--text-muted));
+  counter-reset: ols-item var(--ols-ordinal);
+}
+
+.ols-marker::before {
+  content: counter(ols-item, var(--ols-style)) ".";
+}
+
+.ols-marker[style*="--ols-style: none;"]::before {
+  content: "";
+}

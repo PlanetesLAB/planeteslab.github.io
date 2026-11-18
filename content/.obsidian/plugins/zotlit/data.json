@@ -1,0 +1,32 @@
+{
+  "__VERSION__": 11,
+  "release.previous-version": "2.2.2",
+  "note.default-profile": {
+    "bindings": {
+      "note.literature-folder": "research",
+      "citation.references-style": null,
+      "note.import-folder": "zotero_notes",
+      "note.import-colored-highlights": false,
+      "note.import-annotations-as-template": false
+    }
+  },
+  "library.document": {
+    "node": {
+      "kind": "recent"
+    },
+    "facets": [],
+    "tags": [],
+    "search": "im lu",
+    "sort": [
+      {
+        "property": "lastActivity",
+        "direction": "DESC"
+      }
+    ],
+    "card": {
+      "allFields": false,
+      "annotations": false
+    },
+    "expanded": []
+  }
+}

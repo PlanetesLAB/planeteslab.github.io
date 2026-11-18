@@ -41,6 +41,9 @@ configuration:
         highlight: rgba(6, 18, 39, 0.08)
         textHighlight: rgba(249, 226, 175, 0.20)
 plugins:
+  - source: ./quartz/plugins/local/review-permalinks
+    enabled: true
+    order: 6
   - source: github:quartz-community/created-modified-date
     enabled: false
     options:

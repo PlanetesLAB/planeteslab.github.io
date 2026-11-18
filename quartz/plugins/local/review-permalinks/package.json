@@ -1,0 +1,15 @@
+{
+  "name": "review-permalinks",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "esbuild index.ts --bundle --packages=external --platform=node --format=esm --outfile=dist/index.js"
+  },
+  "quartz": {
+    "name": "review-permalinks",
+    "displayName": "Review Permalinks",
+    "category": "transformer",
+    "defaultOrder": 6
+  }
+}
